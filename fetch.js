@@ -70,6 +70,26 @@ const fetchDemographics = async () => {
   return demographics
 }
 
+/**
+ * Read race data from spreadsheet into object.
+ * @returns {Promise<{}>} - A Promise that resolves with an object representing
+ *   the race data from the spreadsheet.
+ */
+
+ const fetchRaces = async () => {
+  const races = {}
+  await fetchSpreadsheet(config.google.id, config.google.ranges.races, row => {
+    if (row.length > 2) {
+      const name = row[0]
+      if (!races[name]) races[name] = {}
+      races[name].type = row[1]
+      races[name].alignment = row[2]
+    }
+  })
+  return races
+}
+
 module.exports = {
-  fetchDemographics
+  fetchDemographics,
+  fetchRaces
 }
