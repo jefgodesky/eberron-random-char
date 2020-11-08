@@ -210,6 +210,77 @@ const fetchReligions = async () => {
   })
 }
 
+/**
+ * Get traits from spreadsheet.
+ * @param data {object} - The existing data object.
+ * @returns {Promise<void>} - A Promise that resolves when traits have been
+ *   fetched from the spreadsheet and added to the `data` object. Cultural
+ *   traits are added to cultures, while all others are added to a `traits`
+ *   property.
+ */
+
+ const fetchTraits = async (data) => {
+  const scratch = {}
+  await fetchSpreadsheet(config.google.id, config.google.ranges.traits, row => {
+    if (row.length > 3) {
+      const faction = row[2]
+      const factype = row[3]
+
+      if (!scratch[factype]) scratch[factype] = {}
+      if (!scratch[factype][faction]) {
+        scratch[factype][faction] = {
+          personality: [],
+          ideals: { good: [], evil: [], lawful: [], chaotic: [], neutral: [], any: [] },
+          bonds: [],
+          flaws: []
+        }
+      }
+
+      const map = {
+        'Personality trait': scratch[factype][faction].personality,
+        'Ideal (Good)': scratch[factype][faction].ideals.good,
+        'Ideal (Evil)': scratch[factype][faction].ideals.evil,
+        'Ideal (Lawful)': scratch[factype][faction].ideals.lawful,
+        'Ideal (Chaotic)': scratch[factype][faction].ideals.chaotic,
+        'Ideal (Neutral)': scratch[factype][faction].ideals.neutral,
+        'Ideal (Any)': scratch[factype][faction].ideals.any,
+        'Bond': scratch[factype][faction].bonds,
+        'Flaw': scratch[factype][faction].flaws
+      }
+      if (row[0].length > 0) map[row[1]].push(row[0])
+    }
+  })
+
+  data.traits = {
+    any: scratch.Any.Any,
+    lifestyle: scratch.Lifestyle
+  }
+
+  if (data.cultures && scratch.Culture) {
+    Object.keys(scratch.Culture).forEach(culture => {
+      data.cultures[culture].traits = scratch.Culture[culture]
+    })
+  }
+
+  if (data.races && scratch.Race) {
+    Object.keys(scratch.Race).forEach(group => {
+      if (data.races[group]) {
+        data.races[group].traits = scratch.Race[group]
+      } else {
+        Object.keys(data.races).filter(race => race.type === group && !race.traits).forEach(race => {
+          data.races[race].traits = scratch.Race[group]
+        })
+      }
+    })
+  }
+
+  if (data.religions && scratch.Religion) {
+    Object.keys(scratch.Religion).forEach(religion => {
+      data.religions[religion].traits = scratch.Religion[religion]
+    })
+  }
+}
+
 module.exports = {
   fetchDemographics,
   fetchRaces,
@@ -217,5 +288,6 @@ module.exports = {
   fetchReligions,
   fetchNames,
   fetchVars,
-  fetchZilClans
+  fetchZilClans,
+  fetchTraits
 }
