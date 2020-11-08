@@ -2,6 +2,21 @@ const { google } = require('googleapis')
 const config = require('./config.json')
 
 /**
+ * Add a value (`val`) to an array stored in an object (`obj`) with a given
+ * property name (`key`). If no such property exists, make it an empty array
+ * and then add the value. This functionally gives us an "upsert" method for
+ * arrays stored in an object with some arbitrary set of property names.
+ * @param obj {object} - The object containing all of the arrays.
+ * @param key {string} - The property name that the value should be added to.
+ * @param val {*} - The item to add to the array.
+ */
+
+ const addElement = (obj, key, val) => {
+  if (!obj[key]) obj[key] = []
+  obj[key].push(val)
+}
+
+/**
  * Read a spreadsheet from Google Sheets.
  * @param spreadsheetId {string} - The spreadsheet ID.
  * @param range {string} - The range of the spreadsheet to read.
@@ -137,9 +152,39 @@ const fetchReligions = async () => {
   return religions
 }
 
+/**
+ * Read names from spreadsheet into object.
+ * @returns {Promise<{}>} - A Promise that resolves with an object representing
+ *   the names from the spreadsheet.
+ */
+
+ const fetchNames = async () => {
+  const names = {}
+
+  const map = {
+    'Male given name': [ 'male' ],
+    'Female given name': [ 'female' ],
+    'Unisex given name': [ 'male', 'female' ],
+    'Family name': [ 'surname' ]
+  }
+
+  await fetchSpreadsheet(config.google.id, config.google.ranges.names, row => {
+    if (row.length > 2) {
+      const name = row[0]
+      const list = row[1]
+      const types = map[row[2]]
+      if (!names[list]) names[list] = {}
+      types.forEach(type => { addElement(names[list], type, name) })
+    }
+  })
+
+  return names
+}
+
 module.exports = {
   fetchDemographics,
   fetchRaces,
   fetchCultures,
-  fetchReligions
+  fetchReligions,
+  fetchNames
 }
