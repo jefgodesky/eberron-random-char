@@ -281,6 +281,31 @@ const fetchReligions = async () => {
   }
 }
 
+/**
+ * Parse data from the spreadsheet into an object.
+ * @returns {Promise<{demographics: {}, races: {}, cultures: {}, vars: {}}>} -
+ *   A Promise that resolves with an object containing the data from the
+ *   spreadsheet, organized into an object that will be easier to use in
+ *   character generation.
+ */
+
+ const fetchData = async () => {
+  const data = {
+    demographics: await fetchDemographics(),
+    races: await fetchRaces(),
+    cultures: await fetchCultures(),
+    names: await fetchNames(),
+    vars: await fetchVars()
+  }
+
+  await fetchTraits(data)
+  if (data.names && data.names.Zil) {
+    data.names.Zil.clans = {}
+    await fetchZilClans(data.names.Zil.clans)
+  }
+  return data
+}
+
 module.exports = {
   fetchDemographics,
   fetchRaces,
@@ -289,5 +314,6 @@ module.exports = {
   fetchNames,
   fetchVars,
   fetchZilClans,
-  fetchTraits
+  fetchTraits,
+  fetchData
 }

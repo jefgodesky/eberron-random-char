@@ -8,7 +8,8 @@ const {
   fetchNames,
   fetchVars,
   fetchZilClans,
-  fetchTraits
+  fetchTraits,
+  fetchData
 } = require('./fetch')
 
 describe('fetchDemographics', () => {
@@ -154,5 +155,20 @@ describe('fetchTraits', () => {
     expect(religions).toEqual(true)
     expect(any).toEqual(true)
     expect(lifestyles).toEqual(true)
+  })
+})
+
+describe('fetchData', () => {
+  it('fetches all the data in one object', async () => {
+    expect.assertions(8)
+    const data = await fetchData()
+    expect(data.demographics).toBeDefined()
+    expect(data.races).toBeDefined()
+    expect(data.cultures).toBeDefined()
+    expect(data.names).toBeDefined()
+    expect(data.vars).toBeDefined()
+    expect(data.traits.any).toBeDefined()
+    expect(data.traits.lifestyle).toBeDefined()
+    expect(data.names.Zil.clans).toBeDefined()
   })
 })
