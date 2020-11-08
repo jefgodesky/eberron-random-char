@@ -3,7 +3,8 @@
 const {
   randomElementFromArray,
   randomFloatFromBellCurve,
-  makeTable
+  makeTable,
+  randomRowFromTable
 } = require('./randomizer')
 
 describe('randomElementFromArray', () => {
@@ -33,5 +34,16 @@ describe('makeTable', () => {
       { key: 'Two', percent: 65 },
       { key: 'Three', percent: 25 }
     ])
+  })
+})
+
+describe('randomRowFromTable', () => {
+  it('chooses a random row from a table', () => {
+    const actual = randomRowFromTable([
+      { key: 'No', percent: 0 },
+      { key: 'Yes', percent: 100 },
+      { key: 'No', percent: 0 },
+    ])
+    expect(actual).toEqual({ key: 'Yes', percent: 100 })
   })
 })

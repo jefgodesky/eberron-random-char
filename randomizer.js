@@ -35,8 +35,35 @@ const makeTable = obj => {
   return Object.keys(obj).map(key => Object.assign({}, { key }, obj[key]))
 }
 
+/**
+ * Select a random element from a table.
+ * @param table {object[]} - An array of objects to choose from. Each object
+ *   must have a `percent` property, indicating how likely it is. This can be
+ *   a float, but the sum of the `percent` properties for all objects in the
+ *   array should equal 100.
+ * @returns {object} - A randomly selected element from the array.
+ */
+
+const randomRowFromTable = table => {
+  const whole = random.int(0, 99)
+  const part = random.int(0, 99)
+  const rand = whole + (part / 100)
+  let sum = 0
+  let found = undefined
+
+  table.forEach(row => {
+    if (!found && row.percent) {
+      sum += row.percent
+      if (rand < sum) found = row
+    }
+  })
+
+  return found
+}
+
 module.exports = {
   randomElementFromArray,
   randomFloatFromBellCurve,
-  makeTable
+  makeTable,
+  randomRowFromTable
 }
