@@ -181,10 +181,25 @@ const fetchReligions = async () => {
   return names
 }
 
+/**
+ * Read variables from spreadsheet into object.
+ * @returns {Promise<{}>} - A Promise that resolves with an object representing
+ *   the variables from the spreadsheet.
+ */
+
+ const fetchVars = async () => {
+  const vars = {}
+  await fetchSpreadsheet(config.google.id, config.google.ranges.vars, row => {
+    if (row.length > 1) addElement(vars, row[0], row[1])
+  })
+  return vars
+}
+
 module.exports = {
   fetchDemographics,
   fetchRaces,
   fetchCultures,
   fetchReligions,
-  fetchNames
+  fetchNames,
+  fetchVars
 }
