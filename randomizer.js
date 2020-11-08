@@ -45,9 +45,9 @@ const makeTable = obj => {
  */
 
 const randomRowFromTable = table => {
-  const whole = random.int(0, 99)
-  const part = random.int(0, 99)
-  const rand = whole + (part / 100)
+  const whole = random.int(0, 100)
+  const part = random.int(0, 100)
+  const rand = Math.min(whole + (part / 100), 100)
   let sum = 0
   let found = undefined
 
