@@ -2,7 +2,8 @@
 
 const {
   randomElementFromArray,
-  randomFloatFromBellCurve
+  randomFloatFromBellCurve,
+  makeTable
 } = require('./randomizer')
 
 describe('randomElementFromArray', () => {
@@ -16,5 +17,21 @@ describe('randomElementFromArray', () => {
 describe('randomFloatFromBellCurve', () => {
   it('returns a random float from a bell curve', () => {
     expect(typeof randomFloatFromBellCurve()).toEqual('number')
+  })
+})
+
+describe('makeTable', () => {
+  it('makes a table', () => {
+    const obj = {
+      One: { percent: 10 },
+      Two: { percent: 65 },
+      Three: { percent: 25 }
+    }
+    const actual = makeTable(obj)
+    expect(actual).toEqual([
+      { key: 'One', percent: 10 },
+      { key: 'Two', percent: 65 },
+      { key: 'Three', percent: 25 }
+    ])
   })
 })

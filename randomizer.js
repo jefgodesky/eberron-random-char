@@ -22,7 +22,21 @@ const randomFloatFromBellCurve = (mean = 0, std = 1) => {
   return thunk()
 }
 
+/**
+ * Creates a table array from an object.
+ * @param obj {object} - An object that has some arbitrary number of
+ *   properties, where each property is an object.
+ * @returns {object[]} - An array of objects. Each object in the array
+ *   represents one of the properties in the original object, with its key
+ *   saved as the added property `key`.
+ */
+
+const makeTable = obj => {
+  return Object.keys(obj).map(key => Object.assign({}, { key }, obj[key]))
+}
+
 module.exports = {
   randomElementFromArray,
-  randomFloatFromBellCurve
+  randomFloatFromBellCurve,
+  makeTable
 }
