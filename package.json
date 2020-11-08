@@ -1,0 +1,23 @@
+{
+  "name": "eberron-random-char",
+  "version": "1.0.0",
+  "description": "Random character generator for Eberron.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jefgodesky/eberron-random-char.git"
+  },
+  "author": "Jason Godesky <jefgodesky@gmail.com>",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/jefgodesky/eberron-random-char/issues"
+  },
+  "homepage": "https://github.com/jefgodesky/eberron-random-char#readme",
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}
