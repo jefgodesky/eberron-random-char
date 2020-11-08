@@ -195,11 +195,27 @@ const fetchReligions = async () => {
   return vars
 }
 
+/**
+ * Read Zil clans and their families from spreadsheet into object.
+ * @param obj {object} - The object that should be populated with Zil clans.
+ * @returns {Promise<{}>} - A Promise that resolves when the given object has
+ *   been populated with Zil clans and families from the spreadsheet. The
+ *   object will have a property named for each clan, that will be equal to an
+ *   array of strings providing the names of the families in that clan.
+ */
+
+ const fetchZilClans = async (obj) => {
+  await fetchSpreadsheet(config.google.id, config.google.ranges.zil, row => {
+    if (row.length > 1) addElement(obj, row[1], row[0])
+  })
+}
+
 module.exports = {
   fetchDemographics,
   fetchRaces,
   fetchCultures,
   fetchReligions,
   fetchNames,
-  fetchVars
+  fetchVars,
+  fetchZilClans
 }

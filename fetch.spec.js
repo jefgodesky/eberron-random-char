@@ -6,7 +6,8 @@ const {
   fetchCultures,
   fetchReligions,
   fetchNames,
-  fetchVars
+  fetchVars,
+  fetchZilClans
 } = require('./fetch')
 
 describe('fetchDemographics', () => {
@@ -98,6 +99,18 @@ describe('fetchVars', () => {
     const vars = await fetchVars()
     const keys = Object.keys(vars)
     const haveArrays = keys.reduce((acc, curr) => acc && Array.isArray(vars[curr]) && (vars[curr].length > 0), true)
+    expect(keys.length).toBeGreaterThan(0)
+    expect(haveArrays).toEqual(true)
+  })
+})
+
+describe('fetchZilClans', () => {
+  it('fetches Zil clans and families', async () => {
+    expect.assertions(2)
+    const clans = {}
+    await fetchZilClans(clans)
+    const keys = Object.keys(clans)
+    const haveArrays = keys.reduce((acc, curr) => acc && Array.isArray(clans[curr]) && (clans[curr].length > 0), true)
     expect(keys.length).toBeGreaterThan(0)
     expect(haveArrays).toEqual(true)
   })
