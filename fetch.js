@@ -114,8 +114,32 @@ const fetchDemographics = async () => {
   return cultures
 }
 
+/**
+ * Read religion data from spreadsheet into object.
+ * @returns {Promise<{}>} - A Promise that resolves with an object representing
+ *   the religion data from the spreadsheet.
+ */
+
+const fetchReligions = async () => {
+  const religions = {}
+  await fetchSpreadsheet(config.google.id, config.google.ranges.religions, row => {
+    if (row.length > 3) {
+      const name = row[0]
+      const race = row[1]
+      const culture = row[2]
+      const alignment = row[3]
+      if (!religions[name]) religions[name] = {}
+      if (race) religions[name].race = race
+      if (culture) religions[name].culture = culture
+      religions[name].alignment = alignment
+    }
+  })
+  return religions
+}
+
 module.exports = {
   fetchDemographics,
   fetchRaces,
-  fetchCultures
+  fetchCultures,
+  fetchReligions
 }

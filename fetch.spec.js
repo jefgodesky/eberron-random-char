@@ -3,7 +3,8 @@
 const {
   fetchDemographics,
   fetchRaces,
-  fetchCultures
+  fetchCultures,
+  fetchReligions
 } = require('./fetch')
 
 describe('fetchDemographics', () => {
@@ -49,6 +50,25 @@ describe('fetchCultures', () => {
     expect(havePiety).toEqual(true)
     expect(haveMod).toEqual(true)
     expect(havePreferred).toEqual(true)
+    expect(haveAlignment).toEqual(true)
+  })
+})
+
+describe('fetchReligions', () => {
+  it('fetches religions', async () => {
+    expect.assertions(6)
+    const religions = await fetchReligions()
+    const keys = Object.keys(religions)
+    const haveRaces = keys.reduce((acc, curr) => acc && religions[curr].race !== undefined, true)
+    const noRaces = keys.reduce((acc, curr) => acc && religions[curr].race === undefined, true)
+    const haveCultures = keys.reduce((acc, curr) => acc && religions[curr].culture !== undefined, true)
+    const noCultures = keys.reduce((acc, curr) => acc && religions[curr].culture === undefined, true)
+    const haveAlignment = keys.reduce((acc, curr) => acc && religions[curr].alignment !== undefined, true)
+    expect(keys.length).toBeGreaterThan(0)
+    expect(haveRaces).toEqual(false)
+    expect(noRaces).toEqual(false)
+    expect(haveCultures).toEqual(false)
+    expect(noCultures).toEqual(false)
     expect(haveAlignment).toEqual(true)
   })
 })
