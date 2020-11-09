@@ -10,7 +10,7 @@ app.use(bodyParser.json())
 app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
-  res.send('Hello, Eberron!')
+  res.render('index')
 })
 
 app.listen(config.port, async () => {
