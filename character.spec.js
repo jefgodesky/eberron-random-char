@@ -1,8 +1,13 @@
 /* global describe, it, expect, beforeAll */
 
+const { fetchData } = require('./fetch')
 const Character = require('./character')
 
 describe('Character', () => {
+  beforeAll(async () => {
+    data = await fetchData()
+  })
+
   describe('constructor', () => {
     it('returns an empty character', () => {
       const actual = new Character()
@@ -16,6 +21,13 @@ describe('Character', () => {
       expect(alignment).toEqual(null)
       expect(gender).toEqual(null)
       expect(traits).toEqual({ personality: null, ideal: null, bond: null, flaw: null })
+    })
+  })
+
+  describe('chooseRaceFromDemographics', () => {
+    it('returns a random acceptable race', () => {
+      const actual = Character.chooseRaceFromDemographics(data, 'Sharn', { race: [ 'Human' ] })
+      expect(actual.key).toEqual('Human')
     })
   })
 })
