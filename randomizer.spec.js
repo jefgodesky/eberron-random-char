@@ -2,6 +2,7 @@
 
 const {
   intersection,
+  union,
   randomElementFromArray,
   randomFloatFromBellCurve,
   makeTable,
@@ -40,6 +41,41 @@ describe('intersection', () => {
     const b = [ 2, 3, 4 ]
     const c = [ 3, 4, 5 ]
     expect(intersection(42, a, '*', b, 3.1415, c)).toEqual([ 3 ])
+  })
+})
+
+describe('union', () => {
+  it('returns an empty array if not given any elements', () => {
+    expect(union()).toEqual([])
+  })
+
+  it('returns an empty array if not given any arrays', () => {
+    expect(union(42, '*', 3.1415)).toEqual([])
+  })
+
+  it('returns the array if only given one', () => {
+    const a = [ 1, 2, 3 ]
+    expect(union(a)).toEqual(a)
+  })
+
+  it('returns the union if given two', () => {
+    const a = [ 1, 2, 3 ]
+    const b = [ 2, 3, 4 ]
+    expect(union(a, b)).toEqual([ 1, 2, 3, 4 ])
+  })
+
+  it('returns the union of any number of arrays', () => {
+    const a = [ 1, 2, 3 ]
+    const b = [ 2, 3, 4 ]
+    const c = [ 3, 4, 5 ]
+    expect(union(a, b, c)).toEqual([ 1, 2, 3, 4, 5 ])
+  })
+
+  it('ignores non-array arguments', () => {
+    const a = [ 1, 2, 3 ]
+    const b = [ 2, 3, 4 ]
+    const c = [ 3, 4, 5 ]
+    expect(union(42, a, '*', b, 3.1415, c)).toEqual([ 1, 2, 3, 4, 5 ])
   })
 })
 

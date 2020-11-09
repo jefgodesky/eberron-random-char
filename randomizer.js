@@ -20,6 +20,25 @@ const intersection = (...arr) => {
 }
 
 /**
+ * Returns the union of any given number of arrays.
+ * @param arr {any[]} - The arrays to form a union from.
+ * @returns {any[]} - The union of the given arrays.
+ */
+
+const union = (...arr) => {
+  const arrays = arr.filter(a => Array.isArray(a))
+  if (arrays.length === 1) {
+    return arrays[0]
+  } else if (arrays.length > 1) {
+    let a = arrays[0]
+    for (let i = 1; i < arrays.length; i++) a = [ ...new Set([ ...a, ...arrays[i] ]) ]
+    return a
+  } else {
+    return []
+  }
+}
+
+/**
  * Return a random element from an array.
  * @param arr {*[]} - An array of elements.
  * @returns {*} - An element randomly selected from the array provided.
@@ -82,6 +101,7 @@ const randomRowFromTable = table => {
 
 module.exports = {
   intersection,
+  union,
   randomElementFromArray,
   randomFloatFromBellCurve,
   makeTable,
