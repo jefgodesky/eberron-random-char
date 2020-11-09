@@ -54,6 +54,30 @@ class Character {
     const obj = table ? randomAcceptableRowFromTable(table, options.culture) : null
     return obj ? obj.key : null
   }
+
+  /**
+   * Choose a religion based on the area's demographics and the user's
+   * specifications.
+   * @param data {object} - The full data set pulled from `fetchData`.
+   * @param area {string} - The specified demographic area.
+   * @param options {object} - The user's specifications, which should include
+   *   a `religion` property providing an array of strings specifying what
+   *   religions are acceptable options for these characters.
+   * @returns {*|null} - A religion object pulled from the `data` object, chosen
+   *   randomly based on their prevalence in the demographic area, and limited by
+   *   the user's specifications, or `null` if no valid demographic area was
+   *   specified.
+   */
+
+  static chooseReligionFromDemographics (data, area, options) {
+    const table = data.demographics[area]
+      ? makeTable(data.demographics[area].byReligion)
+      : null
+    const pick = table ? randomAcceptableRowFromTable(table, options.religion) : null
+    return pick && data.religions[pick.key]
+      ? Object.assign({}, { name: pick.key }, data.religions[pick.key])
+      : null
+  }
 }
 
 module.exports = Character
