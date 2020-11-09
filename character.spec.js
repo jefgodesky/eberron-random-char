@@ -30,4 +30,20 @@ describe('Character', () => {
       expect(actual.key).toEqual('Human')
     })
   })
+
+  describe('chooseCultureFromRace', () => {
+    it('returns a random acceptable culture', () => {
+      const race = {
+        key: 'Human',
+        cultures: {
+          Brelish: { percent: 24 },
+          Aundairian: { percent: 24 },
+          Karrnathi: { percent: 24 },
+          Thranish: { percent: 24 },
+          Cyran: { percent: 4 }
+        }
+      }
+      expect(Character.chooseCultureFromRace(race, { culture: [ 'Brelish' ] })).toEqual('Brelish')
+    })
+  })
 })
