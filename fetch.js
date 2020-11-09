@@ -294,6 +294,7 @@ const fetchReligions = async () => {
     demographics: await fetchDemographics(),
     races: await fetchRaces(),
     cultures: await fetchCultures(),
+    religions: await fetchReligions(),
     names: await fetchNames(),
     vars: await fetchVars()
   }
