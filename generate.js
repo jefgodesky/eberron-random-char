@@ -296,6 +296,29 @@ const chooseGivenName = (data, list, gender) => {
   return randomElementFromArray(names)
 }
 
+/**
+ * Pick a family name for the character.
+ * @param data {object} - The full data set pulled from `fetchData`.
+ * @param list {string} - The names list to pull from.
+ * @returns {string|null} - A family name or `null` if the selected names list
+ *   does not use family names.
+ */
+
+const chooseFamilyName = (data, list) => {
+  const addOccupations = [ 'Aundairian', 'Brelish', 'Cyran', 'Karrnathi', 'Thranish', 'Khoravar', 'Marcher', 'Reacher' ]
+  if (addOccupations.includes(list)) {
+    return randomElementFromArray([ ...data.names[list].surname, ...data.names['Occupational surnames'].surname ])
+  } else if (data.names[list].surname) {
+    return randomElementFromArray(data.names[list].surname)
+  } else if (data.names[list].clans) {
+    const clan = randomElementFromArray(Object.keys(data.names[list].clans))
+    const family = randomElementFromArray(data.names[list].clans[clan])
+    return `${family} ${clan}`
+  } else {
+    return null
+  }
+}
+
 module.exports = {
   chooseRaceFromDemographics,
   chooseCultureFromRace,
@@ -308,5 +331,6 @@ module.exports = {
   addTraits,
   chooseTraits,
   chooseGender,
-  chooseGivenName
+  chooseGivenName,
+  chooseFamilyName
 }

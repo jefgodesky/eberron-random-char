@@ -215,3 +215,27 @@ describe('chooseGivenName', () => {
     expect(data.names.Brelish.female.includes(name)).toEqual(true)
   })
 })
+
+describe('chooseFamilyName', () => {
+  it('chooses a family name', () => {
+    const name = chooseFamilyName(data, 'Tairnadal')
+    expect(data.names.Tairnadal.surname.includes(name)).toEqual(true)
+  })
+
+  it('might choose an occupational surname for some name lists', () => {
+    const name = chooseFamilyName(data, 'Brelish')
+    const options = [ ...data.names.Brelish.surname, ...data.names['Occupational surnames'].surname ]
+    expect(options.includes(name)).toEqual(true)
+  })
+
+  it('handles Zil clans', () => {
+    const name = chooseFamilyName(data, 'Zil')
+    const parts = name.split(' ')
+    expect(data.names.Zil.clans[parts[1]].includes(parts[0])).toEqual(true)
+  })
+
+  it('returns null if that list doesn\'t have family names', () => {
+    const name = chooseFamilyName(data, 'Changeling')
+    expect(name).toEqual(null)
+  })
+})
