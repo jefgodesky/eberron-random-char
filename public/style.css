@@ -15,8 +15,32 @@ body {
   }
 }
 
-label
+label,
 fieldset legend {
   display: block;
   font-weight: bold;
+}
+
+fieldset {
+  margin-top: 2em;
+}
+
+label {
+  cursor: pointer;
+}
+
+.many-options {
+  list-style-type: none;
+  margin: 1em 0;
+  padding: 0;
+}
+
+.many-options li {
+  display: inline-block;
+  width: 12em;
+}
+
+.many-options label {
+  display: inline-block;
+  font-weight: normal;
 }

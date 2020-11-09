@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const slugify = require('slugify')
 
 const config = require('./config.json')
 const { fetchData } = require('./fetch')
@@ -12,7 +13,8 @@ app.set('view engine', 'ejs')
 
 app.get('/', (req, res) => {
   const params = {
-    areas: Object.keys(app.data.demographics)
+    areas: Object.keys(app.data.demographics),
+    cultures: Object.keys(app.data.cultures).map(name => ({ name, id: `culture-${slugify(name)}` }))
   }
   res.render('index', params)
 })
