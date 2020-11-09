@@ -1,4 +1,5 @@
 const {
+  intersection,
   makeTable,
   randomAcceptableRowFromTable,
   randomFloatFromBellCurve
@@ -115,11 +116,38 @@ const generateRandomAlignment = () => {
   return prelim === 'NN' ? 'N' : prelim
 }
 
+/**
+ * Return a randomly generated alignment, so long as it matches one of the
+ * acceptable alignments provided.
+ * @param acceptable {string[]} - An array of acceptable alignments.
+ * @returns {string} - If you provided any acceptable alignments, one of them
+ *   will be chosen, with weights provided based on the criteria used in
+ *   `generateRandomAlignment`. If you did not provide any valid acceptable
+ *   alignments, one is returned at random.
+ */
+
+const generateAcceptableRandomAlignment = acceptable => {
+  const acc = intersection([ 'LG', 'NG', 'CG', 'LN', 'N', 'CN', 'LE', 'NE', 'CE' ], acceptable)
+  if (acc.length > 1) {
+    let alignment = false
+    while (!alignment) {
+      alignment = generateRandomAlignment()
+      if (!acc.includes(alignment)) alignment = false
+    }
+    return alignment
+  } else if (acc.length === 1) {
+    return acc[0]
+  } else {
+    return generateRandomAlignment()
+  }
+}
+
 module.exports = {
   chooseRaceFromDemographics,
   chooseCultureFromRace,
   chooseReligionFromDemographics,
   choosePiety,
   isPious,
-  generateRandomAlignment
+  generateRandomAlignment,
+  generateAcceptableRandomAlignment
 }

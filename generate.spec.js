@@ -6,7 +6,8 @@ const {
   chooseReligionFromDemographics,
   choosePiety,
   isPious,
-  generateRandomAlignment
+  generateRandomAlignment,
+  generateAcceptableRandomAlignment
 } = require('./generate')
 const { fetchData } = require('./fetch')
 
@@ -68,5 +69,17 @@ describe('generateRandomAlignment', () => {
     const alignments = [ 'LG', 'NG', 'CG', 'LN', 'N', 'CN', 'LE', 'NE', 'CE' ]
     const actual = generateRandomAlignment()
     expect(alignments.includes(actual)).toEqual(true)
+  })
+})
+
+describe('generateAcceptableRandomAlignment', () => {
+  it('returns an acceptable alignment', () => {
+    const acceptable = [ 'LG', 'NG', 'CG' ]
+    const actual = generateAcceptableRandomAlignment(acceptable)
+    expect(acceptable.includes(actual)).toEqual(true)
+  })
+
+  it('returns the specified alignment if only given one', () => {
+    expect(generateAcceptableRandomAlignment([ 'CG' ])).toEqual('CG')
   })
 })
