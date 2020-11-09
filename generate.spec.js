@@ -11,7 +11,9 @@ const {
   chooseLifestyle,
   addTraits,
   chooseTraits,
-  chooseGender
+  chooseGender,
+  chooseGivenName,
+  chooseFamilyName
 } = require('./generate')
 const { fetchData } = require('./fetch')
 
@@ -204,5 +206,12 @@ describe('chooseGender', () => {
     const possibilities = [ 'Female', 'Male', 'Non-binary', 'Genderfluid', 'Agender' ]
     const actual = chooseGender(possibilities)
     expect(possibilities.includes(actual)).toEqual(true)
+  })
+})
+
+describe('chooseGivenName', () => {
+  it('chooses a name', () => {
+    const name = chooseGivenName(data, 'Brelish', 'Female')
+    expect(data.names.Brelish.female.includes(name)).toEqual(true)
   })
 })

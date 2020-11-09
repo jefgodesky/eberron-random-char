@@ -2,6 +2,7 @@ const random = require('random')
 const { avgAlignment } = require('./dndmath')
 const {
   intersection,
+  attemptIntersection,
   makeTable,
   randomAcceptableRowFromTable,
   randomFloatFromBellCurve,
@@ -276,6 +277,25 @@ const chooseGender = (options, eschewsGender = false) => {
   return randomAcceptableRowFromTable(table, options).key
 }
 
+/**
+ * Choose a given name.
+ * @param data {object} - The full data set pulled from `fetchData`.
+ * @param list {string} - The names list to be used.
+ * @param gender {string} - This character's gender.
+ * @returns {string} - A given name chosen at random for this character from
+ *   the appropriate name list.
+ */
+
+const chooseGivenName = (data, list, gender) => {
+  let names = []
+  if (gender === 'Female') names = [ ...data.names[list].female ]
+  if (gender === 'Male') names = [ ...data.names[list].male ]
+  if (gender === 'Non-binary') names = attemptIntersection(data.names[list].female, data.names[list].male)
+  if (gender === 'Genderfluid') names = attemptIntersection(data.names[list].female, data.names[list].male)
+  if (gender === 'Agender') names = attemptIntersection(data.names[list].female, data.names[list].male)
+  return randomElementFromArray(names)
+}
+
 module.exports = {
   chooseRaceFromDemographics,
   chooseCultureFromRace,
@@ -287,5 +307,6 @@ module.exports = {
   chooseLifestyle,
   addTraits,
   chooseTraits,
-  chooseGender
+  chooseGender,
+  chooseGivenName
 }
