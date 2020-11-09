@@ -94,11 +94,12 @@ const fetchDemographics = async () => {
  const fetchRaces = async () => {
   const races = {}
   await fetchSpreadsheet(config.google.id, config.google.ranges.races, row => {
-    if (row.length > 2) {
+    if (row.length > 3) {
       const name = row[0]
       if (!races[name]) races[name] = {}
-      races[name].type = row[1]
-      races[name].alignment = row[2]
+      races[name].plural = row[1]
+      races[name].type = row[2]
+      races[name].alignment = row[3]
     }
   })
   return races

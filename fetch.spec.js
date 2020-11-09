@@ -27,12 +27,14 @@ describe('fetchDemographics', () => {
 
 describe('fetchRaces', () => {
   it('fetches races', async () => {
-    expect.assertions(3)
+    expect.assertions(4)
     const races = await fetchRaces()
     const keys = Object.keys(races)
+    const havePlurals = keys.reduce((acc, curr) => acc && races[curr].plural !== undefined, true)
     const haveTypes = keys.reduce((acc, curr) => acc && races[curr].type !== undefined, true)
     const haveAlignment = keys.reduce((acc, curr) => acc && races[curr].alignment !== undefined, true)
     expect(keys.length).toBeGreaterThan(0)
+    expect(havePlurals).toEqual(true)
     expect(haveTypes).toEqual(true)
     expect(haveAlignment).toEqual(true)
   })
