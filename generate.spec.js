@@ -5,7 +5,8 @@ const {
   chooseCultureFromRace,
   chooseReligionFromDemographics,
   choosePiety,
-  isPious
+  isPious,
+  generateRandomAlignment
 } = require('./generate')
 const { fetchData } = require('./fetch')
 
@@ -59,5 +60,13 @@ describe('isPious', () => {
 
   it('returns false if given a value not more than one standard deviation above the mean', () => {
     expect(isPious(1)).toEqual(false)
+  })
+})
+
+describe('generateRandomAlignment', () => {
+  it('returns an alignment', () => {
+    const alignments = [ 'LG', 'NG', 'CG', 'LN', 'N', 'CN', 'LE', 'NE', 'CE' ]
+    const actual = generateRandomAlignment()
+    expect(alignments.includes(actual)).toEqual(true)
   })
 })

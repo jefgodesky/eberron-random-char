@@ -96,10 +96,30 @@ const choosePiety = (data, culture) => {
 
 const isPious = piety => piety > 1
 
+/**
+ * Generate a random alignment. We assume that both the lawful/chaotic X axis
+ * and the good/evil y axis are normally distributed, with most people being
+ * neutral. This assigns values of good, evil, lawful, or chaotic to those
+ * individuals who are more than one standard deviation from the mean on those
+ * axes.
+ * @returns {string} - An alignment selected randomly from a normally
+ *   distributed population.
+ */
+
+const generateRandomAlignment = () => {
+  const x = randomFloatFromBellCurve()
+  const y = randomFloatFromBellCurve()
+  const lc = x > 1 ? 'L' : x < -1 ? 'C' : 'N'
+  const ge = x > 1 ? 'G' : x < -1 ? 'E' : 'N'
+  const prelim = `${lc}${ge}`
+  return prelim === 'NN' ? 'N' : prelim
+}
+
 module.exports = {
   chooseRaceFromDemographics,
   chooseCultureFromRace,
   chooseReligionFromDemographics,
   choosePiety,
-  isPious
+  isPious,
+  generateRandomAlignment
 }
