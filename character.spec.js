@@ -47,6 +47,15 @@ describe('Character', () => {
     })
   })
 
+  describe('setPersonalAlignment', () => {
+    it('sets an alignment', () => {
+      const alignments = [ 'LG', 'NG', 'CG', 'LN', 'N', 'CN', 'LE', 'NE', 'CE' ]
+      const char = new Character()
+      char.setPersonalAlignment()
+      expect(alignments.includes(char.alignment)).toEqual(true)
+    })
+  })
+
   describe('chooseRaceFromDemographics', () => {
     it('returns a random acceptable race', () => {
       const actual = Character.chooseRaceFromDemographics(data, 'Sharn', { race: [ 'Human' ] })

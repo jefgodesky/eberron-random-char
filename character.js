@@ -44,6 +44,23 @@ class Character {
   }
 
   /**
+   * Generate a random alignment. We assume that both the lawful/chaotic X axis
+   * and the good/evil y axis are normally distributed, with most people being
+   * neutral. This assigns values of good, evil, lawful, or chaotic to those
+   * individuals who are more than one standard deviation from the mean on those
+   * axes.
+   */
+
+  setPersonalAlignment () {
+    const x = randomFloatFromBellCurve()
+    const y = randomFloatFromBellCurve()
+    const lc = x > 1 ? 'L' : x < -1 ? 'C' : 'N'
+    const ge = y > 1 ? 'G' : y < -1 ? 'E' : 'N'
+    const prelim = `${lc}${ge}`
+    this.alignment = prelim === 'NN' ? 'N' : prelim
+  }
+
+  /**
    * Choose a race based on the area's demographics and the user's
    * specifications.
    * @param data {object} - The full data set pulled from `fetchData`.
