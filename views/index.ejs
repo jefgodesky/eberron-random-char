@@ -16,12 +16,23 @@
         <fieldset>
             <legend>What cultures could these characters come from?</legend>
             <ul class="many-options">
-            <% cultures.forEach(culture => { %>
-            <li>
-                <input type="checkbox" name="culture" value="<%= culture.name %>" id="<%= culture.id %>" checked>
-                <label for="<%= culture.id %>"><%= culture.name %></label>
-            </li>
-            <% }) %>
+                <% cultures.forEach(culture => { %>
+                <li>
+                    <input type="checkbox" name="culture" value="<%= culture.name %>" id="<%= culture.id %>" checked>
+                    <label for="<%= culture.id %>"><%= culture.name %></label>
+                </li>
+                <% }) %>
+            </ul>
+        </fieldset>
+        <fieldset>
+            <legend>Which races could these characters belong to?</legend>
+            <ul class="many-options">
+                <% races.forEach(race => { %>
+                <li>
+                    <input type="checkbox" name="race" value="<%= race.name %>" id="<%= race.id %>" checked>
+                    <label for="<%= race.id %>"><%= race.name %></label>
+                </li>
+                <% }) %>
             </ul>
         </fieldset>
     </body>
