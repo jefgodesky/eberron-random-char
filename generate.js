@@ -60,8 +60,21 @@ const choosePiety = (data, culture) => {
   return disposition + cultural
 }
 
+/**
+ * We'll consider a character "pious," meaning that religion plays a critical
+ * part of hens life, if hens piety is more than one standard deviation above
+ * the mean.
+ * @param piety {number} - A character's piety, as provided by `choosePiety`.
+ * @returns {boolean} - `true` if the character is pious (e.g., hens piety is
+ *   more than one standard deviation above the mean), or `false` if hen
+ *   is not.
+ */
+
+const isPious = piety => piety > 1
+
 module.exports = {
   chooseRaceFromDemographics,
   chooseCultureFromRace,
-  choosePiety
+  choosePiety,
+  isPious
 }

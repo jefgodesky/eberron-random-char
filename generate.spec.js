@@ -3,7 +3,8 @@
 const {
   chooseRaceFromDemographics,
   chooseCultureFromRace,
-  choosePiety
+  choosePiety,
+  isPious
 } = require('./generate')
 const { fetchData } = require('./fetch')
 
@@ -40,5 +41,15 @@ describe('choosePiety', () => {
   it('returns a piety score', () => {
     const actual = choosePiety(data, data.cultures.Thranish)
     expect(typeof actual).toEqual('number')
+  })
+})
+
+describe('isPious', () => {
+  it('returns true if given a value more than one standard deviation above the mean', () => {
+    expect(isPious(2)).toEqual(true)
+  })
+
+  it('returns false if given a value not more than one standard deviation above the mean', () => {
+    expect(isPious(1)).toEqual(false)
   })
 })
