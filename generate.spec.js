@@ -9,7 +9,8 @@ const {
   generateRandomAlignment,
   generateAcceptableRandomAlignment,
   chooseLifestyle,
-  addTraits
+  addTraits,
+  chooseTraits
 } = require('./generate')
 const { fetchData } = require('./fetch')
 
@@ -172,5 +173,27 @@ describe('addTraits', () => {
       flaws: [ 'Flaw 1', 'Flaw 2' ]
     }
     expect(actual).toEqual(expected)
+  })
+})
+
+describe('chooseTraits', () => {
+  it('chooses traits randomly from a set', () => {
+    const set = {
+      personality: [ 'Personality 1', 'Personality 2' ],
+      ideals: [
+        { ideal: 'Any 1', type: 'any' },
+        { ideal: 'Neutral 1', type: 'neutral' },
+        { ideal: 'Any 2', type: 'any' },
+        { ideal: 'Neutral 2', type: 'neutral' }
+      ],
+      bonds: [ 'Bond 1', 'Bond 2' ],
+      flaws: [ 'Flaw 1', 'Flaw 2' ]
+    }
+    const actual = chooseTraits(set)
+    expect(actual).toBeDefined()
+    expect(set.personality.includes(actual.personality)).toEqual(true)
+    expect(set.ideals.map(ideal => ideal.ideal).includes(actual.ideal.ideal)).toEqual(true)
+    expect(set.bonds.includes(actual.bond)).toEqual(true)
+    expect(set.flaws.includes(actual.flaw)).toEqual(true)
   })
 })

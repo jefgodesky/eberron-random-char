@@ -4,7 +4,8 @@ const {
   intersection,
   makeTable,
   randomAcceptableRowFromTable,
-  randomFloatFromBellCurve
+  randomFloatFromBellCurve,
+  randomElementFromArray
 } = require('./randomizer')
 
 /**
@@ -224,6 +225,25 @@ const addTraits = (existing, set, alignment) => {
   return base
 }
 
+/**
+ * Choose traits from a set of potential options.
+ * @param set {{ personality: string[], ideals: string[], bonds: string[],
+ *   flaws: string[] }} - An object presenting a set of potential traits to
+ *   choose from.
+ * @returns {{ personality: string, ideal: string, bond: string,
+ *   flaw: string }} - An object with the traits selected randomly from the
+ *   given set.
+ */
+
+const chooseTraits = set => {
+  return {
+    personality: randomElementFromArray(set.personality),
+    ideal: randomElementFromArray(set.ideals),
+    bond: randomElementFromArray(set.bonds),
+    flaw: randomElementFromArray(set.flaws)
+  }
+}
+
 module.exports = {
   chooseRaceFromDemographics,
   chooseCultureFromRace,
@@ -233,5 +253,6 @@ module.exports = {
   generateRandomAlignment,
   generateAcceptableRandomAlignment,
   chooseLifestyle,
-  addTraits
+  addTraits,
+  chooseTraits
 }
