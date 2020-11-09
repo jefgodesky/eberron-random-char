@@ -15,7 +15,8 @@ app.get('/', (req, res) => {
   const params = {
     areas: Object.keys(app.data.demographics),
     cultures: Object.keys(app.data.cultures).map(name => ({ name, id: `culture-${slugify(name)}` })),
-    races: Object.keys(app.data.races).map(name => ({ name, id: `race-${slugify(name)}` }))
+    races: Object.keys(app.data.races).map(name => ({ name, id: `race-${slugify(name)}` })),
+    religions: Object.keys(app.data.religions).map(name => ({ name, id: `religion-${slugify(name)}` }))
   }
   res.render('index', params)
 })

@@ -35,5 +35,16 @@
                 <% }) %>
             </ul>
         </fieldset>
+        <fieldset>
+            <legend>Which faiths might these characters follow?</legend>
+            <ul class="many-options">
+                <% religions.forEach(religion => { %>
+                <li>
+                    <input type="checkbox" name="religion" value="<%= religion.name %>" id="<%= religion.id %>" checked>
+                    <label for="<%= religion.id %>"><%= religion.name %></label>
+                </li>
+                <% }) %>
+            </ul>
+        </fieldset>
     </body>
 </html>
