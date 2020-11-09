@@ -33,6 +33,20 @@ describe('Character', () => {
     })
   })
 
+  describe('isPious', () => {
+    it('returns true if given a value more than 1.5 standard deviations above the mean', () => {
+      const char = new Character()
+      char.faith.piety = 2
+      expect(char.isPious()).toEqual(true)
+    })
+
+    it('returns false if given a value not more than 1.5 standard deviations above the mean', () => {
+      const char = new Character()
+      char.faith.piety = 1
+      expect(char.isPious()).toEqual(false)
+    })
+  })
+
   describe('chooseRaceFromDemographics', () => {
     it('returns a random acceptable race', () => {
       const actual = Character.chooseRaceFromDemographics(data, 'Sharn', { race: [ 'Human' ] })

@@ -31,6 +31,19 @@ class Character {
   }
 
   /**
+   * We'll consider a character "pious," meaning that religion plays a critical
+   * part of hens life, if hens piety is more than 1.5 standard deviations
+   * above the mean.
+   * @returns {boolean} - `true` if the character is pious (e.g., hens piety is
+   *   more than one standard deviation above the mean), or `false` if hen
+   *   is not.
+   */
+
+  isPious () {
+    return typeof this.faith.piety === 'number' && this.faith.piety > 1.5
+  }
+
+  /**
    * Choose a race based on the area's demographics and the user's
    * specifications.
    * @param data {object} - The full data set pulled from `fetchData`.
