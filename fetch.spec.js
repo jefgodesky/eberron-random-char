@@ -80,16 +80,12 @@ describe('fetchReligions', () => {
 
 describe('fetchNames', () => {
   it('fetches names', async () => {
-    expect.assertions(5)
+    expect.assertions(3)
     const names = await fetchNames()
     const keys = Object.keys(names)
-    const haveMale = keys.reduce((acc, curr) => acc && names[curr].male !== undefined, true)
-    const haveFemale = keys.reduce((acc, curr) => acc && names[curr].female !== undefined, true)
     const haveSurnames = keys.reduce((acc, curr) => acc && names[curr].surname !== undefined, true)
     const noSurnames = keys.reduce((acc, curr) => acc && names[curr].surname === undefined, true)
     expect(keys.length).toBeGreaterThan(0)
-    expect(haveMale).toEqual(true)
-    expect(haveFemale).toEqual(true)
     expect(haveSurnames).toEqual(false)
     expect(noSurnames).toEqual(false)
   })
