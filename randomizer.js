@@ -1,6 +1,25 @@
 const random = require('random')
 
 /**
+ * Returns the intersection of any given number of arrays.
+ * @param arr {any[]} - The arrays to intersect.
+ * @returns {any[]} - The intersection of the given arrays.
+ */
+
+const intersection = (...arr) => {
+  const arrays = arr.filter(a => Array.isArray(a))
+  if (arrays.length === 1) {
+    return arrays[0]
+  } else if (arrays.length > 1) {
+    let a = arrays[0]
+    for (let i = 1; i < arrays.length; i++) a = a.filter(x => arrays[i].includes(x))
+    return a
+  } else {
+    return []
+  }
+}
+
+/**
  * Return a random element from an array.
  * @param arr {*[]} - An array of elements.
  * @returns {*} - An element randomly selected from the array provided.
@@ -62,6 +81,7 @@ const randomRowFromTable = table => {
 }
 
 module.exports = {
+  intersection,
   randomElementFromArray,
   randomFloatFromBellCurve,
   makeTable,
