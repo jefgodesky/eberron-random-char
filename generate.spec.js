@@ -7,7 +7,8 @@ const {
   choosePiety,
   isPious,
   generateRandomAlignment,
-  generateAcceptableRandomAlignment
+  generateAcceptableRandomAlignment,
+  chooseLifestyle
 } = require('./generate')
 const { fetchData } = require('./fetch')
 
@@ -89,5 +90,12 @@ describe('generateAcceptableRandomAlignment', () => {
     const religion = { alignment: 'LG' }
     const actual = generateAcceptableRandomAlignment(race, culture, religion, 2, acceptable)
     expect(actual).toEqual('CG')
+  })
+})
+
+describe('chooseLifestyle', () => {
+  it('chooses a lifestyle', () => {
+    const lifestyles = [ 'Rich', 'Middle', 'Poor' ]
+    expect(lifestyles.includes(chooseLifestyle())).toEqual(true)
   })
 })

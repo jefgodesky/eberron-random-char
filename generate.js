@@ -1,3 +1,4 @@
+const random = require('random')
 const { avgAlignment } = require('./dndmath')
 const {
   intersection,
@@ -164,6 +165,18 @@ const generateAcceptableRandomAlignment = (race, culture, religion, piety, accep
   }
 }
 
+/**
+ * Choose an economic class.
+ * @returns {string} - A string indicating one's economic class. 10% are rich,
+ *   60% are poor, and 30% are middle class (which seems pretty generous for a
+ *   medieval setting, but this is D&D).
+ */
+
+const chooseLifestyle = () => {
+  const wealth = random.int(1, 10)
+  return wealth === 10 ? 'Rich' : wealth < 7 ? 'Poor' : 'Middle'
+}
+
 module.exports = {
   chooseRaceFromDemographics,
   chooseCultureFromRace,
@@ -171,5 +184,6 @@ module.exports = {
   choosePiety,
   isPious,
   generateRandomAlignment,
-  generateAcceptableRandomAlignment
+  generateAcceptableRandomAlignment,
+  chooseLifestyle
 }
