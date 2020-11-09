@@ -39,6 +39,20 @@ const union = (...arr) => {
 }
 
 /**
+ * Checks to see if an intersection of the given arrays includes any elements.
+ * If it does, it returns the intersection. If it doesn't, it returns the
+ * union.
+ * @param arr {any[]} - Arrays to intersect or form a union from.
+ * @returns {any[]} - The intersection of the arrays given if it has any
+ *   elements, or the union of those arrays if not.
+ */
+
+const attemptIntersection = (...arr) => {
+  const attempt = intersection(...arr)
+  return attempt.length > 0 ? attempt : union(...arr)
+}
+
+/**
  * Return a random element from an array.
  * @param arr {*[]} - An array of elements.
  * @returns {*} - An element randomly selected from the array provided.
@@ -131,6 +145,7 @@ const randomAcceptableRowFromTable = (table, acceptable) => {
 module.exports = {
   intersection,
   union,
+  attemptIntersection,
   randomElementFromArray,
   randomFloatFromBellCurve,
   makeTable,

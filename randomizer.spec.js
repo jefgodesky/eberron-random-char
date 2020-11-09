@@ -3,6 +3,7 @@
 const {
   intersection,
   union,
+  attemptIntersection,
   randomElementFromArray,
   randomFloatFromBellCurve,
   makeTable,
@@ -77,6 +78,23 @@ describe('union', () => {
     const b = [ 2, 3, 4 ]
     const c = [ 3, 4, 5 ]
     expect(union(42, a, '*', b, 3.1415, c)).toEqual([ 1, 2, 3, 4, 5 ])
+  })
+})
+
+describe('attemptIntersection', () => {
+  it('returns an intersection of the given arrays', () => {
+    const a = [ 1, 2, 3 ]
+    const b = [ 2, 3, 4 ]
+    const c = [ 3, 4, 5 ]
+    expect(attemptIntersection(a, b, c)).toEqual([ 3 ])
+  })
+
+  it('returns the union if the intersection is empty', () => {
+    const a = [ 1, 2, 3 ]
+    const b = [ 2, 3, 4 ]
+    const c = [ 3, 4, 5 ]
+    const d = [ 4, 5, 6 ]
+    expect(attemptIntersection(a, b, c, d)).toEqual([ 1, 2, 3, 4, 5, 6 ])
   })
 })
 
