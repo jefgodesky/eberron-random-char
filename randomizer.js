@@ -99,11 +99,41 @@ const randomRowFromTable = table => {
   return found
 }
 
+/**
+ * Returns a random element from a table, so long as that element has a `key`
+ * property that is included in the whitelisted array of `acceptable` values.
+ * @param table {object[]} - An array of objects to choose from. Each object
+ *   must have a `key` property and a `percent` property, indicating how likely
+ *   it is. This can be a float, but the sum of the `percent` properties for
+ *   all objects in the array should equal 100.
+ * @param acceptable {string[]} - An array of acceptable `key` values.
+ * @returns {any} - A randomly selected element from the array. If any elements
+ *   in the table match the criteria provided by the `acceptable` array, the
+ *   returned row will meet those criteria. If no rows in the table meet these
+ *   criteria, one is chosen at random, per the likelihood of each row's
+ *   `percent` property.
+ */
+
+const randomAcceptableRowFromTable = (table, acceptable) => {
+  const check = intersection(table.map(row => row.key), acceptable)
+  if (check.length > 0) {
+    let found = undefined
+    while (!found) {
+      const candidate = randomRowFromTable(table)
+      if (acceptable.includes(candidate.key)) found = candidate
+    }
+    return found
+  } else {
+    return randomRowFromTable(table)
+  }
+}
+
 module.exports = {
   intersection,
   union,
   randomElementFromArray,
   randomFloatFromBellCurve,
   makeTable,
-  randomRowFromTable
+  randomRowFromTable,
+  randomAcceptableRowFromTable
 }

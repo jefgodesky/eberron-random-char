@@ -6,7 +6,8 @@ const {
   randomElementFromArray,
   randomFloatFromBellCurve,
   makeTable,
-  randomRowFromTable
+  randomRowFromTable,
+  randomAcceptableRowFromTable
 } = require('./randomizer')
 
 describe('intersection', () => {
@@ -117,5 +118,15 @@ describe('randomRowFromTable', () => {
       { key: 'No', percent: 0 },
     ])
     expect(actual).toEqual({ key: 'Yes', percent: 100 })
+  })
+})
+
+describe('randomAcceptableRowFromTable', () => {
+  it('only returns an acceptable value', () => {
+    const actual = randomAcceptableRowFromTable([
+      { key: 'Acceptable', percent: 50 },
+      { key: 'Unacceptable', percent: 50 }
+    ], [ 'Acceptable' ])
+    expect(actual).toEqual({ key: 'Acceptable', percent: 50 })
   })
 })
