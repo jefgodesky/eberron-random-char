@@ -1,6 +1,7 @@
 const {
   makeTable,
-  randomAcceptableRowFromTable
+  randomAcceptableRowFromTable,
+  randomFloatFromBellCurve
 } = require('./randomizer')
 
 /**
@@ -44,7 +45,23 @@ const chooseCultureFromRace = (race, options) => {
   return obj ? obj.key : null
 }
 
+/**
+ * Determines a character's piety. Individual religious disposition is evenly
+ * distributed, but different cultures modify this with an average piety score
+ * that can push members of those cultures to be more or less devout.
+ * @param data {object} - The full data set pulled from `fetchData`.
+ * @param culture {object} - The culture object for this character.
+ * @returns {number} - The character's piety.
+ */
+
+const choosePiety = (data, culture) => {
+  const disposition = randomFloatFromBellCurve()
+  const cultural = culture.religion.piety
+  return disposition + cultural
+}
+
 module.exports = {
   chooseRaceFromDemographics,
-  chooseCultureFromRace
+  chooseCultureFromRace,
+  choosePiety
 }

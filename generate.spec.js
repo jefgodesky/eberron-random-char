@@ -2,7 +2,8 @@
 
 const {
   chooseRaceFromDemographics,
-  chooseCultureFromRace
+  chooseCultureFromRace,
+  choosePiety
 } = require('./generate')
 const { fetchData } = require('./fetch')
 
@@ -32,5 +33,12 @@ describe('chooseCultureFromRace', () => {
       }
     }
     expect(chooseCultureFromRace(race, { culture: [ 'Brelish' ] })).toEqual('Brelish')
+  })
+})
+
+describe('choosePiety', () => {
+  it('returns a piety score', () => {
+    const actual = choosePiety(data, data.cultures.Thranish)
+    expect(typeof actual).toEqual('number')
   })
 })
