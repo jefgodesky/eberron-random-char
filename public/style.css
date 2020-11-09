@@ -1,0 +1,16 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 2em;
+}
+
+@media (min-width: 50em) {
+  body {
+    padding: 2em 5%;
+  }
+}
+
+@media (min-width: 75em) {
+  body {
+    padding: 2em 10%;
+  }
+}
