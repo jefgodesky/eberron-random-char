@@ -1,3 +1,4 @@
+const { avgAlignment } = require('./dndmath')
 const {
   intersection,
   makeTable,
@@ -117,28 +118,49 @@ const generateRandomAlignment = () => {
 }
 
 /**
- * Return a randomly generated alignment, so long as it matches one of the
- * acceptable alignments provided.
- * @param acceptable {string[]} - An array of acceptable alignments.
- * @returns {string} - If you provided any acceptable alignments, one of them
- *   will be chosen, with weights provided based on the criteria used in
- *   `generateRandomAlignment`. If you did not provide any valid acceptable
- *   alignments, one is returned at random.
+ * Generate an acceptable character alignment.
+ * @param race {object} - A race object.
+ * @param race.alignment {string} - A string providing the alignment that this
+ *   character is pushed towards by virtue of being a member of this race.
+ * @param culture {object} - A culture object.
+ * @param culutre.alignment {string} - A string providing the alignment that
+ *   this character is pushed towards by virtue of being a member of this
+ *   culture.
+ * @param religion {object} - A religion object.
+ * @param religion.alignment {string} - A string providing the alignment that
+ *   this character is pushed towards by virtue of following this religion.
+ * @param piety {number} - The character's piety. If the character is pious
+ *   (see the `isPious` method), then hens religion's alignment will influence
+ *   hens alignment. If not, then the alignment of hens religion will not be
+ *   a factor.
+ * @param acceptable {string[]} - An array of acceptable alignments. If no
+ *   valid alignments are offered, all alignments will be considered
+ *   acceptable.
+ * @returns {string} - An alignment for the character. This begins with hens
+ *   personal disposition (see the `generateRandomAlignment` method), averaged
+ *   with hens race an culture (and religion if hen is pious). If the resulting
+ *   alignment is acceptable, it is returned. If not, we try again.
  */
 
-const generateAcceptableRandomAlignment = acceptable => {
-  const acc = intersection([ 'LG', 'NG', 'CG', 'LN', 'N', 'CN', 'LE', 'NE', 'CE' ], acceptable)
+const generateAcceptableRandomAlignment = (race, culture, religion, piety, acceptable) => {
+  const all = [ 'LG', 'NG', 'CG', 'LN', 'N', 'CN', 'LE', 'NE', 'CE' ]
+  const acc = Array.isArray(acceptable) && acceptable.length > 0
+    ? intersection([ 'LG', 'NG', 'CG', 'LN', 'N', 'CN', 'LE', 'NE', 'CE' ], acceptable)
+    : all
+  const ra = race && race.alignment ? race.alignment : false
+  const cu = culture && culture.alignment ? culture.alignment : false
+  const re = religion && religion.alignment && isPious(piety) ? religion.alignment : false
   if (acc.length > 1) {
     let alignment = false
     while (!alignment) {
-      alignment = generateRandomAlignment()
+      alignment = avgAlignment(generateRandomAlignment(), ra, cu, re)
       if (!acc.includes(alignment)) alignment = false
     }
     return alignment
   } else if (acc.length === 1) {
     return acc[0]
   } else {
-    return generateRandomAlignment()
+    return avgAlignment(generateRandomAlignment(), ra, cu, re)
   }
 }
 

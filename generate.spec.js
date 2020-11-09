@@ -75,11 +75,19 @@ describe('generateRandomAlignment', () => {
 describe('generateAcceptableRandomAlignment', () => {
   it('returns an acceptable alignment', () => {
     const acceptable = [ 'LG', 'NG', 'CG' ]
-    const actual = generateAcceptableRandomAlignment(acceptable)
+    const race = { alignment: 'CN' }
+    const culture = { alignment: 'N' }
+    const religion = { alignment: 'LG' }
+    const actual = generateAcceptableRandomAlignment(race, culture, religion, 2, acceptable)
     expect(acceptable.includes(actual)).toEqual(true)
   })
 
   it('returns the specified alignment if only given one', () => {
-    expect(generateAcceptableRandomAlignment([ 'CG' ])).toEqual('CG')
+    const acceptable = [ 'CG' ]
+    const race = { alignment: 'CN' }
+    const culture = { alignment: 'N' }
+    const religion = { alignment: 'LG' }
+    const actual = generateAcceptableRandomAlignment(race, culture, religion, 2, acceptable)
+    expect(actual).toEqual('CG')
   })
 })
