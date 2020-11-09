@@ -10,7 +10,8 @@ const {
   generateAcceptableRandomAlignment,
   chooseLifestyle,
   addTraits,
-  chooseTraits
+  chooseTraits,
+  chooseGender
 } = require('./generate')
 const { fetchData } = require('./fetch')
 
@@ -195,5 +196,13 @@ describe('chooseTraits', () => {
     expect(set.ideals.map(ideal => ideal.ideal).includes(actual.ideal.ideal)).toEqual(true)
     expect(set.bonds.includes(actual.bond)).toEqual(true)
     expect(set.flaws.includes(actual.flaw)).toEqual(true)
+  })
+})
+
+describe('chooseGender', () => {
+  it('chooses a gender', () => {
+    const possibilities = [ 'Female', 'Male', 'Non-binary', 'Genderfluid', 'Agender' ]
+    const actual = chooseGender(possibilities)
+    expect(possibilities.includes(actual)).toEqual(true)
   })
 })

@@ -244,6 +244,38 @@ const chooseTraits = set => {
   }
 }
 
+/**
+ * Choose a gender.
+ * @param options {string[]} - An array of acceptable gender options for this
+ *   character.
+ * @param eschewsGender {boolean} - Optional. If `true`, we're talking about a
+ *   character from a background that eschews typical human gender norms (e.g.,
+ *   warforged or elves), making non-binary, genderfluid, and agender options
+ *   as common as male or female. (Default: `false`)
+ * @returns {string} - A gender chosen from the `options` requested. If the
+ *   `options` provided do not include any of Female, Male, Non-binary,
+ *   Genderfluid, or Agender, then any of those options might be returned.
+ */
+
+const chooseGender = (options, eschewsGender = false) => {
+  const table = eschewsGender
+    ? [
+        { key: 'Female', percent: 30 },
+        { key: 'Male', percent: 30 },
+        { key: 'Non-binary', percent: 15 },
+        { key: 'Genderfluid', percent: 5 },
+        { key: 'Agender', percent: 20 }
+      ]
+    : [
+        { key: 'Female', percent: 49 },
+        { key: 'Male', percent: 49 },
+        { key: 'Non-binary', percent: 0.6 },
+        { key: 'Genderfluid', percent: 0.3 },
+        { key: 'Agender', percent: 0.1 }
+      ]
+  return randomAcceptableRowFromTable(table, options).key
+}
+
 module.exports = {
   chooseRaceFromDemographics,
   chooseCultureFromRace,
@@ -254,5 +286,6 @@ module.exports = {
   generateAcceptableRandomAlignment,
   chooseLifestyle,
   addTraits,
-  chooseTraits
+  chooseTraits,
+  chooseGender
 }
