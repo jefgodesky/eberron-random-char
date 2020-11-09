@@ -24,6 +24,15 @@ describe('Character', () => {
     })
   })
 
+  describe('setPiety', () => {
+    it('assigns a piety score', () => {
+      const char = new Character()
+      char.culture = 'Brelish'
+      char.setPiety(data)
+      expect(typeof char.faith.piety).toEqual('number')
+    })
+  })
+
   describe('chooseRaceFromDemographics', () => {
     it('returns a random acceptable race', () => {
       const actual = Character.chooseRaceFromDemographics(data, 'Sharn', { race: [ 'Human' ] })

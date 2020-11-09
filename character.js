@@ -1,6 +1,7 @@
 const {
   makeTable,
-  randomAcceptableRowFromTable
+  randomAcceptableRowFromTable,
+  randomFloatFromBellCurve
 } = require('./randomizer')
 
 class Character {
@@ -12,6 +13,21 @@ class Character {
     this.faith = { religion: null, piety: null }
     this.alignment = null
     this.traits = { personality: null, ideal: null, bond: null, flaw: null }
+  }
+
+  /**
+   * Sets the character's piety. Individual religious disposition is evenly
+   * distributed, but different cultures modify this with an average piety score
+   * that can push members of those cultures to be more or less devout.
+   * @param data {object} - The full data set pulled from `fetchData`.
+   */
+
+  setPiety (data) {
+    const disposition = randomFloatFromBellCurve()
+    const cultural = this.culture && data.cultures && data.cultures[this.culture] && data.cultures[this.culture].religion
+      ? data.cultures[this.culture].religion.piety || 0
+      : 0
+    this.faith.piety = disposition + cultural
   }
 
   /**
