@@ -1,3 +1,4 @@
+const random = require('random')
 const { avgAlignment } = require('./dndmath')
 const {
   intersection,
@@ -107,6 +108,17 @@ class Character {
           : avgAlignment(this.setPersonalAlignment(), ra, cu)
       }
     }
+  }
+
+  /**
+   * Sets the character's economic class. 10% are rich, 60% are poor, and 30%
+   * are middle class (which seems pretty generous by comparison to real-world
+   * medieval or early modern societies, but hey, this is D&D).
+   */
+
+  setLifestyle () {
+    const wealth = random.int(1, 10)
+    this.lifestyle = wealth === 10 ? 'Rich' : wealth < 7 ? 'Poor' : 'Miiddle'
   }
 
   /**

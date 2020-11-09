@@ -81,6 +81,15 @@ describe('Character', () => {
     })
   })
 
+  describe('setLifestyle', () => {
+    it('sets lifestyle', () => {
+      const lifestyles = [ 'Rich', 'Middle', 'Poor' ]
+      const char = new Character()
+      char.setLifestyle()
+      expect(lifestyles.includes(char.lifestyle)).toEqual(true)
+    })
+  })
+
   describe('chooseRaceFromDemographics', () => {
     it('returns a random acceptable race', () => {
       const actual = Character.chooseRaceFromDemographics(data, 'Sharn', { race: [ 'Human' ] })
