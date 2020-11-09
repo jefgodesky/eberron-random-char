@@ -69,3 +69,15 @@ label {
   background: #3366cc;
   color: #fff;
 }
+
+button.generate {
+  background: #3366cc;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font-size: 2em;
+  margin: 2em 0;
+  padding: 1em;
+  width: 100%;
+}
