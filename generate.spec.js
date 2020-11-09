@@ -3,6 +3,7 @@
 const {
   chooseRaceFromDemographics,
   chooseCultureFromRace,
+  chooseReligionFromDemographics,
   choosePiety,
   isPious
 } = require('./generate')
@@ -34,6 +35,13 @@ describe('chooseCultureFromRace', () => {
       }
     }
     expect(chooseCultureFromRace(race, { culture: [ 'Brelish' ] })).toEqual('Brelish')
+  })
+})
+
+describe('chooseReligionFromDemographics', () => {
+  it('picks a religion', () => {
+    const actual = chooseReligionFromDemographics(data, 'Sharn', { religion: [ 'Sovereign Host' ] })
+    expect(actual.name).toEqual('Sovereign Host')
   })
 })
 
