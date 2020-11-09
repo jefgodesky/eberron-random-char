@@ -1,4 +1,6 @@
+const { avgAlignment } = require('./dndmath')
 const {
+  intersection,
   makeTable,
   randomAcceptableRowFromTable,
   randomFloatFromBellCurve
@@ -58,6 +60,52 @@ class Character {
     const ge = y > 1 ? 'G' : y < -1 ? 'E' : 'N'
     const prelim = `${lc}${ge}`
     this.alignment = prelim === 'NN' ? 'N' : prelim
+  }
+
+  /**
+   * Set a random alignment for this character. Each character has a personal
+   * disposition, but it is weighted by hens race and culture (and, if hen is
+   * a pious person, hens religion as well).
+   * @param data {object} - The full data set pulled from `fetchData`.
+   * @param acceptable {string[]} - An array of acceptable alignments. If no
+   *   valid alignments are offered, all alignments will be considered
+   *   acceptable.
+   */
+
+  setAcceptableAlignment (data, acceptable) {
+    const { race, culture } = this
+    const { religion, piety } = this.faith
+    const raceObj = data && data.races ? data.races[race] : null
+    const cultureObj = data && data.cultures ? data.cultures[culture] : null
+    const religionObj = data && data.religions ? data.religions[religion] : null
+
+    if (raceObj && cultureObj && religionObj && !isNaN(piety)) {
+      const all = [ 'LG', 'NG', 'CG', 'LN', 'N', 'CN', 'LE', 'NE', 'CE' ]
+      const acc = Array.isArray(acceptable) && acceptable.length > 0
+        ? intersection([ 'LG', 'NG', 'CG', 'LN', 'N', 'CN', 'LE', 'NE', 'CE' ], acceptable)
+        : all
+      const ra = raceObj && raceObj.alignment ? raceObj.alignment : false
+      const cu = cultureObj && cultureObj.alignment ? cultureObj.alignment : false
+      const re = religionObj && religionObj.alignment ? religionObj.alignment : false
+      const influence = this.isPious() ? avgAlignment(ra, cu, re) : avgAlignment(ra, cu)
+
+      if (acc.length > 1) {
+        let al = false
+        let count = 0
+        while (!al) {
+          this.setPersonalAlignment()
+          al = avgAlignment(this.alignment, influence)
+          if (!acc.includes(al) && count < 10) { al = false; count++ }
+        }
+        this.alignment = al
+      } else if (acc.length === 1) {
+        this.alignment = acc[0]
+      } else {
+        this.alignment = this.isPious()
+          ? avgAlignment(this.setPersonalAlignment(), ra, cu, re)
+          : avgAlignment(this.setPersonalAlignment(), ra, cu)
+      }
+    }
   }
 
   /**

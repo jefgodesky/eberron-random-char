@@ -56,6 +56,30 @@ describe('Character', () => {
     })
   })
 
+  describe('setAcceptableAlignment', () => {
+    it('returns an acceptable alignment', () => {
+      const acceptable = [ 'LG', 'NG', 'CG' ]
+      const char = new Character()
+      char.race = 'Human'
+      char.culture = 'Brelish'
+      char.faith.piety = 0
+      char.faith.religion = 'Sovereign Host'
+      char.setAcceptableAlignment(data, acceptable)
+      expect(acceptable.includes(char.alignment)).toEqual(true)
+    })
+
+    it('returns the specified alignment if only given one', () => {
+      const acceptable = [ 'CG' ]
+      const char = new Character()
+      char.race = 'Human'
+      char.culture = 'Brelish'
+      char.faith.piety = 0
+      char.faith.religion = 'Sovereign Host'
+      char.setAcceptableAlignment(data, acceptable)
+      expect(char.alignment).toEqual('CG')
+    })
+  })
+
   describe('chooseRaceFromDemographics', () => {
     it('returns a random acceptable race', () => {
       const actual = Character.chooseRaceFromDemographics(data, 'Sharn', { race: [ 'Human' ] })
