@@ -12,4 +12,8 @@ describe('avgAlignment', () => {
   it('averages more than two alignments', () => {
     expect(avgAlignment('CG', 'NG', 'LE')).toEqual('NG')
   })
+
+  it('ignores things that aren\'t alignments', () => {
+    expect(avgAlignment('CG', 'True neutral', 42, 'LE')).toEqual('N')
+  })
 })

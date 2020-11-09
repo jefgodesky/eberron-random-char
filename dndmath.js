@@ -7,9 +7,10 @@
  */
 
 const avgAlignment = (...alignments) => {
-  const format = alignments.map(alignment => alignment === 'N' ? 'NN' : alignment)
-  const lc = format.map(al => al.charAt(0)).map(al => al === 'L' ? 1 : al === 'C' ? -1 : 0)
-  const ge = format.map(al => al.charAt(1)).map(al => al === 'G' ? 1 : al === 'E' ? -1 : 0)
+  const all = [ 'LG', 'NG', 'CG', 'LN', 'N', 'CN', 'LE', 'NE', 'CE' ]
+  const args = alignments.filter(al => all.includes(al)).map(al => al === 'N' ? 'NN' : al)
+  const lc = args.map(al => al.charAt(0)).map(al => al === 'L' ? 1 : al === 'C' ? -1 : 0)
+  const ge = args.map(al => al.charAt(1)).map(al => al === 'G' ? 1 : al === 'E' ? -1 : 0)
   const lcavg = lc.reduce((acc, curr) => acc + curr, 0) / lc.length
   const geavg = ge.reduce((acc, curr) => acc + curr, 0) / ge.length
   const lcval = lcavg >= 0.33 ? 'L' : lcavg <= -0.33 ? 'C' : 'N'
