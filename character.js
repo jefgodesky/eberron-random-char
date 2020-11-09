@@ -14,6 +14,7 @@ class Character {
     this.culture = null
     this.faith = { religion: null, piety: null }
     this.alignment = null
+    this.lifestyle = null
     this.traits = { personality: null, ideal: null, bond: null, flaw: null }
   }
 
