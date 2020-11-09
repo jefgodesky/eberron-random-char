@@ -177,6 +177,53 @@ const chooseLifestyle = () => {
   return wealth === 10 ? 'Rich' : wealth < 7 ? 'Poor' : 'Middle'
 }
 
+/**
+ * Add two sets of potential traits together.
+ * @param existing {{ personality: string[], ideals: string[], bonds: string[],
+ *   flaws: string[] }} - An object that provides a set of potential traits.
+ * @param set {{ personality: string[], ideals: { any: string[],
+ *   good: string[], evil: string[], lawful: string[], chaotic: string[],
+ *   neutral: string[] }, bonds: string[], flaws: string[] }} - An object that
+ *   provides a set of traits.
+ * @param alignment {string} - An alignment.
+ * @returns {{ personality: string[], ideals: string[], bonds: string[],
+ *   flaws: string[] }} - An object providing the potential traits from
+ *   `existing` and `set` concatenated together.
+ */
+
+const addTraits = (existing, set, alignment) => {
+  const base = existing ? existing : {
+    personality: [],
+    ideals: [],
+    bonds: [],
+    flaws: []
+  }
+
+  const isGood = alignment.length === 2 && alignment.charAt(1) === 'G'
+  const isEvil = alignment.length === 2 && alignment.charAt(1) === 'E'
+  const isLawful = alignment.charAt(0) === 'L'
+  const isChaotic = alignment.charAt(0) === 'C'
+  const isNeutral = (!isGood && !isEvil) || (!isLawful && !isChaotic)
+
+  const idealTypes = [ 'any' ]
+  if (isGood) idealTypes.push('good')
+  if (isEvil) idealTypes.push('evil')
+  if (isLawful) idealTypes.push('lawful')
+  if (isChaotic) idealTypes.push('chaotic')
+  if (isNeutral) idealTypes.push('neutral')
+
+  idealTypes.forEach(type => {
+    const map = set.ideals[type].map(ideal => ({ ideal, type }))
+    base.ideals = [ ...base.ideals, ...map ]
+  })
+
+  base.personality = [ ...base.personality, ...set.personality ]
+  base.bonds = [ ...base.bonds, ...set.bonds ]
+  base.flaws = [ ...base.flaws, ...set.flaws ]
+
+  return base
+}
+
 module.exports = {
   chooseRaceFromDemographics,
   chooseCultureFromRace,
@@ -185,5 +232,6 @@ module.exports = {
   isPious,
   generateRandomAlignment,
   generateAcceptableRandomAlignment,
-  chooseLifestyle
+  chooseLifestyle,
+  addTraits
 }
