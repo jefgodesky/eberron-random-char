@@ -110,7 +110,7 @@ const generateRandomAlignment = () => {
   const x = randomFloatFromBellCurve()
   const y = randomFloatFromBellCurve()
   const lc = x > 1 ? 'L' : x < -1 ? 'C' : 'N'
-  const ge = x > 1 ? 'G' : x < -1 ? 'E' : 'N'
+  const ge = y > 1 ? 'G' : y < -1 ? 'E' : 'N'
   const prelim = `${lc}${ge}`
   return prelim === 'NN' ? 'N' : prelim
 }
