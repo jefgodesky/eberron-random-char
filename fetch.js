@@ -72,13 +72,13 @@ const fetchDemographics = async () => {
 
       if (race) {
         addRace(area, race)
-        demographics[area].byRace[race].cultures[demo] = percent
+        demographics[area].byRace[race].cultures[demo] = { percent }
       } else if (dim === 'Race') {
         addRace(area, demo, percent)
       } else {
         const dimension = `by${dim}`
         if (!demographics[area][dimension]) demographics[area][dimension] = {}
-        demographics[area][dimension][demo] = percent
+        demographics[area][dimension][demo] = { percent }
       }
     }
   })
