@@ -7,5 +7,11 @@
     </head>
     <body>
         <h1>Eberron Random Character Generator</h1>
+        <label for="area">What area are these characters from?</label>
+        <select id="area" name="area">
+            <% areas.forEach(area => { %>
+            <option><%= area %></option>
+            <% }) %>
+        </select>
     </body>
 </html>
