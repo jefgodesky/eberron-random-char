@@ -48,6 +48,22 @@ describe('Character', () => {
     })
   })
 
+  describe('setGender', () => {
+    it('sets a random gender', () => {
+      const genders = [ 'Female', 'Male', 'Non-binary', 'Genderfluid', 'Agender' ]
+      const char = new Character()
+      char.setGender()
+      expect(genders.includes(char.gender)).toEqual(true)
+    })
+
+    it('can be restricted to a subset of genders', () => {
+      const acceptable = [ 'Female' ]
+      const char = new Character()
+      char.setGender(acceptable)
+      expect(char.gender).toEqual('Female')
+    })
+  })
+
   describe('setPersonalAlignment', () => {
     it('sets an alignment', () => {
       const alignments = [ 'LG', 'NG', 'CG', 'LN', 'N', 'CN', 'LE', 'NE', 'CE' ]

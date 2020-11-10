@@ -49,6 +49,35 @@ class Character {
   }
 
   /**
+   * Choose a gender.
+   * @param acceptable {string[]} - An array of acceptable gender options for
+   *   this character.
+   * @param eschewsGender {boolean} - Optional. If `true`, we're talking about a
+   *   character from a background that eschews typical human gender norms (e.g.,
+   *   warforged or elves), making non-binary, genderfluid, and agender options
+   *   as common as male or female. (Default: `false`)
+   */
+
+  setGender (acceptable = [], eschewsGender = false) {
+    const table = eschewsGender
+      ? [
+        { key: 'Female', percent: 30 },
+        { key: 'Male', percent: 30 },
+        { key: 'Non-binary', percent: 15 },
+        { key: 'Genderfluid', percent: 5 },
+        { key: 'Agender', percent: 20 }
+      ]
+      : [
+        { key: 'Female', percent: 49 },
+        { key: 'Male', percent: 49 },
+        { key: 'Non-binary', percent: 0.6 },
+        { key: 'Genderfluid', percent: 0.3 },
+        { key: 'Agender', percent: 0.1 }
+      ]
+    this.gender = randomAcceptableRowFromTable(table, acceptable).key
+  }
+
+  /**
    * Generate a random alignment. We assume that both the lawful/chaotic X axis
    * and the good/evil y axis are normally distributed, with most people being
    * neutral. This assigns values of good, evil, lawful, or chaotic to those
