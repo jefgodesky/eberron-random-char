@@ -323,7 +323,6 @@ describe('Character', () => {
     it('generates a character', () => {
       const options = { race: [], culture: [], religion: [], alignment: [], gender: [] }
       const char = Character.generate(data, 'Sharn', options)
-      console.log(char)
       expect(char).toBeInstanceOf(Character)
       expect(typeof char.race).toEqual('string')
       expect(typeof char.culture).toEqual('string')
