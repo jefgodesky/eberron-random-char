@@ -241,6 +241,18 @@ class Character {
   }
 
   /**
+   * Write the character's ideal as a string.
+   * @returns {string} - A string communicating the character's ideal and its
+   *   type.
+   */
+
+  getIdeal () {
+    const { ideal, type } = this.traits.ideal
+    const t = type.charAt(0).toUpperCase() + type.slice(1)
+    return `${ideal} (${t})`
+  }
+
+  /**
    * Return the character's parenthetical description
    * (e.g., `(CG female Brelish human)`).
    * @returns {string} - The character's parenthetical description.

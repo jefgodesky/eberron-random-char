@@ -179,6 +179,17 @@ describe('Character', () => {
     })
   })
 
+  describe('getIdeal', () => {
+    it('returns a string for the character\'s ideal', () => {
+      const char = new Character()
+      char.traits.ideal = {
+        ideal: 'Testing. A good developer always writes unit tests.',
+        type: 'lawful'
+      }
+      expect(char.getIdeal()).toEqual('Testing. A good developer always writes unit tests. (Lawful)')
+    })
+  })
+
   describe('getDesc', () => {
     it('returns the character\'s parenthetical description', () => {
       const char = new Character()
