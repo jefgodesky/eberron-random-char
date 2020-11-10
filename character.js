@@ -232,10 +232,12 @@ class Character {
       if (religion && this.isPious()) set = Character.addTraits(set, religion, this.alignment)
 
       if (set && set.personality && set.ideals && set.bonds && set.flaws) {
-        this.traits.personality = randomElementFromArray(set.personality)
+        this.traits.personality = Character.parseTraitVar(data.vars, randomElementFromArray(set.personality))
+        this.traits.bond = Character.parseTraitVar(data.vars, randomElementFromArray(set.bonds))
+        this.traits.flaw = Character.parseTraitVar(data.vars, randomElementFromArray(set.flaws))
+
         this.traits.ideal = randomElementFromArray(set.ideals)
-        this.traits.bond = randomElementFromArray(set.bonds)
-        this.traits.flaw = randomElementFromArray(set.flaws)
+        this.traits.ideal.ideal = Character.parseTraitVar(data.vars, this.traits.ideal.ideal)
       }
     }
   }
