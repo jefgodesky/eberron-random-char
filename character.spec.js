@@ -64,6 +64,16 @@ describe('Character', () => {
     })
   })
 
+  describe('setGivenName', () => {
+    it('sets a given name', () => {
+      const char = new Character()
+      char.gender = 'Female'
+      char.culture = 'Brelish'
+      char.setGivenName(data)
+      expect(data.names.Brelish.female.includes(char.name.given)).toEqual(true)
+    })
+  })
+
   describe('setPersonalAlignment', () => {
     it('sets an alignment', () => {
       const alignments = [ 'LG', 'NG', 'CG', 'LN', 'N', 'CN', 'LE', 'NE', 'CE' ]

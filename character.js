@@ -2,6 +2,7 @@ const random = require('random')
 const { avgAlignment } = require('./dndmath')
 const {
   intersection,
+  attemptIntersection,
   makeTable,
   randomAcceptableRowFromTable,
   randomFloatFromBellCurve,
@@ -75,6 +76,25 @@ class Character {
         { key: 'Agender', percent: 0.1 }
       ]
     this.gender = randomAcceptableRowFromTable(table, acceptable).key
+  }
+
+  /**
+   * Sets the character's given name.
+   * @param data {object} - The full data set pulled from `fetchData`.
+   */
+
+  setGivenName = (data) => {
+    const { gender } = this
+    const list = this.culture && data && data.cultures && data.cultures[this.culture] ? data.cultures[this.culture].names : null
+    if (list && gender) {
+      let names = []
+      if (gender === 'Female') names = [ ...data.names[list].female ]
+      if (gender === 'Male') names = [ ...data.names[list].male ]
+      if (gender === 'Non-binary') names = attemptIntersection(data.names[list].female, data.names[list].male)
+      if (gender === 'Genderfluid') names = attemptIntersection(data.names[list].female, data.names[list].male)
+      if (gender === 'Agender') names = attemptIntersection(data.names[list].female, data.names[list].male)
+      this.name.given = randomElementFromArray(names)
+    }
   }
 
   /**
