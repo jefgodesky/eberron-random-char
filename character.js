@@ -118,6 +118,21 @@ class Character {
   }
 
   /**
+   * Return the character's full name.
+   * @returns {string|null} - If the character has both a given name and a
+   *   family name, a string is returned of the form `GIVEN FAMILY`. If the
+   *   character has only a given name, the string is simply the given name.
+   *   If the character has neither a given name nor a family name, the method
+   *   returns `null`.
+   */
+
+  getFullName () {
+    return this.name.family
+      ? `${this.name.given} ${this.name.family}`
+      : this.name.given
+  }
+
+  /**
    * Generate a random alignment. We assume that both the lawful/chaotic X axis
    * and the good/evil y axis are normally distributed, with most people being
    * neutral. This assigns values of good, evil, lawful, or chaotic to those

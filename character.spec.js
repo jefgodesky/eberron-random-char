@@ -106,6 +106,21 @@ describe('Character', () => {
     })
   })
 
+  describe('getFullName', () => {
+    it('returns a full name', () => {
+      const char = new Character()
+      char.gender = 'Female'
+      char.culture = 'Tairnadal'
+      char.setGivenName(data)
+      char.setFamilyName(data)
+      const name = char.getFullName()
+      const parts = name.split(' ')
+      expect(parts).toHaveLength(2)
+      expect(data.names.Tairnadal.female.includes(parts[0])).toEqual(true)
+      expect(data.names.Tairnadal.surname.includes(parts[1])).toEqual(true)
+    })
+  })
+
   describe('setPersonalAlignment', () => {
     it('sets an alignment', () => {
       const alignments = [ 'LG', 'NG', 'CG', 'LN', 'N', 'CN', 'LE', 'NE', 'CE' ]
