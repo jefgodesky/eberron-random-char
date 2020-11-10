@@ -203,7 +203,7 @@ class Character {
 
   setLifestyle () {
     const wealth = random.int(1, 10)
-    this.lifestyle = wealth === 10 ? 'Rich' : wealth < 7 ? 'Poor' : 'Miiddle'
+    this.lifestyle = wealth === 10 ? 'Rich' : wealth < 7 ? 'Poor' : 'Middle'
   }
 
   /**
