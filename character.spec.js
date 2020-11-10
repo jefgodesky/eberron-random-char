@@ -282,4 +282,28 @@ describe('Character', () => {
       expect(actual).toEqual(expected)
     })
   })
+
+  describe('generate', () => {
+    it('generates a character', () => {
+      const options = { race: [], culture: [], religion: [], alignment: [], gender: [] }
+      const char = Character.generate(data, 'Sharn', options)
+      console.log(char)
+      expect(char).toBeInstanceOf(Character)
+      expect(typeof char.race).toEqual('string')
+      expect(typeof char.culture).toEqual('string')
+      expect(typeof char.name.given).toEqual('string')
+      expect([ 'Female', 'Male', 'Non-binary', 'Genderfluid', 'Agender' ].includes(char.gender)).toEqual(true)
+      expect(typeof char.faith.religion).toEqual('string')
+      expect(typeof char.faith.piety).toEqual('number')
+      expect([ 'LG', 'NG', 'CG', 'LN', 'N', 'CN', 'LE', 'NE', 'CE' ].includes(char.alignment)).toEqual(true)
+      expect(typeof char.lifestyle).toEqual('string')
+      expect(typeof char.traits).toEqual('object')
+      expect(typeof char.traits.personality).toEqual('string')
+      expect(typeof char.traits.ideal).toEqual('object')
+      expect(typeof char.traits.ideal.ideal).toEqual('string')
+      expect(typeof char.traits.ideal.type).toEqual('string')
+      expect(typeof char.traits.bond).toEqual('string')
+      expect(typeof char.traits.flaw).toEqual('string')
+    })
+  })
 })

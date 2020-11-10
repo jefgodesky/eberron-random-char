@@ -351,6 +351,50 @@ class Character {
 
     return base
   }
+
+  /**
+   * Generate a character.
+   * @param data {object} - The full data set pulled from `fetchData`.
+   * @param area {string} - The area that this character comes from. This
+   *   string must match one of the properties in `data.demographics`.
+   * @param options {object} - An object specifying parameters for the
+   *   character being generated.
+   * @param options.race {string[]} - An array of strings specifying the
+   *   acceptable races for this character.
+   * @param options.culture {string[]} - An array of strings specifying the
+   *   acceptable cultures for this character.
+   * @param options.religion {string[]} - An array of string specifying the
+   *   acceptable religions for this character.
+   * @param options.alignment {string[]} - An array of string specifying the
+   *   acceptable alignments for this character.
+   * @param options.gender {string[]} -  An array of string specifying the
+   *   acceptable genders for this character.
+   * @returns {Character} - A randomly generated character, with probabilities
+   *   drawn from the demographics of the area specified, and restricted to the
+   *   possibilities defined by the `options` object.
+   */
+
+  static generate (data, area, options) {
+    const char = new Character()
+    const race = Character.chooseRaceFromDemographics(data, area, options)
+    const culture = Character.chooseCultureFromRace(race, options)
+    const religion = Character.chooseReligionFromDemographics(data, area, options)
+    char.race = race.key
+    char.culture = culture
+    char.faith.religion = religion.name
+    char.setPiety(data)
+    char.setAcceptableAlignment(data, options.alignment)
+
+    const eschewGender = [ 'Traveler Changeling', 'Stable Changeling', 'Tairnadal', 'Warforged' ]
+    char.setGender(options.gender, eschewGender.includes(char.culture))
+
+    char.setLifestyle()
+    char.setTraits(data)
+
+    char.setGivenName(data)
+    char.setFamilyName(data)
+    return char
+  }
 }
 
 module.exports = Character
