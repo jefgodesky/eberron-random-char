@@ -375,6 +375,22 @@ class Character {
   }
 
   /**
+   * Parse any trait variables.
+   * @param vars {object} - An object containing trait variables to replace.
+   * @param orig {string} - The original string.
+   * @returns {string} - The original string with any variables replaced with
+   *   randomly chosen variables.
+   */
+
+  static parseTraitVar (vars, orig) {
+    let str = orig
+    Object.keys(vars).forEach(key => {
+      str = str.replace(key, randomElementFromArray(vars[key]))
+    })
+    return str
+  }
+
+  /**
    * Generate a character.
    * @param data {object} - The full data set pulled from `fetchData`.
    * @param area {string} - The area that this character comes from. This

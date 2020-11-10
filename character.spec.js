@@ -305,6 +305,20 @@ describe('Character', () => {
     })
   })
 
+  describe('parseTraits', () => {
+    it('can replace a whole string', () => {
+      const actual = Character.parseTraitVar(data.vars, '<PHOBIA>')
+      expect(data.vars['<PHOBIA>'].includes(actual))
+    })
+
+    it('can replace part of a string', () => {
+      const actual = Character.parseTraitVar(data.vars, 'I fought for <FIVENATIONS> during the war.')
+      const match = actual.match(/I fought for (.*?) during the war\./)
+      expect(match).toHaveLength(2)
+      expect(data.vars['<FIVENATIONS>'].includes(match[1])).toEqual(true)
+    })
+  })
+
   describe('generate', () => {
     it('generates a character', () => {
       const options = { race: [], culture: [], religion: [], alignment: [], gender: [] }
