@@ -90,6 +90,22 @@ describe('Character', () => {
     })
   })
 
+  describe('setTraits', () => {
+    it('sets traits', () => {
+      const char = new Character()
+      char.race = 'Human'
+      char.culture = 'Brelish'
+      char.alignment = 'CG'
+      char.setLifestyle()
+      char.faith = { religion: 'Sovereign Host', piety: 0 }
+      char.setTraits(data)
+      expect(typeof char.traits.personality).toEqual('string')
+      expect(typeof char.traits.ideal).toEqual('object')
+      expect(typeof char.traits.bond).toEqual('string')
+      expect(typeof char.traits.flaw).toEqual('string')
+    })
+  })
+
   describe('chooseRaceFromDemographics', () => {
     it('returns a random acceptable race', () => {
       const actual = Character.chooseRaceFromDemographics(data, 'Sharn', { race: [ 'Human' ] })

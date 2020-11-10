@@ -4,7 +4,8 @@ const {
   intersection,
   makeTable,
   randomAcceptableRowFromTable,
-  randomFloatFromBellCurve
+  randomFloatFromBellCurve,
+  randomElementFromArray
 } = require('./randomizer')
 
 class Character {
@@ -119,6 +120,40 @@ class Character {
   setLifestyle () {
     const wealth = random.int(1, 10)
     this.lifestyle = wealth === 10 ? 'Rich' : wealth < 7 ? 'Poor' : 'Miiddle'
+  }
+
+  /**
+   * Sets the character's traits by first compiling arrays of all possible
+   * traits, combining those that any character might have with those unique
+   * to hens race, culture, lifestyle, and religion, and then selecting one
+   * at random for each type. This method only has full effect if the
+   * character's `race`, `culture`, `lifestyle`, and `faith` properties are
+   * filled in first. It doesn't do anything at all unless the character's
+   * `alignment` has been set.
+   * @param data {object} - The full data set pulled from `fetchData`.
+   */
+
+  setTraits (data) {
+    if (this.alignment) {
+      const any = data && data.traits ? data.traits.any : null
+      const race = this.race && data && data.races && data.races[this.race] ? data.races[this.race].traits : null
+      const culture = this.culture && data && data.cultures && data.cultures[this.culture] ? data.cultures[this.culture].traits : null
+      const lifestyle = this.lifestyle && data && data.traits && data.traits.lifestyle ? data.traits.lifestyle[this.lifestyle] : null
+      const religion = this.faith.religion && data && data.religions && data.religions[this.faith.religion] ? data.religions[this.faith.religion].traits : null
+
+      let set = Character.addTraits(null, any, this.alignment)
+      if (race) set = Character.addTraits(set, race, this.alignment)
+      if (culture) set = Character.addTraits(set, culture, this.alignment)
+      if (lifestyle) set = Character.addTraits(set, lifestyle, this.alignment)
+      if (religion && this.isPious()) set = Character.addTraits(set, religion, this.alignment)
+
+      if (set && set.personality && set.ideals && set.bonds && set.flaws) {
+        this.traits.personality = randomElementFromArray(set.personality)
+        this.traits.ideal = randomElementFromArray(set.ideals)
+        this.traits.bond = randomElementFromArray(set.bonds)
+        this.traits.flaw = randomElementFromArray(set.flaws)
+      }
+    }
   }
 
   /**
