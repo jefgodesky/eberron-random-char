@@ -178,11 +178,10 @@ class Character {
 
       if (acc.length > 1) {
         let al = false
-        let count = 0
         while (!al) {
           this.setPersonalAlignment()
           al = avgAlignment(this.alignment, influence)
-          if (!acc.includes(al) && count < 10) { al = false; count++ }
+          if (!acc.includes(al)) al = false
         }
         this.alignment = al
       } else if (acc.length === 1) {
