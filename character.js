@@ -241,6 +241,16 @@ class Character {
   }
 
   /**
+   * Return the character's parenthetical description
+   * (e.g., `(CG female Brelish human)`).
+   * @returns {string} - The character's parenthetical description.
+   */
+
+  getDesc () {
+    return `(${this.alignment} ${this.gender.toLowerCase()} ${this.culture} ${this.race.toLowerCase()})`
+  }
+
+  /**
    * Choose a race based on the area's demographics and the user's
    * specifications.
    * @param data {object} - The full data set pulled from `fetchData`.

@@ -179,6 +179,17 @@ describe('Character', () => {
     })
   })
 
+  describe('getDesc', () => {
+    it('returns the character\'s parenthetical description', () => {
+      const char = new Character()
+      char.alignment = 'CG'
+      char.culture = 'Brelish'
+      char.race = 'Human'
+      char.gender = 'Agender'
+      expect(char.getDesc()).toEqual('(CG agender Brelish human)')
+    })
+  })
+
   describe('chooseRaceFromDemographics', () => {
     it('returns a random acceptable race', () => {
       const actual = Character.chooseRaceFromDemographics(data, 'Sharn', { race: [ 'Human' ] })
