@@ -74,6 +74,38 @@ describe('Character', () => {
     })
   })
 
+  describe('setFamilyName', () => {
+    it('chooses a family name', () => {
+      const char = new Character()
+      char.culture = 'Tairnadal'
+      char.setFamilyName(data)
+      expect(data.names.Tairnadal.surname.includes(char.name.family)).toEqual(true)
+    })
+
+    it('might choose an occupational surname for some name lists', () => {
+      const char = new Character()
+      char.culture = 'Brelish'
+      char.setFamilyName(data)
+      const options = [ ...data.names.Brelish.surname, ...data.names['Occupational surnames'].surname ]
+      expect(options.includes(char.name.family)).toEqual(true)
+    })
+
+    it('handles Zil clans', () => {
+      const char = new Character()
+      char.culture = 'Zil'
+      char.setFamilyName(data)
+      const parts = char.name.family.split(' ')
+      expect(data.names.Zil.clans[parts[1]].includes(parts[0])).toEqual(true)
+    })
+
+    it('returns null if that list doesn\'t have family names', () => {
+      const char = new Character()
+      char.culture = 'Traveler Changeling'
+      char.setFamilyName(data)
+      expect(char.name.family).toEqual(null)
+    })
+  })
+
   describe('setPersonalAlignment', () => {
     it('sets an alignment', () => {
       const alignments = [ 'LG', 'NG', 'CG', 'LN', 'N', 'CN', 'LE', 'NE', 'CE' ]

@@ -83,7 +83,7 @@ class Character {
    * @param data {object} - The full data set pulled from `fetchData`.
    */
 
-  setGivenName = (data) => {
+  setGivenName (data) {
     const { gender } = this
     const list = this.culture && data && data.cultures && data.cultures[this.culture] ? data.cultures[this.culture].names : null
     if (list && gender) {
@@ -94,6 +94,26 @@ class Character {
       if (gender === 'Genderfluid') names = attemptIntersection(data.names[list].female, data.names[list].male)
       if (gender === 'Agender') names = attemptIntersection(data.names[list].female, data.names[list].male)
       this.name.given = randomElementFromArray(names)
+    }
+  }
+
+  /**
+   * Sets a family name for the character.
+   */
+
+  setFamilyName (data) {
+    const list = this.culture && data && data.cultures && data.cultures[this.culture] ? data.cultures[this.culture].names : null
+    const addOccupations = [ 'Aundairian', 'Brelish', 'Cyran', 'Karrnathi', 'Thranish', 'Khoravar', 'Marcher', 'Reacher' ]
+    if (addOccupations.includes(list)) {
+      this.name.family = randomElementFromArray([ ...data.names[list].surname, ...data.names['Occupational surnames'].surname ])
+    } else if (data.names[list].surname) {
+      this.name.family = randomElementFromArray(data.names[list].surname)
+    } else if (data.names[list].clans) {
+      const clan = randomElementFromArray(Object.keys(data.names[list].clans))
+      const family = randomElementFromArray(data.names[list].clans[clan])
+      this.name.family = `${family} ${clan}`
+    } else {
+      this.name.family = null
     }
   }
 
