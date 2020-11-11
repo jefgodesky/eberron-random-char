@@ -110,7 +110,7 @@ const randomRowFromTable = table => {
     }
   })
 
-  return found
+  return found || randomElementFromArray(table)
 }
 
 /**
