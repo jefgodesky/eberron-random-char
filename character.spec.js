@@ -340,5 +340,14 @@ describe('Character', () => {
       expect(typeof char.traits.bond).toEqual('string')
       expect(typeof char.traits.flaw).toEqual('string')
     })
+
+    it('can create 100 characters', () => {
+      const options = { race: [], culture: [], religion: [], alignment: [], gender: [] }
+      const characters = []
+      for (let i = 0; i < 100; i++) {
+        characters.push(Character.generate(data, 'Sharn', options))
+      }
+      expect(characters).toHaveLength(100)
+    })
   })
 })
