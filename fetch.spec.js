@@ -14,14 +14,12 @@ const {
 
 describe('fetchDemographics', () => {
   it('fetches demographics', async () => {
-    expect.assertions(4)
+    expect.assertions(3)
     const demographics = await fetchDemographics()
     const areas = Object.keys(demographics)
-    const first = demographics[areas[0]]
     expect(demographics).toBeDefined()
     expect(areas.length).toBeGreaterThan(0)
-    expect(Object.keys(first.byRace).length).toBeGreaterThan(0)
-    expect(Object.keys(first.byReligion).length).toBeGreaterThan(0)
+    expect(demographics[areas[0]].length).toBeGreaterThan(0)
   })
 })
 

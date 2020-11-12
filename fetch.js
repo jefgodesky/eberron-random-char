@@ -48,38 +48,14 @@ const fetchSpreadsheet = (spreadsheetId, range, op) => {
 
 const fetchDemographics = async () => {
   const demographics = {}
-
-  const addRace = (area, race, percent) => {
-    if (!demographics[area].byRace) demographics[area].byRace = {}
-    if (!demographics[area].byRace[race]) {
-      demographics[area].byRace[race] = { percent, cultures: {} }
-    } else if (percent) {
-      demographics[area].byRace[race].percent = percent
-    }
-    if (!demographics[area].byRace[race].cultures) demographics[area].byRace[race].cultures = {}
-  }
-
   await fetchSpreadsheet(config.google.id, config.google.ranges.demographics, row => {
-    if (row.length > 3) {
+    if (row.length > 7) {
       const area = row[0]
-      const dim = row[1]
-      const demo = row[2]
-      const percent = parseFloat(row[3].substr(0, row[3].length - 1))
-      const match = dim.match(/Culture \((.*?)\)/)
-      const race = match && match.length > 1 ? match[1] : null
-
-      if (!demographics[area]) demographics[area] = {}
-
-      if (race) {
-        addRace(area, race)
-        demographics[area].byRace[race].cultures[demo] = { percent }
-      } else if (dim === 'Race') {
-        addRace(area, demo, percent)
-      } else {
-        const dimension = `by${dim}`
-        if (!demographics[area][dimension]) demographics[area][dimension] = {}
-        demographics[area][dimension][demo] = { percent }
-      }
+      const race = row[1]
+      const culture = row[2]
+      const religion = row[3]
+      const pop = parseInt(row[7])
+      addElement(demographics, area, { race, culture, religion, pop })
     }
   })
   return demographics
