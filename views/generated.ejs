@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Eberron Random Character Generator</title>
+        <link rel="stylesheet" media="all" href="/style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    <body>
+        <h1><%= characters.length %> Random Characters</h1>
+        <% characters.forEach(char => { %>
+        <section>
+            <p><strong><%= char.getFullName() %></strong> <%= char.getDesc() %></p>
+            <ul>
+                <li><strong>Personality trait:</strong> <%= char.traits.personality %></li>
+                <li><strong>Ideal:</strong> <%= char.getIdeal() %></li>
+                <li><strong>Bond:</strong> <%= char.traits.bond %></li>
+                <li><strong>Flaw:</strong> <%= char.traits.flaw %></li>
+            </ul>
+        </section>
+        <% }) %>
+    </body>
+</html>
