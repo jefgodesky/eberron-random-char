@@ -299,6 +299,42 @@ class Character {
   }
 
   /**
+   * Render wiki categories for a randomly-generated character.
+   * @param data {object} - The full data set pulled from `fetchData`.
+   * @returns {string} - A string with the character's wiki categories.
+   */
+
+  getWikiCategories (data) {
+    const { name, race, culture, alignment } = this
+    const end = name.given && name.family
+      ? `|${name.family}, ${name.given}]]`
+      : ']]'
+    const categories = []
+    categories.push(`[[Category:${data.races[race].plural}${end}`)
+    categories.push(`[[Category:${culture} characters${end}`)
+
+    const map = {
+      LG: 'Lawful good', NG: 'Neutral good', CG: 'Chaotic good',
+      LN: 'Lawful neutral', N: 'True neutral', CN: 'Chaotic neutral',
+      LE: 'Lawful evil', NE: 'Neutral evil', CE: 'Chaotic evil'
+    }
+
+    const isGood = alignment.length === 2 && alignment.charAt(1) === 'G'
+    const isEvil = alignment.length === 2 && alignment.charAt(1) === 'E'
+    const isLawful = alignment.charAt(0) === 'L'
+    const isChaotic = alignment.charAt(0) === 'C'
+    const isNeutral = (!isGood && !isEvil) || (!isLawful && !isChaotic)
+
+    if (isGood) categories.push(`[[Category:Good characters${end}`)
+    if (isEvil) categories.push(`[[Category:Evil characters${end}`)
+    if (isLawful) categories.push(`[[Category:Lawful characters${end}`)
+    if (isChaotic) categories.push(`[[Category:Chaotic characters${end}`)
+    if (isNeutral) categories.push(`[[Category:Neutral characters${end}`)
+    categories.push(`[[Category:${map[this.alignment]} characters${end}`)
+    return categories.join('\n')
+  }
+
+  /**
    * Choose a race based on the area's demographics and the user's
    * specifications.
    * @param data {object} - The full data set pulled from `fetchData`.

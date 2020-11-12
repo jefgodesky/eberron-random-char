@@ -249,6 +249,18 @@ describe('Character', () => {
     })
   })
 
+  describe('getWikiCategories', () => {
+    it('returns categories', () => {
+      const char = new Character()
+      char.name = { given: 'Fname', family: "Lname" }
+      char.race = 'Human'
+      char.culture = 'Brelish'
+      char.alignment = 'CG'
+      const expected = '[[Category:Humans|Lname, Fname]]\n[[Category:Brelish characters|Lname, Fname]]\n[[Category:Good characters|Lname, Fname]]\n[[Category:Chaotic characters|Lname, Fname]]\n[[Category:Chaotic good characters|Lname, Fname]]'
+      expect(char.getWikiCategories(data)).toEqual(expected)
+    })
+  })
+
   describe('chooseRaceFromDemographics', () => {
     it('returns a random acceptable race', () => {
       const actual = Character.chooseRaceFromDemographics(data, 'Sharn', { race: [ 'Human' ] })
