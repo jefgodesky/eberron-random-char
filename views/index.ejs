@@ -14,7 +14,7 @@
                 <option><%= area %></option>
                 <% }) %>
             </select>
-            <fieldset>
+            <fieldset class="togglable">
                 <legend>What cultures could these characters come from?</legend>
                 <ul class="many-options">
                     <% cultures.forEach(culture => { %>
@@ -25,7 +25,7 @@
                     <% }) %>
                 </ul>
             </fieldset>
-            <fieldset>
+            <fieldset class="togglable">
                 <legend>Which races could these characters belong to?</legend>
                 <ul class="many-options">
                     <% races.forEach(race => { %>
@@ -36,7 +36,7 @@
                     <% }) %>
                 </ul>
             </fieldset>
-            <fieldset>
+            <fieldset class="togglable">
                 <legend>Which faiths might these characters follow?</legend>
                 <ul class="many-options">
                     <% religions.forEach(religion => { %>
@@ -124,5 +124,6 @@
             <input type="number" min="1" max="100" value="1" name="num" id="num" />
             <button class="generate">Generate Characters</button>
         </form>
+        <script type="text/javascript" src="client.js"></script>
     </body>
 </html>

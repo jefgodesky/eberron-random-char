@@ -81,3 +81,9 @@ button.generate {
   padding: 1em;
   width: 100%;
 }
+
+span.toggle {
+  color: #3366cc;
+  cursor: pointer;
+  text-decoration: underline;
+}
