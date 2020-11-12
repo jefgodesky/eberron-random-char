@@ -346,33 +346,30 @@ describe('Character', () => {
 
   describe('generate', () => {
     it('generates a character', () => {
-      const options = { race: [], culture: [], religion: [], alignment: [], gender: [] }
+      const options = { race: [], culture: [], religion: [], alignment: [], gender: [], num: 1 }
       const char = Character.generate(data, 'Sharn', options)
-      expect(char).toBeInstanceOf(Character)
-      expect(typeof char.race).toEqual('string')
-      expect(typeof char.culture).toEqual('string')
-      expect(typeof char.name.given).toEqual('string')
-      expect([ 'Female', 'Male', 'Non-binary', 'Genderfluid', 'Agender' ].includes(char.gender)).toEqual(true)
-      expect(typeof char.faith.religion).toEqual('string')
-      expect(typeof char.faith.piety).toEqual('number')
-      expect([ 'LG', 'NG', 'CG', 'LN', 'N', 'CN', 'LE', 'NE', 'CE' ].includes(char.alignment)).toEqual(true)
-      expect(typeof char.lifestyle).toEqual('string')
-      expect(typeof char.traits).toEqual('object')
-      expect(typeof char.traits.personality).toEqual('string')
-      expect(typeof char.traits.ideal).toEqual('object')
-      expect(typeof char.traits.ideal.ideal).toEqual('string')
-      expect(typeof char.traits.ideal.type).toEqual('string')
-      expect(typeof char.traits.bond).toEqual('string')
-      expect(typeof char.traits.flaw).toEqual('string')
+      expect(char).toHaveLength(1)
+      expect(char[0]).toBeInstanceOf(Character)
+      expect(typeof char[0].race).toEqual('string')
+      expect(typeof char[0].culture).toEqual('string')
+      expect(typeof char[0].name.given).toEqual('string')
+      expect([ 'Female', 'Male', 'Non-binary', 'Genderfluid', 'Agender' ].includes(char[0].gender)).toEqual(true)
+      expect(typeof char[0].faith.religion).toEqual('string')
+      expect(typeof char[0].faith.piety).toEqual('number')
+      expect([ 'LG', 'NG', 'CG', 'LN', 'N', 'CN', 'LE', 'NE', 'CE' ].includes(char[0].alignment)).toEqual(true)
+      expect(typeof char[0].lifestyle).toEqual('string')
+      expect(typeof char[0].traits).toEqual('object')
+      expect(typeof char[0].traits.personality).toEqual('string')
+      expect(typeof char[0].traits.ideal).toEqual('object')
+      expect(typeof char[0].traits.ideal.ideal).toEqual('string')
+      expect(typeof char[0].traits.ideal.type).toEqual('string')
+      expect(typeof char[0].traits.bond).toEqual('string')
+      expect(typeof char[0].traits.flaw).toEqual('string')
     })
 
     it('can create 100 characters', () => {
-      const options = { race: [], culture: [], religion: [], alignment: [], gender: [] }
-      const characters = []
-      for (let i = 0; i < 100; i++) {
-        characters.push(Character.generate(data, 'Sharn', options))
-      }
-      expect(characters).toHaveLength(100)
+      const options = { race: [], culture: [], religion: [], alignment: [], gender: [], num: 100 }
+      expect(Character.generate(data, 'Sharn', options)).toHaveLength(100)
     })
   })
 })

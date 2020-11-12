@@ -428,29 +428,35 @@ class Character {
    *   acceptable alignments for this character.
    * @param options.gender {string[]} -  An array of string specifying the
    *   acceptable genders for this character.
+   * @param options.num {number} - How many characters to create.
    * @returns {Character} - A randomly generated character, with probabilities
    *   drawn from the demographics of the area specified, and restricted to the
    *   possibilities defined by the `options` object.
    */
 
   static generate (data, area, options) {
-    const char = new Character()
-    const race = Character.chooseRaceFromDemographics(data, area, options)
-    const culture = Character.chooseCultureFromRace(race, options)
-    char.race = race.key
-    char.culture = culture
-    char.setFaith(data, area, options)
-    char.setAcceptableAlignment(data, options.alignment)
+    const num = options.num && typeof options.num === 'number' ? Math.min(Math.max(options.num, 0), 100) : 1
+    const characters = []
+    for (let i = 0; i < num; i++) {
+      const char = new Character()
+      const race = Character.chooseRaceFromDemographics(data, area, options)
+      const culture = Character.chooseCultureFromRace(race, options)
+      char.race = race.key
+      char.culture = culture
+      char.setFaith(data, area, options)
+      char.setAcceptableAlignment(data, options.alignment)
 
-    const eschewGender = [ 'Traveler Changeling', 'Stable Changeling', 'Tairnadal', 'Warforged' ]
-    char.setGender(options.gender, eschewGender.includes(char.culture))
+      const eschewGender = ['Traveler Changeling', 'Stable Changeling', 'Tairnadal', 'Warforged']
+      char.setGender(options.gender, eschewGender.includes(char.culture))
 
-    char.setLifestyle()
-    char.setTraits(data)
+      char.setLifestyle()
+      char.setTraits(data)
 
-    char.setGivenName(data)
-    char.setFamilyName(data)
-    return char
+      char.setGivenName(data)
+      char.setFamilyName(data)
+      characters.push(char)
+    }
+    return characters
   }
 }
 
