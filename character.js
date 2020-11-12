@@ -435,7 +435,9 @@ class Character {
    */
 
   static generate (data, area, options) {
-    const num = options.num && typeof options.num === 'number' ? Math.min(Math.max(options.num, 0), 100) : 1
+    const parsed = options.num ? parseInt(options.num) : 1
+    const num = parsed ? Math.min(Math.max(parsed, 0), 100) : 1
+    console.log({ options, num })
     const characters = []
     for (let i = 0; i < num; i++) {
       const char = new Character()
