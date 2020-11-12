@@ -41,6 +41,19 @@ const fetchSpreadsheet = (spreadsheetId, range, op) => {
 }
 
 /**
+ * Fetch the areas from the spreadsheet into an object.
+ * @returns {Promise<{}>} - A Promise that resolves with the areas object.
+ */
+
+const fetchAreas = async () => {
+  const areas = {}
+  await fetchSpreadsheet(config.google.id, config.google.ranges.areas, row => {
+    if (row.length > 1) areas[row[0]] = parseInt(row[1])
+  })
+  return areas
+}
+
+/**
  * Parse the demographics info from the spreadsheet into an object.
  * @returns {Promise<{}>} - A Promise that resolves with the demographics
  *   object.
@@ -287,6 +300,7 @@ const fetchReligions = async () => {
 }
 
 module.exports = {
+  fetchAreas,
   fetchDemographics,
   fetchRaces,
   fetchCultures,

@@ -1,6 +1,7 @@
 /* global describe, it, expect */
 
 const {
+  fetchAreas,
   fetchDemographics,
   fetchRaces,
   fetchCultures,
@@ -11,6 +12,16 @@ const {
   fetchTraits,
   fetchData
 } = require('./fetch')
+
+describe('fetchAreas', () => {
+  it('fetches areas', async () => {
+    expect.assertions(2)
+    const areas = await fetchAreas()
+    const keys = Object.keys(areas)
+    expect(keys.length).toBeGreaterThan(0)
+    expect(typeof areas[keys[0]]).toEqual('number')
+  })
+})
 
 describe('fetchDemographics', () => {
   it('fetches demographics', async () => {
