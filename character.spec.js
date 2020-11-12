@@ -231,6 +231,7 @@ describe('Character', () => {
       const char = new Character()
       char.faith.piety = 2
       char.faith.religion = 'Sovereign Host'
+      char.faith.follower = 'Vassal'
       expect(char.getReligionDesc(data)).toEqual('is a pious Vassal')
     })
 
@@ -238,6 +239,7 @@ describe('Character', () => {
       const char = new Character()
       char.faith.piety = -2
       char.faith.religion = 'Sovereign Host'
+      char.faith.follower = 'Vassal'
       expect(char.getReligionDesc(data)).toEqual('is a nominal Vassal')
     })
 
@@ -245,6 +247,7 @@ describe('Character', () => {
       const char = new Character()
       char.faith.piety = 0
       char.faith.religion = 'Sovereign Host'
+      char.faith.follower = 'Vassal'
       expect(char.getReligionDesc(data)).toEqual('is a Vassal')
     })
   })

@@ -67,6 +67,7 @@ class Character {
       if ((race && this.race !== race) || (culture && this.culture !== culture)) religion = false
     }
     this.faith.religion = religion.name
+    this.faith.follower = religion.follower
   }
 
   /**
@@ -285,17 +286,15 @@ class Character {
 
   /**
    * Return a string describing the character's religious beliefs.
-   * @param data {object} - The full data set pulled from `fetchData`.
    * @returns {string} - A string describing the character's religious beliefs.
    */
 
-  getReligionDesc (data) {
-    const follower = data.religions[this.faith.religion].follower
+  getReligionDesc () {
     return this.isPious()
-      ? `is a pious ${follower}`
+      ? `is a pious ${this.faith.follower}`
       : this.faith.piety < -1.5
-        ? `is a nominal ${follower}`
-        : `is a ${follower}`
+        ? `is a nominal ${this.faith.follower}`
+        : `is a ${this.faith.follower}`
   }
 
   /**
@@ -452,7 +451,6 @@ class Character {
   static generate (data, area, options) {
     const parsed = options.num ? parseInt(options.num) : 1
     const num = parsed ? Math.min(Math.max(parsed, 0), 100) : 1
-    console.log({ options, num })
     const characters = []
     for (let i = 0; i < num; i++) {
       const char = new Character()
