@@ -4,6 +4,7 @@ const slugify = require('slugify')
 
 const config = require('./config.json')
 const { fetchData } = require('./fetch')
+const Character = require('./character')
 
 const app = express()
 app.use(express.static('public'))
@@ -19,6 +20,11 @@ app.get('/', (req, res) => {
     religions: Object.keys(app.data.religions).map(name => ({ name, id: `religion-${slugify(name)}` }))
   }
   res.render('index', params)
+})
+
+app.post('/generate', (req, res) => {
+  const characters = Character.generate(app.data, req.body.area, req.body)
+  res.render('generated', { data: app.data, characters })
 })
 
 app.listen(config.port, async () => {
