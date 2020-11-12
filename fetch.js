@@ -283,6 +283,7 @@ const fetchReligions = async () => {
 
  const fetchData = async () => {
   const data = {
+    areas: await fetchAreas(),
     demographics: await fetchDemographics(),
     races: await fetchRaces(),
     cultures: await fetchCultures(),

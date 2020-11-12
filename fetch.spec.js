@@ -169,8 +169,9 @@ describe('fetchTraits', () => {
 
 describe('fetchData', () => {
   it('fetches all the data in one object', async () => {
-    expect.assertions(9)
+    expect.assertions(10)
     const data = await fetchData()
+    expect(data.areas).toBeDefined()
     expect(data.demographics).toBeDefined()
     expect(data.races).toBeDefined()
     expect(data.cultures).toBeDefined()
