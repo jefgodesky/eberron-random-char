@@ -285,15 +285,17 @@ class Character {
 
   /**
    * Return a string describing the character's religious beliefs.
+   * @param data {object} - The full data set pulled from `fetchData`.
    * @returns {string} - A string describing the character's religious beliefs.
    */
 
-  getReligionDesc () {
+  getReligionDesc (data) {
+    const follower = data.religions[this.faith.religion].follower
     return this.isPious()
-      ? `is a pious ${this.faith.follower}`
+      ? `is a pious ${follower}`
       : this.faith.piety < -1.5
-        ? `is a nominal ${this.faith.follower}`
-        : `is a ${this.faith.follower}`
+        ? `is a nominal ${follower}`
+        : `is a ${follower}`
   }
 
   /**
