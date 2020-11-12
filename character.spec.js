@@ -48,6 +48,31 @@ describe('Character', () => {
     })
   })
 
+  describe('setFaith', () => {
+    it('sets the character\'s piety', () => {
+      const options = { race: [], culture: [], religion: [], alignment: [], gender: [] }
+      const char = new Character()
+      char.race = 'Human'
+      char.culture = 'Brelish'
+      char.setFaith(data, 'Sharn', options)
+      expect(typeof char.faith.piety).toEqual('number')
+    })
+
+    it('never sets a religion the character can\'t follow', () => {
+      const options = { race: [], culture: [], religion: [], alignment: [], gender: [] }
+      const char = new Character()
+      char.race = 'Human'
+      char.culture = 'Brelish'
+      let test = true
+      for (let i = 0; i < 100; i++) {
+        char.setFaith(data, 'Sharn', options)
+        test = test && char.faith.religion !== 'Spirits of the Past'
+        test = test && char.faith.religion !== 'Undying Court'
+      }
+      expect(test).toEqual(true)
+    })
+  })
+
   describe('setGender', () => {
     it('sets a random gender', () => {
       const genders = [ 'Female', 'Male', 'Non-binary', 'Genderfluid', 'Agender' ]

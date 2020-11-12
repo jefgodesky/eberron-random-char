@@ -50,6 +50,26 @@ class Character {
   }
 
   /**
+   * Sets the character's piety and religion.
+   * @param data {object} - The full data set pulled from `fetchData`.
+   * @param area {string} - The specified demographic area.
+   * @param options {object} - The user's specifications, which should include
+   *   a `religion` property providing an array of strings specifying what
+   *   religions are acceptable options for these characters.
+   */
+
+  setFaith (data, area, options) {
+    this.setPiety(data)
+    let religion = false
+    while (!religion) {
+      religion = Character.chooseReligionFromDemographics(data, area, options)
+      const { race, culture } = religion
+      if ((race && this.race !== race) || (culture && this.culture !== culture)) religion = false
+    }
+    this.faith.religion = religion.name
+  }
+
+  /**
    * Choose a gender.
    * @param acceptable {string[]} - An array of acceptable gender options for
    *   this character.
@@ -417,11 +437,9 @@ class Character {
     const char = new Character()
     const race = Character.chooseRaceFromDemographics(data, area, options)
     const culture = Character.chooseCultureFromRace(race, options)
-    const religion = Character.chooseReligionFromDemographics(data, area, options)
     char.race = race.key
     char.culture = culture
-    char.faith.religion = religion.name
-    char.setPiety(data)
+    char.setFaith(data, area, options)
     char.setAcceptableAlignment(data, options.alignment)
 
     const eschewGender = [ 'Traveler Changeling', 'Stable Changeling', 'Tairnadal', 'Warforged' ]
