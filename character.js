@@ -67,7 +67,6 @@ class Character {
       if ((race && this.race !== race) || (culture && this.culture !== culture)) religion = false
     }
     this.faith.religion = religion.name
-    this.faith.follower = religion.follower
   }
 
   /**
