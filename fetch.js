@@ -141,10 +141,12 @@ const fetchReligions = async () => {
   await fetchSpreadsheet(config.google.id, config.google.ranges.religions, row => {
     if (row.length > 3) {
       const name = row[0]
-      const race = row[1]
-      const culture = row[2]
-      const alignment = row[3]
+      const follower = row[1]
+      const race = row[2]
+      const culture = row[3]
+      const alignment = row[4]
       if (!religions[name]) religions[name] = {}
+      if (follower) religions[name].follower = follower
       if (race) religions[name].race = race
       if (culture) religions[name].culture = culture
       religions[name].alignment = alignment

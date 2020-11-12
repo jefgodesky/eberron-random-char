@@ -63,15 +63,17 @@ describe('fetchCultures', () => {
 
 describe('fetchReligions', () => {
   it('fetches religions', async () => {
-    expect.assertions(6)
+    expect.assertions(7)
     const religions = await fetchReligions()
     const keys = Object.keys(religions)
+    const haveFollowers = keys.reduce((acc, curr) => acc && religions[curr].follower !== undefined, true)
     const haveRaces = keys.reduce((acc, curr) => acc && religions[curr].race !== undefined, true)
     const noRaces = keys.reduce((acc, curr) => acc && religions[curr].race === undefined, true)
     const haveCultures = keys.reduce((acc, curr) => acc && religions[curr].culture !== undefined, true)
     const noCultures = keys.reduce((acc, curr) => acc && religions[curr].culture === undefined, true)
     const haveAlignment = keys.reduce((acc, curr) => acc && religions[curr].alignment !== undefined, true)
     expect(keys.length).toBeGreaterThan(0)
+    expect(haveFollowers).toEqual(true)
     expect(haveRaces).toEqual(false)
     expect(noRaces).toEqual(false)
     expect(haveCultures).toEqual(false)
