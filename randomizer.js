@@ -98,11 +98,31 @@ const makeTable = arr => {
   return { table, max: curr }
 }
 
+/**
+ * Roll for a random element from a rollable table.
+ * @param src {object} - The rollable table.
+ * @param src.table {object[]} - An array of objects. Each object in this array
+ *   should have two properties: `from` and `to`. Both of these properties
+ *   should be numbers, defining a range that expresses how likely this option
+ *   is to be chosen relative to the others. There should be no overlap in
+ *   these ranges, comparing amongst all objects in the array.
+ * @param src.max {number} - The value of the highest `to` property in the
+ *   `src.table` array.
+ * @returns {object} - The object randomly selected from the table.
+ */
+
+const rollTable = src => {
+  const rand = random.int(1, src.max)
+  const match = src.table.filter(row => rand >= row.from && rand <= row.to)
+  return match.length > 0 ? match[0] : randomElementFromArray(src.table)
+}
+
 module.exports = {
   intersection,
   union,
   attemptIntersection,
   randomElementFromArray,
   randomFloatFromBellCurve,
-  makeTable
+  makeTable,
+  rollTable
 }

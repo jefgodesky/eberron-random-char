@@ -6,7 +6,8 @@ const {
   attemptIntersection,
   randomElementFromArray,
   randomFloatFromBellCurve,
-  makeTable
+  makeTable,
+  rollTable
 } = require('./randomizer')
 
 describe('intersection', () => {
@@ -126,5 +127,20 @@ describe('makeTable', () => {
       max: 15
     }
     expect(actual).toEqual(expected)
+  })
+})
+
+describe('rollTable', () => {
+  it('selects an item from the table', () => {
+    const actual = rollTable({
+      table: [
+        { val: 'Unit test', pop: 5, from: 1, to: 6 },
+        { val: 'JavaScript', pop: 5, from: 7, to: 12 },
+        { val: 'Documentation', pop: 2, from: 13, to: 15 }
+      ],
+      max: 15
+    })
+    const options = [ 'Unit test', 'JavaScript', 'Documentation' ]
+    expect(options.includes(actual.val)).toEqual(true)
   })
 })
