@@ -75,71 +75,27 @@ const randomFloatFromBellCurve = (mean = 0, std = 1) => {
 }
 
 /**
- * Creates a table array from an object.
- * @param obj {object} - An object that has some arbitrary number of
- *   properties, where each property is an object.
- * @returns {object[]} - An array of objects. Each object in the array
- *   represents one of the properties in the original object, with its key
- *   saved as the added property `key`.
+ * Given a population array, create a rollable table.
+ * @param arr {object[]} - Each object in this array should have a `pop`
+ *   property. This should be a number, providing the population for the
+ *   group that this object describes.
+ * @returns {{max: number, table: []}} - An object with two properties. The
+ *   `table` property is an array that is identical to the `arr` argument that
+ *   was provided, except that each element now has `from` and `to` properties.
+ *   These are numbers that allow it to be used as a rollable table. The `max`
+ *   property provides the value of the largest `to` property in the array,
+ *   making it easier to generate a random number between 1 and `max`.
  */
 
-const makeTable = obj => {
-  return Object.keys(obj).map(key => Object.assign({}, { key }, obj[key]))
-}
-
-/**
- * Select a random element from a table.
- * @param table {object[]} - An array of objects to choose from. Each object
- *   must have a `percent` property, indicating how likely it is. This can be
- *   a float, but the sum of the `percent` properties for all objects in the
- *   array should equal 100.
- * @returns {object} - A randomly selected element from the array.
- */
-
-const randomRowFromTable = table => {
-  const whole = random.int(0, 100)
-  const part = random.int(0, 100)
-  const rand = Math.min(whole + (part / 100), 100)
-  let sum = 0
-  let found = undefined
-
-  table.forEach(row => {
-    if (!found && row.percent) {
-      sum += row.percent
-      if (rand < sum) found = row
-    }
+const makeTable = arr => {
+  let curr = 0
+  const table = []
+  arr.forEach(item => {
+    curr++
+    table.push(Object.assign({}, { from: curr, to: curr + item.pop }, item))
+    curr += item.pop
   })
-
-  return found || randomElementFromArray(table)
-}
-
-/**
- * Returns a random element from a table, so long as that element has a `key`
- * property that is included in the whitelisted array of `acceptable` values.
- * @param table {object[]} - An array of objects to choose from. Each object
- *   must have a `key` property and a `percent` property, indicating how likely
- *   it is. This can be a float, but the sum of the `percent` properties for
- *   all objects in the array should equal 100.
- * @param acceptable {string[]} - An array of acceptable `key` values.
- * @returns {any} - A randomly selected element from the array. If any elements
- *   in the table match the criteria provided by the `acceptable` array, the
- *   returned row will meet those criteria. If no rows in the table meet these
- *   criteria, one is chosen at random, per the likelihood of each row's
- *   `percent` property.
- */
-
-const randomAcceptableRowFromTable = (table, acceptable) => {
-  const check = intersection(table.map(row => row.key), acceptable)
-  if (check.length > 0) {
-    let found = undefined
-    while (!found) {
-      const candidate = randomRowFromTable(table)
-      if (acceptable.includes(candidate.key)) found = candidate
-    }
-    return found
-  } else {
-    return randomRowFromTable(table)
-  }
+  return { table, max: curr }
 }
 
 module.exports = {
@@ -148,7 +104,5 @@ module.exports = {
   attemptIntersection,
   randomElementFromArray,
   randomFloatFromBellCurve,
-  makeTable,
-  randomRowFromTable,
-  randomAcceptableRowFromTable
+  makeTable
 }

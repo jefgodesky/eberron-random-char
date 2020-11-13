@@ -6,9 +6,7 @@ const {
   attemptIntersection,
   randomElementFromArray,
   randomFloatFromBellCurve,
-  makeTable,
-  randomRowFromTable,
-  randomAcceptableRowFromTable
+  makeTable
 } = require('./randomizer')
 
 describe('intersection', () => {
@@ -113,38 +111,20 @@ describe('randomFloatFromBellCurve', () => {
 })
 
 describe('makeTable', () => {
-  it('makes a table', () => {
-    const obj = {
-      One: { percent: 10 },
-      Two: { percent: 65 },
-      Three: { percent: 25 }
+  it('returns a population array into a rollable table', () => {
+    const actual = makeTable([
+      { val: 'Unit test', pop: 5 },
+      { val: 'JavaScript', pop: 5 },
+      { val: 'Documentation', pop: 2 }
+    ])
+    const expected = {
+      table: [
+        { val: 'Unit test', pop: 5, from: 1, to: 6 },
+        { val: 'JavaScript', pop: 5, from: 7, to: 12 },
+        { val: 'Documentation', pop: 2, from: 13, to: 15 }
+      ],
+      max: 15
     }
-    const actual = makeTable(obj)
-    expect(actual).toEqual([
-      { key: 'One', percent: 10 },
-      { key: 'Two', percent: 65 },
-      { key: 'Three', percent: 25 }
-    ])
-  })
-})
-
-describe('randomRowFromTable', () => {
-  it('chooses a random row from a table', () => {
-    const actual = randomRowFromTable([
-      { key: 'No', percent: 0 },
-      { key: 'Yes', percent: 100 },
-      { key: 'No', percent: 0 },
-    ])
-    expect(actual).toEqual({ key: 'Yes', percent: 100 })
-  })
-})
-
-describe('randomAcceptableRowFromTable', () => {
-  it('only returns an acceptable value', () => {
-    const actual = randomAcceptableRowFromTable([
-      { key: 'Acceptable', percent: 50 },
-      { key: 'Unacceptable', percent: 50 }
-    ], [ 'Acceptable' ])
-    expect(actual).toEqual({ key: 'Acceptable', percent: 50 })
+    expect(actual).toEqual(expected)
   })
 })
