@@ -18,6 +18,7 @@ class Character {
     this.faith = { religion: null, piety: null }
     this.alignment = null
     this.lifestyle = null
+    this.noble = false
     this.traits = { personality: null, ideal: null, bond: null, flaw: null }
   }
 
@@ -206,6 +207,7 @@ class Character {
   setLifestyle () {
     const wealth = random.int(1, 10)
     this.lifestyle = wealth === 10 ? 'Rich' : wealth < 7 ? 'Poor' : 'Middle'
+    if (wealth === 10) this.noble = random.int(1, 10) === 10
   }
 
   /**

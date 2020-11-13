@@ -161,6 +161,12 @@ describe('Character', () => {
       char.setLifestyle()
       expect(lifestyles.includes(char.lifestyle)).toEqual(true)
     })
+
+    it('sets if you\'re a noble', () => {
+      const char = new Character()
+      char.setLifestyle()
+      expect(typeof char.noble).toEqual('boolean')
+    })
   })
 
   describe('setTraits', () => {
