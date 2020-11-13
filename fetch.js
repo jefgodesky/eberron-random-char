@@ -103,18 +103,19 @@ const fetchDemographics = async () => {
  const fetchCultures = async () => {
   const cultures = {}
   await fetchSpreadsheet(config.google.id, config.google.ranges.cultures, row => {
-    if (row.length > 6) {
+    if (row.length > 8) {
       const name = row[0]
       if (!cultures[name]) cultures[name] = {}
       cultures[name].common = row[1]
       cultures[name].names = row[2]
       cultures[name].eschewsGender = row[3].length > 0
+      cultures[name].nobility = row[4].length > 0
       cultures[name].religion = {
-        piety: parseFloat(row[4]),
-        mod: parseFloat(row[5]),
-        preferred: row[6]
+        piety: parseFloat(row[5]),
+        mod: parseFloat(row[6]),
+        preferred: row[7]
       }
-      cultures[name].alignment = row[7]
+      cultures[name].alignment = row[8]
     }
   })
   return cultures
