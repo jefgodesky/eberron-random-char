@@ -4,7 +4,7 @@ const {
   intersection,
   attemptIntersection,
   makeTable,
-  randomAcceptableRowFromTable,
+  rollTable,
   randomFloatFromBellCurve,
   randomElementFromArray
 } = require('./randomizer')
@@ -335,71 +335,6 @@ class Character {
   }
 
   /**
-   * Choose a race based on the area's demographics and the user's
-   * specifications.
-   * @param data {object} - The full data set pulled from `fetchData`.
-   * @param area {string} - The specified demographic area.
-   * @param options {object} - The user's specifications, which should include
-   *   a `race` property providing an array of strings specifying what races
-   *   are acceptable options for these characters.
-   * @returns {*|null} - A race object pulled from the `data` object, chosen
-   *   randomly based on their prevalence in the demographic area, and limited by
-   *   the user's specifications, or `null` if no valid demographic area was
-   *   specified.
-   */
-
-  static chooseRaceFromDemographics (data, area, options) {
-    const table = data.demographics[area]
-      ? makeTable(data.demographics[area].byRace)
-      : null
-    return table ? randomAcceptableRowFromTable(table, options.race) : null
-  }
-
-  /**
-   * Choose a culture based on the race provided.
-   * @param race {object} - An object representing the character's race, as
-   *   chosen by `chooseRaceFromDemographics`.
-   * @param options {object} - The user's specifications, which should include
-   *   a `culture` property providing an array of strings specifying what
-   *   cultures are acceptable options for these characters.
-   * @returns {string|null} - The name of a culture, randomly chosen based on
-   *   the demographics provided by the `race` object, or `null` if the `race`
-   *   object provided did not include any cultures.
-   */
-
-  static chooseCultureFromRace (race, options) {
-    const table = race.cultures
-      ? makeTable(race.cultures)
-      : null
-    const obj = table ? randomAcceptableRowFromTable(table, options.culture) : null
-    return obj ? obj.key : null
-  }
-
-  /**
-   * Choose a religion based on the area's demographics and the user's
-   * specifications.
-   * @param data {object} - The full data set pulled from `fetchData`.
-   * @param area {string} - The specified demographic area.
-   * @param options {object} - The user's specifications, which should include
-   *   a `religion` property providing an array of strings specifying what
-   *   religions are acceptable options for these characters.
-   * @returns {*|null} - A religion object pulled from the `data` object, chosen
-   *   randomly based on their prevalence in the demographic area, and limited by
-   *   the user's specifications, or `null` if no valid demographic area was
-   *   specified.
-   */
-
-  static chooseReligionFromDemographics (data, area, options) {
-    const table = data.demographics[area]
-      ? makeTable(data.demographics[area].byReligion)
-      : null
-    const pick = table ? randomAcceptableRowFromTable(table, options.religion) : null
-    return pick && data.religions[pick.key]
-      ? Object.assign({}, { name: pick.key }, data.religions[pick.key])
-      : null
-  }
-
-  /**
    * Add two sets of potential traits together.
    * @param existing {{ personality: string[], ideals: string[], bonds: string[],
    *   flaws: string[] }} - An object that provides a set of potential traits.
@@ -463,6 +398,51 @@ class Character {
   }
 
   /**
+   * Choose a demographic at random.
+   * @param arr {object[]} - An array of objects representing the various
+   *   demographics that could be chosen.
+   * @param arr[].race {string} - The race of this demographic (e.g., for
+   *   Brelish human followers of the Sovereign Host, this would be "human").
+   * @param arr[].culture {string} - The culture of this demographic (e.g., for
+   *   Brelish human followers of the Sovereign Host, this would be "Brelish").
+   * @param arr[].religion {string} - The religion of this demographic (e.g.,
+   *   for Brelish human followers of the Sovereign Host, this would be
+   *   "Sovereign Host").
+   * @param arr[].pop {number} - The number of people in this demographic.
+   * @param options {object[]} - An object defining acceptable parameters for
+   *   this character.
+   * @param options[].race {string[]} - An array of strings establishing which
+   *   races are acceptable choices.
+   * @param options[].culture {string[]} - An array of strings establishing
+   *   which cultures are acceptable choices.
+   * @param options[].religion {string[]} - An array of strings establishing
+   *   which religions are acceptable choices.
+   * @returns {{ race: string, culture: string, religion: string,
+   *   pop: number }} - An object representing the demographic chosen. If
+   *   any options with the race, culture, and religion restrictions set in
+   *   the `options` parameter exist, a set matching those restrictions is
+   *   chosen, weighting the choice by population. If no demographics meet the
+   *   criteria given, then one is chosen from the full set, still weighting
+   *   by population. The `race`, `culture`, and `religion` properties provide
+   *   the race, culture, and religion of the demographic, respectively. The
+   *   `pop` property provides the population of this demographic.
+   */
+
+  static chooseDemographic (arr, options) {
+    const filtered = arr.filter(demo => {
+      const ra = options.race.includes(demo.race)
+      const cu = options.culture.includes(demo.culture)
+      const re = options.religion.includes(demo.religion)
+      return ra && cu && re
+    })
+    const demos = filtered.length > 0 ? filtered : arr
+    const demo = rollTable(makeTable(demos))
+    delete demo.from
+    delete demo.to
+    return demo
+  }
+
+  /**
    * Generate a character.
    * @param data {object} - The full data set pulled from `fetchData`.
    * @param area {string} - The area that this character comes from. This
@@ -491,14 +471,11 @@ class Character {
     const characters = []
     for (let i = 0; i < num; i++) {
       const char = new Character()
-      const race = Character.chooseRaceFromDemographics(data, area, options)
-      const culture = Character.chooseCultureFromRace(race, options)
-      char.race = race.key
-      char.culture = culture
+      const { race, culture, religion } = Character.chooseDemographic(data.demographics[area], options)
       char.setFaith(data, area, options)
       char.setAcceptableAlignment(data, options.alignment)
 
-      const eschewGender = ['Traveler Changeling', 'Stable Changeling', 'Tairnadal', 'Warforged']
+      const eschewGender = [ 'Traveler Changeling', 'Stable Changeling', 'Tairnadal', 'Warforged' ]
       char.setGender(options.gender, eschewGender.includes(char.culture))
 
       char.setLifestyle()

@@ -379,6 +379,30 @@ describe('Character', () => {
     })
   })
 
+  describe('chooseDemographic', () => {
+    it('chooses a demographic', () => {
+      expect.assertions(7)
+      const options = { race: [], culture: [], religion: [] }
+      const actual = Character.chooseDemographic(data.demographics['Sharn'], options)
+      expect(actual).toBeDefined()
+      expect(typeof actual.race).toEqual('string')
+      expect(typeof actual.culture).toEqual('string')
+      expect(typeof actual.religion).toEqual('string')
+      expect(typeof actual.pop).toEqual('number')
+      expect(actual.to).not.toBeDefined()
+      expect(actual.from).not.toBeDefined()
+    })
+
+    it('respects restrictions', () => {
+      expect.assertions(3)
+      const options = { race: [ 'Aasimar' ], culture: [ 'Karrnathi' ], religion: [ 'Atheism' ] }
+      const actual = Character.chooseDemographic(data.demographics['Sharn'], options)
+      expect(actual.race).toEqual('Aasimar')
+      expect(actual.culture).toEqual('Karrnathi')
+      expect(actual.religion).toEqual('Atheism')
+    })
+  })
+
   describe('generate', () => {
     it('generates a character', () => {
       const options = { race: [], culture: [], religion: [], alignment: [], gender: [], num: 1 }
