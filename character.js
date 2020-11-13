@@ -60,22 +60,25 @@ class Character {
    */
 
   setGender (acceptable = [], eschewsGender = false) {
-    const table = eschewsGender
+    const arr = eschewsGender
       ? [
-        { key: 'Female', percent: 30 },
-        { key: 'Male', percent: 30 },
-        { key: 'Non-binary', percent: 15 },
-        { key: 'Genderfluid', percent: 5 },
-        { key: 'Agender', percent: 20 }
-      ]
+          { gender: 'Female', pop: 30 },
+          { gender: 'Male', pop: 30 },
+          { gender: 'Non-binary', pop: 15 },
+          { gender: 'Genderfluid', pop: 5 },
+          { gender: 'Agender', pop: 20 }
+        ]
       : [
-        { key: 'Female', percent: 49 },
-        { key: 'Male', percent: 49 },
-        { key: 'Non-binary', percent: 0.6 },
-        { key: 'Genderfluid', percent: 0.3 },
-        { key: 'Agender', percent: 0.1 }
-      ]
-    this.gender = randomAcceptableRowFromTable(table, acceptable).key
+          { gender: 'Female', pop: 49 },
+          { gender: 'Male', pop: 49 },
+          { gender: 'Non-binary', pop: 1 },
+          { gender: 'Genderfluid', pop: 1 },
+          { gender: 'Agender', pop: 1 }
+        ]
+    const filtered = arr.filter(item => acceptable.includes(item.gender))
+    const options = filtered.length > 0 ? filtered : arr
+    const choice = rollTable(makeTable(options))
+    this.gender = choice.gender
   }
 
   /**
