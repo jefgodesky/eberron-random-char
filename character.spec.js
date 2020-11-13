@@ -236,36 +236,6 @@ describe('Character', () => {
     })
   })
 
-  describe('chooseRaceFromDemographics', () => {
-    it('returns a random acceptable race', () => {
-      const actual = Character.chooseRaceFromDemographics(data, 'Sharn', { race: [ 'Human' ] })
-      expect(actual.key).toEqual('Human')
-    })
-  })
-
-  describe('chooseCultureFromRace', () => {
-    it('returns a random acceptable culture', () => {
-      const race = {
-        key: 'Human',
-        cultures: {
-          Brelish: { percent: 24 },
-          Aundairian: { percent: 24 },
-          Karrnathi: { percent: 24 },
-          Thranish: { percent: 24 },
-          Cyran: { percent: 4 }
-        }
-      }
-      expect(Character.chooseCultureFromRace(race, { culture: [ 'Brelish' ] })).toEqual('Brelish')
-    })
-  })
-
-  describe('chooseReligionFromDemographics', () => {
-    it('picks a religion', () => {
-      const actual = Character.chooseReligionFromDemographics(data, 'Sharn', { religion: [ 'Sovereign Host' ] })
-      expect(actual.name).toEqual('Sovereign Host')
-    })
-  })
-
   describe('addTraits', () => {
     it('selects traits from the given set if you don\'t provide an existing set', () => {
       const set1 = {
