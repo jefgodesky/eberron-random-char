@@ -108,12 +108,13 @@ const fetchDemographics = async () => {
       if (!cultures[name]) cultures[name] = {}
       cultures[name].common = row[1]
       cultures[name].names = row[2]
+      cultures[name].eschewsGender = row[3].length > 0
       cultures[name].religion = {
-        piety: parseFloat(row[3]),
-        mod: parseFloat(row[4]),
-        preferred: row[5]
+        piety: parseFloat(row[4]),
+        mod: parseFloat(row[5]),
+        preferred: row[6]
       }
-      cultures[name].alignment = row[6]
+      cultures[name].alignment = row[7]
     }
   })
   return cultures

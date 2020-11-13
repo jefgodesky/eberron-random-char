@@ -51,11 +51,12 @@ describe('fetchRaces', () => {
 
 describe('fetchCultures', () => {
   it('fetches cultures', async () => {
-    expect.assertions(7)
+    expect.assertions(8)
     const cultures = await fetchCultures()
     const keys = Object.keys(cultures)
     const haveCommon = keys.reduce((acc, curr) => acc && cultures[curr].common !== undefined, true)
     const haveNames = keys.reduce((acc, curr) => acc && cultures[curr].names !== undefined, true)
+    const haveGenderNorms = keys.reduce((acc, curr) => acc && typeof cultures[curr].eschewsGender === 'boolean', true)
     const havePiety = keys.reduce((acc, curr) => acc && cultures[curr].religion.piety !== undefined, true)
     const haveMod = keys.reduce((acc, curr) => acc && cultures[curr].religion.mod !== undefined, true)
     const havePreferred = keys.reduce((acc, curr) => acc && cultures[curr].religion.preferred !== undefined, true)
@@ -63,6 +64,7 @@ describe('fetchCultures', () => {
     expect(keys.length).toBeGreaterThan(0)
     expect(haveCommon).toEqual(true)
     expect(haveNames).toEqual(true)
+    expect(haveGenderNorms).toEqual(true)
     expect(havePiety).toEqual(true)
     expect(haveMod).toEqual(true)
     expect(havePreferred).toEqual(true)
