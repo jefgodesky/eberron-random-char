@@ -29,7 +29,8 @@ label {
   cursor: pointer;
 }
 
-.many-options {
+.many-options,
+.lifestyle {
   list-style-type: none;
   margin: 1em 0;
   padding: 0;
@@ -40,9 +41,14 @@ label {
   width: 16em;
 }
 
-.many-options label {
+.many-options label,
+.lifestyle label {
   display: inline-block;
   font-weight: normal;
+}
+
+.lifestyle li {
+  margin: 0.5em 0;
 }
 
 .alignment {
