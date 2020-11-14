@@ -302,8 +302,8 @@ class Character {
     // Now you're either in a house or you're not. If you are, do you get a
     // special name? Many do, but not all, and what that special name is can
     // vary from house to house.
-    const markedGetsName = this.house && this.mark && random.int(1, 9) > 1
-    const unmarkedGetsName = this.house && random.int(1, 4) === 4
+    const markedGetsName = Boolean(this.house) && Boolean(this.mark) && random.int(1, 10) > 1
+    const unmarkedGetsName = Boolean(this.house) && random.int(1, 4) === 4
     const getsName = markedGetsName || unmarkedGetsName
     if (getsName && this.house === 'Cannith') {
       // House Cannith lets members keep their old family names and use the
