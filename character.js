@@ -219,6 +219,35 @@ class Character {
   }
 
   /**
+   * Set traits for a Tairnadal character. Tairnadal characters have an
+   * ancestor that they are pledged to spend their lives emulating, so they are
+   * each given an ancestor, and then draw traits from the examples of that
+   * ancestor's life.
+   * @param data {object} - The full data set pulled from `fetchData`.
+   */
+
+  setTairnadalTraits (data) {
+    const ancestor = randomElementFromArray(data.cultures.Tairnadal.ancestors)
+    this.ancestor = ancestor.name
+    this.traits.personality = randomElementFromArray(ancestor.personality)
+    this.traits.bond = randomElementFromArray(ancestor.bonds)
+    this.traits.flaw = randomElementFromArray(ancestor.flaws)
+
+    const isGood = this.alignment.length > 1 && this.alignment.charAt(1) == 'G'
+    const isEvil = this.alignment.length > 1 && this.alignment.charAt(1) == 'E'
+    const isLawful = this.alignment.charAt(0) === 'L'
+    const isChaotic = this.alignment.charAt(0) === 'N'
+    const isNeutral = (!isGood && !isEvil) || (!isLawful && !isChaotic)
+    const candidates = [ { ideal: ancestor.ideals.any, type: 'any' } ]
+    if (isGood) candidates.push({ ideal: ancestor.ideals.good, type: 'good' })
+    if (isEvil) candidates.push({ ideal: ancestor.ideals.evil, type: 'evil' })
+    if (isLawful) candidates.push({ ideal: ancestor.ideals.lawful, type: 'lawful' })
+    if (isChaotic) candidates.push({ ideal: ancestor.ideals.chaotic, type: 'chaotic' })
+    if (isNeutral) candidates.push({ ideal: ancestor.ideals.neutral, type: 'neutral' })
+    this.traits.ideal = randomElementFromArray(candidates)
+  }
+
+  /**
    * Sets the character's traits by first compiling arrays of all possible
    * traits, combining those that any character might have with those unique
    * to hens race, culture, lifestyle, and religion, and then selecting one
@@ -473,7 +502,13 @@ class Character {
       char.setGender(options.gender, data.cultures[char.culture].eschewsGender)
 
       char.setLifestyle()
-      char.setTraits(data)
+      if (this.culture === 'Tairnadal') {
+        char.setTairnadalTraits(data)
+      } else if (this.culture === 'Mror') {
+        char.setMrorTraits(data)
+      } else {
+        char.setTraits(data)
+      }
 
       char.setGivenName(data)
       char.setFamilyName(data)

@@ -188,6 +188,22 @@ describe('Character', () => {
     })
   })
 
+  describe('setTairnadalTraits', () => {
+    it('sets traits for a Tairnadal character', () => {
+      const char = new Character()
+      char.race = 'Elf'
+      char.culture = 'Tairnadal'
+      char.alignment = 'N'
+      char.setTairnadalTraits(data)
+      const ancestor = data.cultures.Tairnadal.ancestors.filter(ancestor => ancestor.name === char.ancestor)[0]
+      expect(char.ancestor).toBeDefined()
+      expect(typeof char.ancestor).toEqual('string')
+      expect(ancestor.personality).toContain(char.traits.personality)
+      expect(ancestor.bonds).toContain(char.traits.bond)
+      expect(ancestor.flaws).toContain(char.traits.flaw)
+    })
+  })
+
   describe('setTraits', () => {
     it('sets traits', () => {
       const char = new Character()
