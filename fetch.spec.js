@@ -162,6 +162,27 @@ describe('fetchTraits', () => {
     expect(data.cultures.Marcher.traits.bonds).toHaveLength(10)
     expect(data.cultures.Reacher.traits.flaws).toHaveLength(10)
   })
+
+  it('fetches Tairnadal ancestor traits', async () => {
+    expect.assertions(11)
+    const data = {
+      cultures: await fetchCultures(),
+      races: await fetchRaces(),
+      religions: await fetchReligions()
+    }
+    await fetchTraits(data)
+    expect(data.cultures.Tairnadal.ancestors.length).toBeGreaterThan(0)
+    expect(typeof data.cultures.Tairnadal.ancestors[0].name).toEqual('string')
+    expect(data.cultures.Tairnadal.ancestors[0].personality).toHaveLength(3)
+    expect(typeof data.cultures.Tairnadal.ancestors[0].ideals.good).toEqual('string')
+    expect(typeof data.cultures.Tairnadal.ancestors[0].ideals.evil).toEqual('string')
+    expect(typeof data.cultures.Tairnadal.ancestors[0].ideals.lawful).toEqual('string')
+    expect(typeof data.cultures.Tairnadal.ancestors[0].ideals.chaotic).toEqual('string')
+    expect(typeof data.cultures.Tairnadal.ancestors[0].ideals.neutral).toEqual('string')
+    expect(typeof data.cultures.Tairnadal.ancestors[0].ideals.any).toEqual('string')
+    expect(data.cultures.Tairnadal.ancestors[0].bonds).toHaveLength(3)
+    expect(data.cultures.Tairnadal.ancestors[0].flaws).toHaveLength(3)
+  })
 })
 
 describe('fetchData', () => {

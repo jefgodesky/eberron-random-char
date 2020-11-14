@@ -291,6 +291,23 @@ const fetchNobleFamilies = async (data) => {
       data.religions[religion].traits = scratch.Religion[religion]
     })
   }
+
+  if (data.cultures.Tairnadal && scratch['Tairnadal ancestor']) {
+    data.cultures.Tairnadal.ancestors = Object.keys(scratch['Tairnadal ancestor']).map(name => ({
+      name,
+      personality: scratch['Tairnadal ancestor'][name].personality,
+      ideals: {
+        good: scratch['Tairnadal ancestor'][name].ideals.good[0],
+        evil: scratch['Tairnadal ancestor'][name].ideals.evil[0],
+        lawful: scratch['Tairnadal ancestor'][name].ideals.lawful[0],
+        chaotic: scratch['Tairnadal ancestor'][name].ideals.chaotic[0],
+        neutral: scratch['Tairnadal ancestor'][name].ideals.neutral[0],
+        any: scratch['Tairnadal ancestor'][name].ideals.any[0]
+      },
+      bonds: scratch['Tairnadal ancestor'][name].bonds,
+      flaws: scratch['Tairnadal ancestor'][name].flaws
+    }))
+  }
 }
 
 /**
