@@ -255,10 +255,10 @@ class Character {
       this.mark = mark
     } else {
       eligible.forEach(mark => {
-        if (random.int(1, 1000)) this.mark = mark
+        if (random.int(1, 250) === 1) this.mark = mark
       })
     }
-    if (!this.mark && random.int(1, 2000) === 1) this.mark = 'Aberrant'
+    if (!this.mark && random.int(1, 1000) === 1) this.mark = 'Aberrant'
   }
 
   /**
@@ -285,7 +285,7 @@ class Character {
       // that chance is even higher, 1 in 500, but that's Lyrandar).
       const raceHouses = union(data.houses.filter(house => house.races.includes(this.race)).map(house => house.name))
       raceHouses.forEach(house => {
-        const chance = house === 'Lyrandar' && this.race === 'Half-elf' ? 500 : 1000
+        const chance = house === 'Lyrandar' && this.race === 'Half-elf' ? 250 : 1000
         if (!this.house && random.int(1, chance) === 1) this.house = house
       })
 
@@ -294,7 +294,7 @@ class Character {
       // and for each there's a 1 in 10,000 chance that you're a member anyway.
       if (!this.house) {
         data.houses.forEach(house => {
-          if (!this.house && random.int(1, 10000) === 1) this.house = house.name
+          if (!this.house && random.int(1, 5000) === 1) this.house = house.name
         })
       }
     }
