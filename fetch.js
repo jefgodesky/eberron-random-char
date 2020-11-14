@@ -312,6 +312,13 @@ const fetchNobleFamilies = async (data) => {
     })
   }
 
+  if (data.houses && scratch['Dragonmarked house']) {
+    data.houses.forEach(house => {
+      const key = `House ${house.name}`
+      if (scratch['Dragonmarked house'][key]) house.traits = scratch['Dragonmarked house'][key]
+    })
+  }
+
   if (data.cultures.Tairnadal && scratch['Tairnadal ancestor']) {
     data.cultures.Tairnadal.ancestors = Object.keys(scratch['Tairnadal ancestor']).map(name => ({
       name,
@@ -363,6 +370,7 @@ const fetchNobleFamilies = async (data) => {
     races: await fetchRaces(),
     cultures: await fetchCultures(),
     religions: await fetchReligions(),
+    houses: await fetchHouses(),
     names: await fetchNames(),
     vars: await fetchVars()
   }

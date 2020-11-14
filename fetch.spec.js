@@ -165,18 +165,20 @@ describe('fetchTraits', () => {
     const data = {
       cultures: await fetchCultures(),
       races: await fetchRaces(),
-      religions: await fetchReligions()
+      religions: await fetchReligions(),
+      houses: await fetchHouses()
     }
     await fetchTraits(data)
+    const lyrandar = data.houses.filter(house => house.name === 'Lyrandar')[0]
     expect(data.cultures.Brelish.traits.personality).toHaveLength(10)
     expect(data.cultures.Aundairian.traits.ideals.good).toHaveLength(6)
     expect(data.cultures.Cyran.traits.ideals.evil).toHaveLength(6)
     expect(data.cultures.Karrnathi.traits.ideals.lawful).toHaveLength(6)
     expect(data.cultures.Thranish.traits.ideals.chaotic).toHaveLength(6)
-    expect(data.cultures.Khoravar.traits.ideals.neutral).toHaveLength(6)
-    expect(data.cultures.Dhakaani.traits.ideals.any).toHaveLength(6)
-    expect(data.cultures.Marcher.traits.bonds).toHaveLength(10)
-    expect(data.cultures.Reacher.traits.flaws).toHaveLength(10)
+    expect(data.races.Human.traits.ideals.neutral).toHaveLength(6)
+    expect(data.religions['Sovereign Host'].traits.ideals.any).toHaveLength(6)
+    expect(lyrandar.traits.bonds).toHaveLength(5)
+    expect(data.traits.lifestyle.Rich.flaws).toHaveLength(10)
   })
 
   it('fetches Tairnadal ancestor traits', async () => {
@@ -184,7 +186,8 @@ describe('fetchTraits', () => {
     const data = {
       cultures: await fetchCultures(),
       races: await fetchRaces(),
-      religions: await fetchReligions()
+      religions: await fetchReligions(),
+      houses: await fetchHouses()
     }
     await fetchTraits(data)
     expect(data.cultures.Tairnadal.ancestors.length).toBeGreaterThan(0)
@@ -205,7 +208,8 @@ describe('fetchTraits', () => {
     const data = {
       cultures: await fetchCultures(),
       races: await fetchRaces(),
-      religions: await fetchReligions()
+      religions: await fetchReligions(),
+      houses: await fetchHouses()
     }
     await fetchTraits(data)
     const families = Object.keys(data.cultures.Mror.families)
