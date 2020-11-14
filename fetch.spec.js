@@ -6,6 +6,7 @@ const {
   fetchRaces,
   fetchCultures,
   fetchReligions,
+  fetchHouses,
   fetchNames,
   fetchVars,
   fetchZilClans,
@@ -91,6 +92,21 @@ describe('fetchReligions', () => {
     expect(haveCultures).toEqual(false)
     expect(noCultures).toEqual(false)
     expect(haveAlignment).toEqual(true)
+  })
+})
+
+describe('fetchHouses', () => {
+  it('fetches dragonmarked houses', async () => {
+    expect.assertions(4)
+    const houses = await fetchHouses()
+    console.log(houses)
+    const hasName = houses.reduce((acc, curr) => acc && typeof curr.name === 'string', true)
+    const hasMark = houses.reduce((acc, curr) => acc && typeof curr.mark === 'string', true)
+    const hasRaces = houses.reduce((acc, curr) => acc && Array.isArray(curr.races) && curr.races.length > 0, true)
+    expect(houses).toHaveLength(13)
+    expect(hasName).toEqual(true)
+    expect(hasMark).toEqual(true)
+    expect(hasRaces).toEqual(true)
   })
 })
 

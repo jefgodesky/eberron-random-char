@@ -146,6 +146,26 @@ const fetchReligions = async () => {
 }
 
 /**
+ * Fetch dragonmarked houses from the spreadsheet.
+ * @returns {Promise<void>} - A Promise that resolves with an array of objects
+ *   representing the dragonmarked houses fetched from the spreadsheet.
+ */
+
+const fetchHouses = async () => {
+  const houses = []
+  await fetchSpreadsheet(config.google.id, config.google.ranges.houses, row => {
+    if (row.length > 2) {
+      houses.push({
+        name: row[0],
+        mark: row[1],
+        races: row[2].split(',')
+      })
+    }
+  })
+  return houses
+}
+
+/**
  * Read names from spreadsheet into object.
  * @returns {Promise<{}>} - A Promise that resolves with an object representing
  *   the names from the spreadsheet.
@@ -362,6 +382,7 @@ module.exports = {
   fetchRaces,
   fetchCultures,
   fetchReligions,
+  fetchHouses,
   fetchNames,
   fetchVars,
   fetchZilClans,
