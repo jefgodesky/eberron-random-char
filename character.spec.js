@@ -77,9 +77,9 @@ describe('Character', () => {
   describe('setFamilyName', () => {
     it('chooses a family name', () => {
       const char = new Character()
-      char.culture = 'Tairnadal'
+      char.culture = 'Mror'
       char.setFamilyName(data)
-      expect(data.names.Tairnadal.surname.includes(char.name.family)).toEqual(true)
+      expect(data.names.Mror.surname.includes(char.name.family)).toEqual(true)
     })
 
     it('might choose an occupational surname for some name lists', () => {
@@ -114,10 +114,7 @@ describe('Character', () => {
       char.setGivenName(data)
       char.setFamilyName(data)
       const name = char.getFullName()
-      const parts = name.split(' ')
-      expect(parts).toHaveLength(2)
-      expect(data.names.Tairnadal.female.includes(parts[0])).toEqual(true)
-      expect(data.names.Tairnadal.surname.includes(parts[1])).toEqual(true)
+      expect(data.names.Tairnadal.female.includes(name)).toEqual(true)
     })
   })
 
