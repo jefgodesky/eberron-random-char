@@ -14,6 +14,8 @@
                 <option><%= area %></option>
                 <% }) %>
             </select>
+            <p>By default, the characters we generate will reflect the diversity of the area you choose. The options below allow you to limit what choices are considered when generating characters, because sometimes you know that you&rsquo;re looking for genderfluid dwarf who follows the Blood of Vol, but there&rsquo;s still an awful lot more that could be filled in.</p>
+            <p><em>Example:</em> One-third of Sharn&rsquo;s population is human, so if you select Sharn as the area, about one-third of the characters generated will be humans. But if you de-select <em>Human</em> from the list of races below, then we won&rsquo;t generate any humans. The proportions will still reflect Sharn&rsquo;s demographics, we&rsquo;ll just be focusing solely on its non-human population. The more options you de-select, the smaller and more specific a subset of the population we draw from.</p>
             <fieldset class="togglable">
                 <legend>What cultures could these characters come from?</legend>
                 <ul class="many-options">
@@ -112,7 +114,7 @@
                 <div class="dragonmark-selection">
                     <label for="mark">Dragonmark</label>
                     <select id="mark" name="mark">
-                        <option value="None" selected>No mark</option>
+                        <option value="Random" selected>Choose randomly</option>
                         <% marks.forEach(mark => { %>
                         <option value="<%= mark %>">Mark of <%= mark %></option>
                         <% }) %>
@@ -122,12 +124,13 @@
                     <div class="dragonmark-selection">
                     <label for="house">Dragonmarked House</label>
                     <select id="house" name="house">
-                        <option value="None" selected>No house</option>
+                        <option value="Random" selected>Choose randomly</option>
                         <% houses.forEach(house => { %>
                         <option value="<%= house %>">House <%= house %></option>
                         <% }) %>
                     </select>
                 </div>
+                <p>When chosen randomly, the overwheling majority of generated characters will not have a dragonmark or belong to any dragonmarked house.</p>
             </fieldset>
             <fieldset>
                 <legend>What alignments might these characters have?</legend>
