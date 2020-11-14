@@ -9,6 +9,7 @@ const {
   fetchNames,
   fetchVars,
   fetchZilClans,
+  fetchNobleFamilies,
   fetchTraits,
   fetchData
 } = require('./fetch')
@@ -126,6 +127,19 @@ describe('fetchZilClans', () => {
     const haveArrays = keys.reduce((acc, curr) => acc && Array.isArray(clans[curr]) && (clans[curr].length > 0), true)
     expect(keys.length).toBeGreaterThan(0)
     expect(haveArrays).toEqual(true)
+  })
+})
+
+describe('fetchNobleFamilies', () => {
+  it('fetches noble families', async () => {
+    expect.assertions(3)
+    const data = {
+      cultures: await fetchCultures()
+    }
+    await fetchNobleFamilies(data)
+    expect(data.cultures.Brelish.nobility).toBeDefined()
+    expect(data.cultures.Brelish.nobility.prefix).toEqual('ir’')
+    expect(data.cultures.Brelish.nobility.families.includes('Clarn')).toEqual(true)
   })
 })
 

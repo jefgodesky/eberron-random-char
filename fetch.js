@@ -204,6 +204,25 @@ const fetchReligions = async () => {
 }
 
 /**
+ * Fetch noble families from spreadsheet.
+ * @param data {object} - The existing data object.
+ * @returns {Promise<void>} - A Promise that resolves when noble families have
+ *   been fetched from the spreadsheet and parsed into the appropriate culture
+ *   objects.
+ */
+
+const fetchNobleFamilies = async (data) => {
+  await fetchSpreadsheet(config.google.id, config.google.ranges.nobility, row => {
+    if (row.length > 2) {
+      const culture = row[1]
+      if (!data.cultures[culture].nobility) data.cultures[culture].nobility = { families: [] }
+      data.cultures[culture].nobility.families.push(row[0])
+      data.cultures[culture].nobility.prefix = row[2]
+    }
+  })
+}
+
+/**
  * Get traits from spreadsheet.
  * @param data {object} - The existing data object.
  * @returns {Promise<void>} - A Promise that resolves when traits have been
@@ -310,6 +329,7 @@ module.exports = {
   fetchNames,
   fetchVars,
   fetchZilClans,
+  fetchNobleFamilies,
   fetchTraits,
   fetchData
 }
