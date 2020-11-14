@@ -248,6 +248,29 @@ class Character {
   }
 
   /**
+   * Set traits for a Mror character. A Mror's ideal is set by his family.
+   * This also confines the character's choices for alignment.
+   * @param data {object} - The full data set pulled from `fetchData`.
+   */
+
+  setMrorTraits (data) {
+    const mror = data.cultures.Mror
+    this.traits.personality = randomElementFromArray(mror.traits.personality)
+    this.traits.bond = randomElementFromArray(mror.traits.bonds)
+    this.traits.flaw = randomElementFromArray(mror.traits.flaws)
+    this.traits.ideal = mror.families[this.name.family]
+
+    const possibilities = {
+      good: [ 'LG', 'NG', 'CG' ],
+      evil: [ 'LE', 'NE', 'CE' ],
+      lawful: [ 'LG', 'LN', 'LE' ],
+      chaotic: [ 'CG', 'CN', 'CE' ],
+      neutral: [ 'NG', 'LN', 'N', 'CN', 'NE' ]
+    }
+    this.alignment = randomElementFromArray(possibilities[this.traits.ideal.type])
+  }
+
+  /**
    * Sets the character's traits by first compiling arrays of all possible
    * traits, combining those that any character might have with those unique
    * to hens race, culture, lifestyle, and religion, and then selecting one

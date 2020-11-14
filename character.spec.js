@@ -204,6 +204,20 @@ describe('Character', () => {
     })
   })
 
+  describe('setMrorTraits', () => {
+    it('sets traits for a Mror character', () => {
+      const char = new Character()
+      char.race = 'Dwarf'
+      char.culture = 'Mror'
+      char.alignment = 'N'
+      char.setFamilyName(data)
+      char.setMrorTraits(data)
+      const family = data.cultures.Mror.families[char.name.family]
+      expect(char.traits.ideal.ideal).toEqual(family.ideal)
+      expect(char.traits.ideal.type).toEqual(family.type)
+    })
+  })
+
   describe('setTraits', () => {
     it('sets traits', () => {
       const char = new Character()
