@@ -137,9 +137,11 @@ class Character {
    */
 
   getFullName () {
-    return this.name.family
-      ? `${this.name.given} ${this.name.family}`
-      : this.name.given
+    return this.name.family && this.name.prefix
+      ? `${this.name.given} ${this.name.prefix}${this.name.family}`
+      : this.name.family
+        ? `${this.name.given} ${this.name.family}`
+        : this.name.given
   }
 
   /**

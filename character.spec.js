@@ -127,6 +127,17 @@ describe('Character', () => {
       const name = char.getFullName()
       expect(data.names.Tairnadal.female.includes(name)).toEqual(true)
     })
+
+    it('returns a noble\'s full name', () => {
+      const char = new Character()
+      char.gender = 'Male'
+      char.culture = 'Brelish'
+      char.noble = true
+      char.setGivenName(data)
+      char.setFamilyName(data)
+      const name = char.getFullName()
+      expect(name).toMatch(/ir’/)
+    })
   })
 
   describe('setPersonalAlignment', () => {
