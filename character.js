@@ -642,6 +642,8 @@ class Character {
       char.setLifestyle()
       char.setGivenName(data)
       char.setFamilyName(data)
+      char.setDragonmark(data, options.mark)
+      char.setHouse(data, options.house)
 
       if (char.culture === 'Tairnadal') {
         char.setTairnadalTraits(data)
