@@ -618,6 +618,10 @@ class Character {
    *   acceptable alignments for this character.
    * @param options.gender {string[]} -  An array of string specifying the
    *   acceptable genders for this character.
+   * @param options.mark {string?} - A string providing the dragonmark that a
+   *   character should have.
+   * @param options.house {string?} - A string providing the dragonmarked house
+   *   that a character should be a member of.
    * @param options.num {number} - How many characters to create.
    * @returns {Character} - A randomly generated character, with probabilities
    *   drawn from the demographics of the area specified, and restricted to the
