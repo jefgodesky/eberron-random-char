@@ -186,6 +186,30 @@ describe('Character', () => {
       char.setLifestyle()
       expect(typeof char.noble).toEqual('boolean')
     })
+
+    it('doesn\'t return anyone rich if it\'s anchored in poverty', () => {
+      const char = new Character()
+      char.setLifestyle('Poor')
+      expect(char.lifestyle).not.toEqual('Rich')
+    })
+
+    it('doesn\'t return a noble if it\'s anchored in the middle class', () => {
+      const char = new Character()
+      char.setLifestyle('Middle')
+      expect(char.noble).toEqual(false)
+    })
+
+    it('doesn\'t return anyone poor if it\'s anchored in wealth', () => {
+      const char = new Character()
+      char.setLifestyle('Rich')
+      expect(char.lifestyle).not.toEqual('Poor')
+    })
+
+    it('doesn\'t return anyone from the middle class if it\'s anchored in nobility', () => {
+      const char = new Character()
+      char.setLifestyle('Noble')
+      expect(char.lifestyle).not.toEqual('Middle')
+    })
   })
 
   describe('setTairnadalTraits', () => {

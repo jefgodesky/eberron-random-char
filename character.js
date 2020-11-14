@@ -210,12 +210,31 @@ class Character {
    * Sets the character's economic class. 10% are rich, 60% are poor, and 30%
    * are middle class (which seems pretty generous by comparison to real-world
    * medieval or early modern societies, but hey, this is D&D).
+   * @param anchor {string} - Optional. A parameter to anchor the lifestyle
+   *   chosen to a given point, with only some variation from it.
    */
 
-  setLifestyle () {
+  setLifestyle (anchor) {
     const wealth = random.int(1, 10)
-    this.lifestyle = wealth === 10 ? 'Rich' : wealth < 7 ? 'Poor' : 'Middle'
-    if (wealth === 10) this.noble = random.int(1, 10) === 10
+    switch (anchor) {
+      case 'Poor':
+        this.lifestyle = wealth < 10 ? 'Poor' : 'Middle'
+        break
+      case 'Middle':
+        this.lifestyle = wealth === 1 ? 'Poor' : wealth < 10 ? 'Middle' : 'Rich'
+        break
+      case 'Rich':
+        this.lifestyle = wealth === 1 ? 'Middle' : 'Rich'
+        this.noble = random.int(1, 10) === 10
+        break
+      case 'Noble':
+        this.lifestyle = 'Rich'
+        this.noble = random.int(1, 10) > 1
+        break
+      default:
+        this.lifestyle = wealth < 7 ? 'Poor' : wealth < 10 ? 'Middle' : 'Rich'
+        this.noble = this.lifestyle === 'Rich' && random.int(1, 10) === 10
+    }
   }
 
   /**
