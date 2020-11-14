@@ -318,7 +318,7 @@ class Character {
       if (this.clan === 'Aashta') {
         this.name.display = `${this.name.given}’aashta`
       } else {
-        this.name.family = clan
+        this.name.family = this.clan
         if (random.boolean()) {
           this.name.prefix = 'd’'
         } else if (random.boolean()) {
