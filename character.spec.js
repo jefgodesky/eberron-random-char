@@ -78,6 +78,7 @@ describe('Character', () => {
     it('chooses a family name', () => {
       const char = new Character()
       char.culture = 'Mror'
+      char.noble = false
       char.setFamilyName(data)
       expect(data.names.Mror.surname.includes(char.name.family)).toEqual(true)
     })
@@ -85,6 +86,7 @@ describe('Character', () => {
     it('might choose an occupational surname for some name lists', () => {
       const char = new Character()
       char.culture = 'Brelish'
+      char.noble = false
       char.setFamilyName(data)
       const options = [ ...data.names.Brelish.surname, ...data.names['Occupational surnames'].surname ]
       expect(options.includes(char.name.family)).toEqual(true)
@@ -103,6 +105,15 @@ describe('Character', () => {
       char.culture = 'Traveler Changeling'
       char.setFamilyName(data)
       expect(char.name.family).toEqual(null)
+    })
+
+    it('selects from the noble families if you\'re noble', () => {
+      const char = new Character()
+      char.culture = 'Brelish'
+      char.noble = true
+      char.setFamilyName(data)
+      expect(data.cultures.Brelish.nobility.families.includes(char.name.family)).toEqual(true)
+      expect(char.name.prefix).toEqual('ir’')
     })
   })
 

@@ -329,6 +329,7 @@ const fetchNobleFamilies = async (data) => {
     vars: await fetchVars()
   }
 
+  await fetchNobleFamilies(data)
   await fetchTraits(data)
   if (data.names && data.names.Zil) {
     data.names.Zil.clans = {}

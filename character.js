@@ -106,18 +106,24 @@ class Character {
    */
 
   setFamilyName (data) {
-    const list = this.culture && data && data.cultures && data.cultures[this.culture] ? data.cultures[this.culture].names : null
-    const addOccupations = [ 'Aundairian', 'Brelish', 'Cyran', 'Karrnathi', 'Thranish', 'Khoravar', 'Marcher', 'Reacher' ]
-    if (addOccupations.includes(list)) {
-      this.name.family = randomElementFromArray([ ...data.names[list].surname, ...data.names['Occupational surnames'].surname ])
-    } else if (data.names[list].surname) {
-      this.name.family = randomElementFromArray(data.names[list].surname)
-    } else if (data.names[list].clans) {
-      const clan = randomElementFromArray(Object.keys(data.names[list].clans))
-      const family = randomElementFromArray(data.names[list].clans[clan])
-      this.name.family = `${family} ${clan}`
+    const culture = this.culture && data.cultures ? data.cultures[this.culture] : null
+    if (this.noble && culture.nobility && culture.nobility.families && culture.nobility.families.length > 0) {
+      this.name.family = randomElementFromArray(culture.nobility.families)
+      this.name.prefix = culture.nobility.prefix
     } else {
-      this.name.family = null
+      const list = culture ? culture.names : null
+      const addOccupations = ['Aundairian', 'Brelish', 'Cyran', 'Karrnathi', 'Thranish', 'Khoravar', 'Marcher', 'Reacher']
+      if (addOccupations.includes(list)) {
+        this.name.family = randomElementFromArray([ ...data.names[list].surname, ...data.names['Occupational surnames'].surname ])
+      } else if (data.names[list].surname) {
+        this.name.family = randomElementFromArray(data.names[list].surname)
+      } else if (data.names[list].clans) {
+        const clan = randomElementFromArray(Object.keys(data.names[list].clans))
+        const family = randomElementFromArray(data.names[list].clans[clan])
+        this.name.family = `${family} ${clan}`
+      } else {
+        this.name.family = null
+      }
     }
   }
 
