@@ -308,6 +308,24 @@ const fetchNobleFamilies = async (data) => {
       flaws: scratch['Tairnadal ancestor'][name].flaws
     }))
   }
+
+  if (data.cultures.Mror && scratch['Mror family']) {
+    const checkIdealType = (family, type) => {
+      return family.ideals && family.ideals[type] && Array.isArray(family.ideals[type]) && family.ideals[type].length > 0
+        ? {ideal: family.ideals[type][0], type}
+        : null
+    }
+    const getIdeal = family => {
+       const types = ['good', 'evil', 'lawful', 'chaotic', 'neutral']
+      const checks = types.map(type => checkIdealType(family, type)).filter(ideal => ideal !== null)
+      return checks.length > 0 ? checks[0] : null
+    }
+    delete data.cultures.Mror.traits.ideals
+    data.cultures.Mror.families = {}
+    Object.keys(scratch['Mror family']).forEach(name => {
+      data.cultures.Mror.families[name] = getIdeal(scratch['Mror family'][name])
+    })
+  }
 }
 
 /**

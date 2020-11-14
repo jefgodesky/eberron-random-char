@@ -183,6 +183,26 @@ describe('fetchTraits', () => {
     expect(data.cultures.Tairnadal.ancestors[0].bonds).toHaveLength(3)
     expect(data.cultures.Tairnadal.ancestors[0].flaws).toHaveLength(3)
   })
+
+  it('fetches Mror families and their ideals', async () => {
+    expect.assertions(4)
+    const data = {
+      cultures: await fetchCultures(),
+      races: await fetchRaces(),
+      religions: await fetchReligions()
+    }
+    await fetchTraits(data)
+    const families = Object.keys(data.cultures.Mror.families)
+    const haveIdeals = families.reduce((acc, curr) => {
+      const family = data.cultures.Mror.families[curr]
+      const possibilities = [ 'good', 'evil', 'lawful', 'chaotic', 'neutral' ]
+      return acc && typeof family.ideal === 'string' && possibilities.includes(family.type)
+    }, true)
+    expect(data.cultures.Mror.traits).toBeDefined()
+    expect(data.cultures.Mror.traits.ideals).not.toBeDefined()
+    expect(families.length).toBeGreaterThan(0)
+    expect(haveIdeals).toEqual(true)
+  })
 })
 
 describe('fetchData', () => {
