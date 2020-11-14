@@ -186,7 +186,10 @@ class Character {
       const ra = raceObj && raceObj.alignment ? raceObj.alignment : false
       const cu = cultureObj && cultureObj.alignment ? cultureObj.alignment : false
       const re = religionObj && religionObj.alignment ? religionObj.alignment : false
-      const influence = this.isPious() ? avgAlignment(ra, cu, re) : avgAlignment(ra, cu)
+      const influences = [ ra, cu ]
+      if (this.isPious()) influences.push(re)
+      if (this.lifestyle === 'Rich') influences.push('LE')
+      const influence = avgAlignment(...influences)
 
       if (acc.length > 1) {
         let al = false
