@@ -145,41 +145,22 @@ describe('fetchNobleFamilies', () => {
 
 describe('fetchTraits', () => {
   it('fetches traits', async () => {
-    expect.assertions(5)
+    expect.assertions(9)
     const data = {
       cultures: await fetchCultures(),
       races: await fetchRaces(),
       religions: await fetchReligions()
     }
     await fetchTraits(data)
-
-    const isPopulatedArray = arr => Array.isArray(arr)
-    // Once traits are finished, check that all arrays actually have something
-    // const isPopulatedArray = arr => Array.isArray(arr) && arr.length > 0
-    const hasTraitSet = obj => {
-      return isPopulatedArray(obj.personality)
-        && obj.ideals
-        && isPopulatedArray(obj.ideals.good)
-        && isPopulatedArray(obj.ideals.evil)
-        && isPopulatedArray(obj.ideals.lawful)
-        && isPopulatedArray(obj.ideals.chaotic)
-        && isPopulatedArray(obj.ideals.neutral)
-        && isPopulatedArray(obj.ideals.any)
-        && isPopulatedArray(obj.bonds)
-        && isPopulatedArray(obj.flaws)
-    }
-
-    const cultures = Object.keys(data.cultures).reduce((acc, curr) => hasTraitSet(data.cultures[curr].traits), true)
-    const races = Object.keys(data.races).reduce((acc, curr) => data.races[curr].traits ? hasTraitSet(data.races[curr].traits) : true, true)
-    const religions = Object.keys(data.religions).reduce((acc, curr) => data.religions[curr].traits ? hasTraitSet(data.religions[curr].traits) : true, true)
-    const any = hasTraitSet(data.traits.any)
-    const lifestyles = Object.keys(data.traits.lifestyle).reduce((acc, curr) => hasTraitSet(data.traits.lifestyle[curr]), true)
-
-    expect(cultures).toEqual(true)
-    expect(races).toEqual(true)
-    expect(religions).toEqual(true)
-    expect(any).toEqual(true)
-    expect(lifestyles).toEqual(true)
+    expect(data.cultures.Brelish.traits.personality).toHaveLength(10)
+    expect(data.cultures.Aundairian.traits.ideals.good).toHaveLength(6)
+    expect(data.cultures.Cyran.traits.ideals.evil).toHaveLength(6)
+    expect(data.cultures.Karrnathi.traits.ideals.lawful).toHaveLength(6)
+    expect(data.cultures.Thranish.traits.ideals.chaotic).toHaveLength(6)
+    expect(data.cultures.Khoravar.traits.ideals.neutral).toHaveLength(6)
+    expect(data.cultures.Dhakaani.traits.ideals.any).toHaveLength(6)
+    expect(data.cultures.Marcher.traits.bonds).toHaveLength(10)
+    expect(data.cultures.Reacher.traits.flaws).toHaveLength(10)
   })
 })
 
