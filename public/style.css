@@ -51,6 +51,11 @@ label {
   margin: 0.5em 0;
 }
 
+.dragonmark-selection {
+  display: inline-block;
+  margin: 1em 4em 1em 0;
+}
+
 .alignment {
   margin: 2em auto;
 }

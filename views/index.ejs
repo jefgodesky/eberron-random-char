@@ -108,6 +108,28 @@
                 </ul>
             </fieldset>
             <fieldset>
+                <legend>Should these characters have dragonmarks, or belong to one of the dragonmarked houses?</legend>
+                <div class="dragonmark-selection">
+                    <label for="mark">Dragonmark</label>
+                    <select id="mark" name="mark">
+                        <option value="None" selected>No mark</option>
+                        <% marks.forEach(mark => { %>
+                        <option value="<%= mark %>">Mark of <%= mark %></option>
+                        <% }) %>
+                        <option value="Aberrant">Aberrant Dragonmark</option>
+                    </select>
+                </div>
+                    <div class="dragonmark-selection">
+                    <label for="house">Dragonmarked House</label>
+                    <select id="house" name="house">
+                        <option value="None" selected>No house</option>
+                        <% houses.forEach(house => { %>
+                        <option value="<%= house %>">House <%= house %></option>
+                        <% }) %>
+                    </select>
+                </div>
+            </fieldset>
+            <fieldset>
                 <legend>What alignments might these characters have?</legend>
                 <table class="alignment">
                     <tr>
