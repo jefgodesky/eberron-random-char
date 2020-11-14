@@ -325,7 +325,7 @@ class Character {
           this.name.family = `${clan} d’Tharashk`
         }
       }
-    } else {
+    } else if (getsName) {
       // Everyone else just follows the old rules: d’House
       this.name.family = this.house
       this.name.prefix = 'd’'
