@@ -212,6 +212,22 @@ describe('Character', () => {
     })
   })
 
+  describe('setDragonmark', () => {
+    it('sets a dragonmark', () => {
+      const char = new Character()
+      char.race = 'Half-orc'
+      char.setDragonmark(data, 'Finding')
+      expect(char.mark).toEqual('Finding')
+    })
+
+    it('won\'t set a dragonmark that you can\'t have', () => {
+      const char = new Character()
+      char.race = 'Half-orc'
+      char.setDragonmark(data, 'Scribing')
+      expect(char.mark).not.toEqual('Scribing')
+    })
+  })
+
   describe('setTairnadalTraits', () => {
     it('sets traits for a Tairnadal character', () => {
       const char = new Character()

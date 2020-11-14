@@ -1,6 +1,7 @@
 const random = require('random')
 const { avgAlignment } = require('./dndmath')
 const {
+  union,
   intersection,
   attemptIntersection,
   makeTable,
@@ -238,6 +239,26 @@ class Character {
         this.lifestyle = wealth < 7 ? 'Poor' : wealth < 10 ? 'Middle' : 'Rich'
         this.noble = this.lifestyle === 'Rich' && random.int(1, 10) === 10
     }
+  }
+
+  /**
+   * Determines if a character has a dragonmark, and if so, what type.
+   * @param data {object} - The full data set pulled from `fetchData`.
+   * @param mark {string} - Optional. A dragonmark that this charcter should
+   *   have. If this parameter is set to a mark that a member of this race
+   *   could have, then the character is set to have that mark.
+   */
+
+  setDragonmark (data, mark) {
+    const eligible = union(data.houses.filter(house => house.races.includes(this.race)).map(house => house.mark))
+    if (mark && eligible.includes(mark)) {
+      this.mark = mark
+    } else {
+      eligible.forEach(mark => {
+        if (random.int(1, 1000)) this.mark = mark
+      })
+    }
+    if (!this.mark && random.int(1, 2000) === 1) this.mark = 'Aberrant'
   }
 
   /**
