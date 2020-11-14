@@ -514,6 +514,7 @@ class Character {
     const parsed = options.num ? parseInt(options.num) : 1
     const num = parsed ? Math.min(Math.max(parsed, 0), 100) : 1
     const characters = []
+
     for (let i = 0; i < num; i++) {
       const char = new Character()
       const { race, culture, religion } = Character.chooseDemographic(data.demographics[area], options)
@@ -525,18 +526,20 @@ class Character {
       char.setGender(options.gender, data.cultures[char.culture].eschewsGender)
 
       char.setLifestyle()
-      if (this.culture === 'Tairnadal') {
+      char.setGivenName(data)
+      char.setFamilyName(data)
+
+      if (char.culture === 'Tairnadal') {
         char.setTairnadalTraits(data)
-      } else if (this.culture === 'Mror') {
+      } else if (char.culture === 'Mror') {
         char.setMrorTraits(data)
       } else {
         char.setTraits(data)
       }
 
-      char.setGivenName(data)
-      char.setFamilyName(data)
       characters.push(char)
     }
+
     return characters
   }
 }
