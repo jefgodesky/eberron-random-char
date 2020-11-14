@@ -228,6 +228,15 @@ describe('Character', () => {
     })
   })
 
+  describe('setHouse', () => {
+    it('sets a house', () => {
+      const char = new Character()
+      char.race = 'Elf'
+      char.setHouse(data, 'Thuranni')
+      expect(char.house).toEqual('Thuranni')
+    })
+  })
+
   describe('setTairnadalTraits', () => {
     it('sets traits for a Tairnadal character', () => {
       const char = new Character()

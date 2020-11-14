@@ -262,6 +262,77 @@ class Character {
   }
 
   /**
+   * Determines if the character belongs to one of the dragonmarked houses, and
+   * if so, what name she might bear as a result.
+   * @param data {object} - The full data set pulled from `fetchData`.
+   * @param house {string} - Optional. A house that this character should
+   *   belong to. If provided, the character belongs to that house, and her
+   *   name is considered accordingly.
+   */
+
+  setHouse (data, house) {
+    if (house) {
+      this.house = house
+    } else if (this.mark) {
+      // If you have a dragonmark, there's a 90% chance you belong to the
+      // house that controls that mark.
+      const markHouse = data.houses.filter(house => house.mark === this.mark)
+      if (markHouse.length > 0 && random.int(1, 10) > 1) this.house = markHouse[0].name
+    } else {
+      // If you belong to one of the races that a house centers on, there's
+      // about a 1 in 1,000 chance that you're a member of that house, even
+      // if you don't have a dragonmark (for House Lyrandar and the half-elves,
+      // that chance is even higher, 1 in 500, but that's Lyrandar).
+      const raceHouses = union(data.houses.filter(house => house.races.includes(this.race)).map(house => house.name))
+      raceHouses.forEach(house => {
+        const chance = house === 'Lyrandar' && this.race === 'Half-elf' ? 500 : 1000
+        if (!this.house && random.int(1, chance) === 1) this.house = house
+      })
+
+      // But the houses also recruit from other races, though it's much less
+      // frequent. If you're not in any house yet, we loop through all of them,
+      // and for each there's a 1 in 10,000 chance that you're a member anyway.
+      if (!this.house) {
+        data.houses.forEach(house => {
+          if (!this.house && random.int(1, 10000) === 1) this.house = house.name
+        })
+      }
+    }
+
+    // Now you're either in a house or you're not. If you are, do you get a
+    // special name? Many do, but not all, and what that special name is can
+    // vary from house to house.
+    const markedGetsName = this.house && this.mark && random.int(1, 9) > 1
+    const unmarkedGetsName = this.house && random.int(1, 4) === 4
+    const getsName = markedGetsName || unmarkedGetsName
+    if (getsName && this.house === 'Cannith') {
+      // House Cannith lets members keep their old family names and use the
+      // honorific d’ prefix with it.
+      this.name.prefix = 'd’'
+      if(random.int(1, 3) > 1) this.name.family = 'Cannith'
+    } else if (getsName && this.house === 'Tharashk') {
+      // Tharashk names are all over the place. There's three clans, and most
+      // of them use the clan name instead of the house name. Also, each clan
+      // seems to have its own way of using its clan name?
+      this.clan = randomElementFromArray([ 'Aashta', 'Torrn', 'Velderan' ])
+      if (this.clan === 'Aashta') {
+        this.name.display = `${this.name.given}’aashta`
+      } else {
+        this.name.family = clan
+        if (random.boolean()) {
+          this.name.prefix = 'd’'
+        } else if (random.boolean()) {
+          this.name.family = `${clan} d’Tharashk`
+        }
+      }
+    } else {
+      // Everyone else just follows the old rules: d’House
+      this.name.family = this.house
+      this.name.prefix = 'd’'
+    }
+  }
+
+  /**
    * Set traits for a Tairnadal character. Tairnadal characters have an
    * ancestor that they are pledged to spend their lives emulating, so they are
    * each given an ancestor, and then draw traits from the examples of that
