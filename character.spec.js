@@ -338,6 +338,28 @@ describe('Character', () => {
       const expected = '[[Category:Humans|Lname, Fname]]\n[[Category:Brelish characters|Lname, Fname]]\n[[Category:Good characters|Lname, Fname]]\n[[Category:Chaotic characters|Lname, Fname]]\n[[Category:Chaotic good characters|Lname, Fname]]'
       expect(char.getWikiCategories(data)).toEqual(expected)
     })
+
+    it('adds members of dragonmarked houses to the corresponding category', () => {
+      const char = new Character()
+      char.name = { given: 'Fname', family: "Lname" }
+      char.race = 'Human'
+      char.culture = 'Brelish'
+      char.alignment = 'CG'
+      char.house = 'Cannith'
+      const expected = '[[Category:House Cannith|Lname, Fname]]\n[[Category:Humans|Lname, Fname]]\n[[Category:Brelish characters|Lname, Fname]]\n[[Category:Good characters|Lname, Fname]]\n[[Category:Chaotic characters|Lname, Fname]]\n[[Category:Chaotic good characters|Lname, Fname]]'
+      expect(char.getWikiCategories(data)).toEqual(expected)
+    })
+
+    it('sorts members of dragonmarked houses who take the house\'s name by first name', () => {
+      const char = new Character()
+      char.name = { given: 'Fname', family: "Cannith" }
+      char.race = 'Human'
+      char.culture = 'Brelish'
+      char.alignment = 'CG'
+      char.house = 'Cannith'
+      const expected = '[[Category:House Cannith|Fname Cannith]]\n[[Category:Humans|Cannith, Fname]]\n[[Category:Brelish characters|Cannith, Fname]]\n[[Category:Good characters|Cannith, Fname]]\n[[Category:Chaotic characters|Cannith, Fname]]\n[[Category:Chaotic good characters|Cannith, Fname]]'
+      expect(char.getWikiCategories(data)).toEqual(expected)
+    })
   })
 
   describe('addTraits', () => {

@@ -464,11 +464,19 @@ class Character {
    */
 
   getWikiCategories (data) {
-    const { name, race, culture, alignment } = this
+    const { name, race, culture, alignment, house, mark } = this
     const end = name.given && name.family
       ? `|${name.family}, ${name.given}]]`
       : ']]'
     const categories = []
+
+    if (house) {
+      const houseEnd = name.given && name.family && name.family === house
+        ? `|${name.given} ${name.family}]]`
+        : end
+      categories.push(`[[Category:House ${house}${houseEnd}`)
+    }
+
     categories.push(`[[Category:${data.races[race].plural}${end}`)
     categories.push(`[[Category:${culture} characters${end}`)
 
