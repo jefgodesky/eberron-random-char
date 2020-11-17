@@ -477,6 +477,15 @@ class Character {
       categories.push(`[[Category:House ${house}${houseEnd}`)
     }
 
+    if (mark) {
+      const familyHouse = data.houses.filter(house => house.name === name.family)
+      const markHouse = data.houses.filter(house => house.mark === mark)
+      const markEnd = familyHouse.length > 0 && markHouse.length > 0 && familyHouse[0].name === markHouse[0].name
+        ? `|${name.given} ${name.family}]]`
+        : end
+      categories.push(`[[Category:Characters with the Mark of ${mark}${markEnd}`)
+    }
+
     categories.push(`[[Category:${data.races[race].plural}${end}`)
     categories.push(`[[Category:${culture} characters${end}`)
 
