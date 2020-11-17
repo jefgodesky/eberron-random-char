@@ -461,21 +461,6 @@ class Character {
   }
 
   /**
-   * Return a string describing the character's religious beliefs.
-   * @param data {object} - The full data set pulled from `fetchData`.
-   * @returns {string} - A string describing the character's religious beliefs.
-   */
-
-  getReligionDesc (data) {
-    const follower = data.religions[this.faith.religion].follower
-    return this.isPious()
-      ? `is a pious ${follower}`
-      : this.faith.piety < -1.5
-        ? `is a nominal ${follower}`
-        : `is a ${follower}`
-  }
-
-  /**
    * Render wiki categories for a randomly-generated character.
    * @param data {object} - The full data set pulled from `fetchData`.
    * @returns {string} - A string with the character's wiki categories.

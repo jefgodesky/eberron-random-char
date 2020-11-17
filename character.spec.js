@@ -317,29 +317,6 @@ describe('Character', () => {
     })
   })
 
-  describe('getReligionDesc', () => {
-    it('describes a pious person', () => {
-      const char = new Character()
-      char.faith.piety = 2
-      char.faith.religion = 'Sovereign Host'
-      expect(char.getReligionDesc(data)).toEqual('is a pious Vassal')
-    })
-
-    it('describes an irreligious person', () => {
-      const char = new Character()
-      char.faith.piety = -2
-      char.faith.religion = 'Sovereign Host'
-      expect(char.getReligionDesc(data)).toEqual('is a nominal Vassal')
-    })
-
-    it('describes a regular person\'s religious beliefs', () => {
-      const char = new Character()
-      char.faith.piety = 0
-      char.faith.religion = 'Sovereign Host'
-      expect(char.getReligionDesc(data)).toEqual('is a Vassal')
-    })
-  })
-
   describe('getWikiCategories', () => {
     it('returns categories', () => {
       const char = new Character()
