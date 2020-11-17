@@ -214,11 +214,12 @@ class Character {
    * Sets the character's economic class. 10% are rich, 60% are poor, and 30%
    * are middle class (which seems pretty generous by comparison to real-world
    * medieval or early modern societies, but hey, this is D&D).
+   * @param data {object} - The full data set pulled from `fetchData`.
    * @param anchor {string} - Optional. A parameter to anchor the lifestyle
    *   chosen to a given point, with only some variation from it.
    */
 
-  setLifestyle (anchor) {
+  setLifestyle (data, anchor) {
     const wealth = random.int(1, 10)
     switch (anchor) {
       case 'Poor':
@@ -229,15 +230,32 @@ class Character {
         break
       case 'Rich':
         this.lifestyle = wealth === 1 ? 'Middle' : 'Rich'
-        this.noble = random.int(1, 10) === 10
+        if (random.int(1, 10) === 10) this.ennoble(data)
         break
       case 'Noble':
         this.lifestyle = 'Rich'
-        this.noble = random.int(1, 10) > 1
+        if (random.int(1, 10) > 1) this.ennoble(data)
         break
       default:
         this.lifestyle = wealth < 7 ? 'Poor' : wealth < 10 ? 'Middle' : 'Rich'
-        this.noble = this.lifestyle === 'Rich' && random.int(1, 10) === 10
+        if (this.lifestyle === 'Rich' && random.int(1, 10) === 10) this.ennoble(data)
+    }
+  }
+
+  /**
+   * Make this character a noble. Select a noble house from the character's
+   * culture and change hens name to be from that family.
+   * @param data {object} - The full data set pulled from `fetchData`.
+   */
+
+  ennoble (data) {
+    const culture = data.cultures[this.culture]
+    const nobility = culture ? culture.nobility : null
+    const families = nobility ? nobility.families : []
+    if (families && Array.isArray(families) && families.length > 0) {
+      this.name.family = randomElementFromArray(families)
+      if (nobility.prefix) this.name.prefix = nobility.prefix
+      this.noble = true
     }
   }
 
@@ -660,7 +678,7 @@ class Character {
       char.setAcceptableAlignment(data, options.alignment)
       char.setGender(options.gender, data.cultures[char.culture].eschewsGender)
 
-      char.setLifestyle()
+      char.setLifestyle(data, options.lifestyle)
       char.setGivenName(data)
       char.setFamilyName(data)
       char.setDragonmark(data, options.mark)

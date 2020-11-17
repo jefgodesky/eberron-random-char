@@ -177,38 +177,50 @@ describe('Character', () => {
     it('sets lifestyle', () => {
       const lifestyles = [ 'Rich', 'Middle', 'Poor' ]
       const char = new Character()
-      char.setLifestyle()
+      char.setLifestyle(data)
       expect(lifestyles.includes(char.lifestyle)).toEqual(true)
     })
 
     it('sets if you\'re a noble', () => {
       const char = new Character()
-      char.setLifestyle()
+      char.setLifestyle(data)
       expect(typeof char.noble).toEqual('boolean')
     })
 
     it('doesn\'t return anyone rich if it\'s anchored in poverty', () => {
       const char = new Character()
-      char.setLifestyle('Poor')
+      char.setLifestyle(data, 'Poor')
       expect(char.lifestyle).not.toEqual('Rich')
     })
 
     it('doesn\'t return a noble if it\'s anchored in the middle class', () => {
       const char = new Character()
-      char.setLifestyle('Middle')
+      char.setLifestyle(data, 'Middle')
       expect(char.noble).toEqual(false)
     })
 
     it('doesn\'t return anyone poor if it\'s anchored in wealth', () => {
       const char = new Character()
-      char.setLifestyle('Rich')
+      char.setLifestyle(data, 'Rich')
       expect(char.lifestyle).not.toEqual('Poor')
     })
 
     it('doesn\'t return anyone from the middle class if it\'s anchored in nobility', () => {
       const char = new Character()
-      char.setLifestyle('Noble')
+      char.setLifestyle(data, 'Noble')
       expect(char.lifestyle).not.toEqual('Middle')
+    })
+  })
+
+  describe('ennoble', () => {
+    it('makes the character a noble', () => {
+      const char = new Character()
+      char.culture = 'Brelish'
+      char.name.given = 'Brent'
+      char.ennoble(data)
+      expect(data.cultures.Brelish.nobility.families).toContain(char.name.family)
+      expect(data.cultures.Brelish.nobility.prefix).toEqual(char.name.prefix)
+      expect(char.noble).toEqual(true)
     })
   })
 
