@@ -343,7 +343,7 @@ describe('Character', () => {
   describe('getWikiCategories', () => {
     it('returns categories', () => {
       const char = new Character()
-      char.name = { given: 'Fname', family: "Lname" }
+      char.name = { given: 'Fname', family: 'Lname' }
       char.race = 'Human'
       char.culture = 'Brelish'
       char.alignment = 'CG'
@@ -353,7 +353,7 @@ describe('Character', () => {
 
     it('adds members of dragonmarked houses to the corresponding category', () => {
       const char = new Character()
-      char.name = { given: 'Fname', family: "Lname" }
+      char.name = { given: 'Fname', family: 'Lname' }
       char.race = 'Human'
       char.culture = 'Brelish'
       char.alignment = 'CG'
@@ -364,7 +364,7 @@ describe('Character', () => {
 
     it('sorts members of dragonmarked houses who take the house\'s name by first name', () => {
       const char = new Character()
-      char.name = { given: 'Fname', family: "Cannith" }
+      char.name = { given: 'Fname', family: 'Cannith' }
       char.race = 'Human'
       char.culture = 'Brelish'
       char.alignment = 'CG'
@@ -375,7 +375,7 @@ describe('Character', () => {
 
     it('adds characters with dragonmarks to the corresponding category', () => {
       const char = new Character()
-      char.name = { given: 'Fname', family: "Lname" }
+      char.name = { given: 'Fname', family: 'Lname' }
       char.race = 'Human'
       char.culture = 'Brelish'
       char.alignment = 'CG'
@@ -402,6 +402,17 @@ describe('Character', () => {
       char.culture = 'Mror'
       char.alignment = 'CG'
       const expected = '[[Category:Clan Lname|Fname Lname]]\n[[Category:Dwarves|Lname, Fname]]\n[[Category:Mror characters|Lname, Fname]]\n[[Category:Good characters|Lname, Fname]]\n[[Category:Chaotic characters|Lname, Fname]]\n[[Category:Chaotic good characters|Lname, Fname]]'
+      expect(char.getWikiCategories(data)).toEqual(expected)
+    })
+
+    it('categorizes members of noble families', () => {
+      const char = new Character()
+      char.race = 'Human'
+      char.culture = 'Brelish'
+      char.name = { given: 'Brent', family: 'Clarn', prefix: 'ir’' }
+      char.noble = true
+      char.alignment = 'CG'
+      const expected = '[[Category:Clarn family|Brent Clarn]]\n[[Category:Humans|Clarn, Brent]]\n[[Category:Brelish characters|Clarn, Brent]]\n[[Category:Good characters|Clarn, Brent]]\n[[Category:Chaotic characters|Clarn, Brent]]\n[[Category:Chaotic good characters|Clarn, Brent]]'
       expect(char.getWikiCategories(data)).toEqual(expected)
     })
   })

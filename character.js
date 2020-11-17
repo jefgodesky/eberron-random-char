@@ -506,6 +506,8 @@ class Character {
 
     if (culture === 'Mror') {
       categories.push(`[[Category:Clan ${name.family}|${name.given} ${name.family}]]`)
+    } else if (noble) {
+      categories.push(`[[Category:${name.family} family|${name.given} ${name.family}]]`)
     }
 
     categories.push(`[[Category:${data.races[race].plural}${end}`)
