@@ -386,12 +386,22 @@ describe('Character', () => {
 
     it('sorts dragonmarked characters who take the house name by given name', () => {
       const char = new Character()
-      char.name = { given: 'Fname', family: "Cannith" }
+      char.name = { given: 'Fname', family: 'Cannith' }
       char.race = 'Human'
       char.culture = 'Brelish'
       char.alignment = 'CG'
       char.mark = 'Making'
       const expected = '[[Category:Characters with the Mark of Making|Fname Cannith]]\n[[Category:Humans|Cannith, Fname]]\n[[Category:Brelish characters|Cannith, Fname]]\n[[Category:Good characters|Cannith, Fname]]\n[[Category:Chaotic characters|Cannith, Fname]]\n[[Category:Chaotic good characters|Cannith, Fname]]'
+      expect(char.getWikiCategories(data)).toEqual(expected)
+    })
+
+    it('categorizes members of Mror clans', () => {
+      const char = new Character()
+      char.name = { given: 'Fname', family: "Lname" }
+      char.race = 'Dwarf'
+      char.culture = 'Mror'
+      char.alignment = 'CG'
+      const expected = '[[Category:Clan Lname|Fname Lname]]\n[[Category:Dwarves|Lname, Fname]]\n[[Category:Mror characters|Lname, Fname]]\n[[Category:Good characters|Lname, Fname]]\n[[Category:Chaotic characters|Lname, Fname]]\n[[Category:Chaotic good characters|Lname, Fname]]'
       expect(char.getWikiCategories(data)).toEqual(expected)
     })
   })

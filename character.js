@@ -482,7 +482,7 @@ class Character {
    */
 
   getWikiCategories (data) {
-    const { name, race, culture, alignment, house, mark } = this
+    const { name, race, culture, alignment, house, mark, noble } = this
     const end = name.given && name.family
       ? `|${name.family}, ${name.given}]]`
       : ']]'
@@ -502,6 +502,10 @@ class Character {
         ? `|${name.given} ${name.family}]]`
         : end
       categories.push(`[[Category:Characters with the Mark of ${mark}${markEnd}`)
+    }
+
+    if (culture === 'Mror') {
+      categories.push(`[[Category:Clan ${name.family}|${name.given} ${name.family}]]`)
     }
 
     categories.push(`[[Category:${data.races[race].plural}${end}`)
