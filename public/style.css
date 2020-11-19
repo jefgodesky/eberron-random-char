@@ -3,6 +3,11 @@ body {
   padding: 2em;
 }
 
+body.generated {
+  margin: 0 auto;
+  max-width: 40em;
+}
+
 @media (min-width: 50em) {
   body {
     padding: 2em 5%;
@@ -97,4 +102,29 @@ span.toggle {
   color: #3366cc;
   cursor: pointer;
   text-decoration: underline;
+}
+
+section.character {
+  background: #eee;
+  margin: 0 0 1em 0;
+  padding: 2em;
+}
+
+section.character p:first-child {
+  margin-top: 0;
+}
+
+section.character ul {
+  margin: 1em 0;
+  padding: 0;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+section.character textarea {
+  height: 10em;
+  width: 100%;
 }

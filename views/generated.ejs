@@ -5,18 +5,20 @@
         <link rel="stylesheet" media="all" href="/style.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
-    <body>
+    <body class="generated">
         <h1><%= characters.length %> Random Characters</h1>
         <% characters.forEach(char => { %>
-        <section>
-            <p><strong><%= char.getFullName() %></strong> <%= char.getDesc() %> <%= char.getReligionDesc(data) %>.</p>
+        <section class="character">
+            <p><%- char.getDescription(data, 'html') %></p>
             <ul>
                 <li><strong>Personality trait:</strong> <%= char.traits.personality %></li>
                 <li><strong>Ideal:</strong> <%= char.getIdeal() %></li>
                 <li><strong>Bond:</strong> <%= char.traits.bond %></li>
                 <li><strong>Flaw:</strong> <%= char.traits.flaw %></li>
             </ul>
-            <textarea>'''<%= char.getFullName() %>''' <%= char.getDesc() %> <%= char.getReligionDesc(data) %>.
+            <details>
+                <summary>Wikitext</summary>
+                <textarea><%= char.getDescription(data, 'wikitext') %>
 
 &lt;div class="secrets"&gt;
 * '''Personality trait:''' <%= char.traits.personality %>
@@ -26,6 +28,7 @@
 &lt;/div&gt;
 
 <%= char.getWikiCategories(data) %></textarea>
+            </details>
         </section>
         <% }) %>
     </body>
