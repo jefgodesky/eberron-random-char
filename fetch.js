@@ -233,10 +233,10 @@ const fetchHouses = async () => {
 
 const fetchNobleFamilies = async (data) => {
   await fetchSpreadsheet(config.google.id, config.google.ranges.nobility, row => {
-    if (row.length > 2) {
+    if (row.length > 3) {
       const culture = row[1]
       if (!data.cultures[culture].nobility) data.cultures[culture].nobility = { families: [] }
-      data.cultures[culture].nobility.families.push(row[0])
+      data.cultures[culture].nobility.families.push({ family: row[0], race: row[3] })
       data.cultures[culture].nobility.prefix = row[2]
     }
   })

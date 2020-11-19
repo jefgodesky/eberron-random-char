@@ -148,14 +148,17 @@ describe('fetchZilClans', () => {
 
 describe('fetchNobleFamilies', () => {
   it('fetches noble families', async () => {
-    expect.assertions(3)
+    expect.assertions(5)
     const data = {
       cultures: await fetchCultures()
     }
     await fetchNobleFamilies(data)
+    const clarns = data.cultures.Brelish.nobility.families.filter(fam => fam.family === 'Clarn')
     expect(data.cultures.Brelish.nobility).toBeDefined()
     expect(data.cultures.Brelish.nobility.prefix).toEqual('ir’')
-    expect(data.cultures.Brelish.nobility.families.includes('Clarn')).toEqual(true)
+    expect(clarns).toHaveLength(1)
+    expect(clarns[0].family).toEqual('Clarn')
+    expect(clarns[0].race).toEqual('Human')
   })
 })
 
