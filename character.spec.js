@@ -223,6 +223,15 @@ describe('Character', () => {
       expect(data.cultures.Brelish.nobility.prefix).toEqual(char.name.prefix)
       expect(char.noble).toEqual(true)
     })
+
+    it('adds a half-elf to a human noble family', () => {
+      const char = new Character()
+      char.culture = 'Brelish'
+      char.race = 'Half-elf'
+      char.name.given = 'Brent'
+      char.ennoble(data)
+      expect(char.noble).toEqual(true)
+    })
   })
 
   describe('setDragonmark', () => {
