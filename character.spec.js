@@ -216,9 +216,10 @@ describe('Character', () => {
     it('makes the character a noble', () => {
       const char = new Character()
       char.culture = 'Brelish'
+      char.race = 'Human'
       char.name.given = 'Brent'
       char.ennoble(data)
-      expect(data.cultures.Brelish.nobility.families).toContain(char.name.family)
+      expect(data.cultures.Brelish.nobility.families.map(fam => fam.family)).toContain(char.name.family)
       expect(data.cultures.Brelish.nobility.prefix).toEqual(char.name.prefix)
       expect(char.noble).toEqual(true)
     })

@@ -251,9 +251,12 @@ class Character {
   ennoble (data) {
     const culture = data.cultures[this.culture]
     const nobility = culture ? culture.nobility : null
-    const families = nobility ? nobility.families : []
+    const families = nobility
+      ? nobility.families.filter(family => family.race === this.race)
+      : []
     if (families && Array.isArray(families) && families.length > 0) {
-      this.name.family = randomElementFromArray(families)
+      const fam = randomElementFromArray(families)
+      this.name.family = fam.family
       if (nobility.prefix) this.name.prefix = nobility.prefix
       this.noble = true
     }
