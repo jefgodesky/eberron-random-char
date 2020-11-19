@@ -462,10 +462,11 @@ class Character {
 
   /**
    * Returns a textual lede to describe the character.
+   * @param data {object} - The full data set pulled from `fetchData`.
    * @returns {string} - A textual lede describing the character.
    */
 
-  getLede () {
+  getLede (data) {
     const { house, mark, noble, race, culture } = this
     const nations = {
       Aundairian: 'Aundair',
@@ -497,7 +498,11 @@ class Character {
       if (mark === 'Aberrant') {
         return 'bears an aberrant dragonmark.'
       } else {
-        return `bears the Mark of ${mark}, but is not a member of any dragonmarked house.`
+        const houses = data.houses.filter(house => house.mark === mark)
+        const house = houses.length > 0
+          ? `House ${houses[0].name}`
+          : 'any dragonmarked house'
+        return `bears the Mark of ${mark}, but is not a member of ${house}.`
       }
     } else {
       return `is a ${culture} ${race.toLowerCase()}.`
