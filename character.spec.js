@@ -324,6 +324,24 @@ describe('Character', () => {
       char.gender = 'Agender'
       expect(char.getDesc()).toEqual('(CG agender warforged)')
     })
+
+    it('doesn\'t describe a "Traveler Changeling changeling"', () => {
+      const char = new Character()
+      char.alignment = 'CG'
+      char.culture = 'Traveler Changeling'
+      char.race = 'Changeling'
+      char.gender = 'Agender'
+      expect(char.getDesc()).toEqual('(CG agender Traveler changeling)')
+    })
+
+    it('doesn\'t describe a "Stable Changeling changeling"', () => {
+      const char = new Character()
+      char.alignment = 'CG'
+      char.culture = 'Stable Changeling'
+      char.race = 'Changeling'
+      char.gender = 'Agender'
+      expect(char.getDesc()).toEqual('(CG agender Stable changeling)')
+    })
   })
 
   describe('getLede', () => {

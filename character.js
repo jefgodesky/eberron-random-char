@@ -458,7 +458,12 @@ class Character {
 
   getDesc () {
     const { culture, race } = this
-    const charace = culture === race ? culture.toLowerCase() : `${culture} ${race.toLowerCase()}`
+    let charace = `${culture} ${race.toLowerCase()}`
+    switch (charace) {
+      case 'Warforged warforged': charace = 'warforged'; break
+      case 'Traveler Changeling changeling': charace = 'Traveler changeling'; break
+      case 'Stable Changeling changeling': charace = 'Stable changeling'; break
+    }
     return `(${this.alignment} ${this.gender.toLowerCase()} ${charace})`
   }
 
