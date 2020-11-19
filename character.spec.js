@@ -315,6 +315,15 @@ describe('Character', () => {
       char.gender = 'Agender'
       expect(char.getDesc()).toEqual('(CG agender Brelish human)')
     })
+
+    it('doesn\'t describe a "Warforged warforged"', () => {
+      const char = new Character()
+      char.alignment = 'CG'
+      char.culture = 'Warforged'
+      char.race = 'Warforged'
+      char.gender = 'Agender'
+      expect(char.getDesc()).toEqual('(CG agender warforged)')
+    })
   })
 
   describe('getLede', () => {

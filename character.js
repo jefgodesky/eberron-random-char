@@ -457,7 +457,9 @@ class Character {
    */
 
   getDesc () {
-    return `(${this.alignment} ${this.gender.toLowerCase()} ${this.culture} ${this.race.toLowerCase()})`
+    const { culture, race } = this
+    const charace = culture === race ? culture.toLowerCase() : `${culture} ${race.toLowerCase()}`
+    return `(${this.alignment} ${this.gender.toLowerCase()} ${charace})`
   }
 
   /**
