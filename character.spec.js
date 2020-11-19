@@ -635,8 +635,8 @@ describe('Character', () => {
 
   describe('parseTraits', () => {
     it('can replace a whole string', () => {
-      const actual = Character.parseTraitVar(data.vars, '<PHOBIA>')
-      expect(data.vars['<PHOBIA>'].includes(actual))
+      const actual = Character.parseTraitVar(data.vars, '<DRAGONMARKEDHOUSE>')
+      expect(data.vars['<DRAGONMARKEDHOUSE>'].includes(actual))
     })
 
     it('can replace part of a string', () => {
