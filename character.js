@@ -529,6 +529,20 @@ class Character {
   }
 
   /**
+   * Generates a string describing a character.
+   * @param data {object} - The full data set pulled from `fetchData`.
+   * @returns {string} - A string describing a character.
+   */
+
+  getDescription (data) {
+    const sentences = [
+      `${this.getFullName()} ${this.getDesc()} ${this.getLede(data)}`,
+      this.getReligion(data)
+    ]
+    return sentences.filter(s => s !== null).join(' ')
+  }
+
+  /**
    * Render wiki categories for a randomly-generated character.
    * @param data {object} - The full data set pulled from `fetchData`.
    * @returns {string} - A string with the character's wiki categories.

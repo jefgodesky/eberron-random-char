@@ -408,6 +408,30 @@ describe('Character', () => {
     })
   })
 
+  describe('getDescription', () => {
+    it('returns a description of the character', () => {
+      const char = new Character()
+      char.name = { given: 'Johnny', family: 'Tester' }
+      char.alignment = 'N'
+      char.gender = 'Male'
+      char.race = 'Human'
+      char.culture = 'Brelish'
+      char.faith = { religion: 'Sovereign Host', piety: 0 }
+      expect(char.getDescription(data)).toEqual('Johnny Tester (N male Brelish human) is a Brelish human.')
+    })
+
+    it('describes a religious character', () => {
+      const char = new Character()
+      char.name = { given: 'Johnny', family: 'Tester' }
+      char.alignment = 'N'
+      char.gender = 'Male'
+      char.race = 'Human'
+      char.culture = 'Brelish'
+      char.faith = { religion: 'Sovereign Host', piety: 2 }
+      expect(char.getDescription(data)).toEqual('Johnny Tester (N male Brelish human) is a Brelish human. He is a devout Vassal.')
+    })
+  })
+
   describe('getWikiCategories', () => {
     it('returns categories', () => {
       const char = new Character()
