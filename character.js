@@ -461,6 +461,50 @@ class Character {
   }
 
   /**
+   * Returns a textual lede to describe the character.
+   * @returns {string} - A textual lede describing the character.
+   */
+
+  getLede () {
+    const { house, mark, noble, race, culture } = this
+    const nations = {
+      Aundairian: 'Aundair',
+      Brelish: 'Breland',
+      Cyran: 'Cyre',
+      Karrnathi: 'Karrnath',
+      Thranish: 'Thrane'
+    }
+
+    if (noble) {
+      if (culture === 'Aereni') {
+        return `comes from the noble line of ${this.name.family} of Aerenal.`
+      } else if (culture === 'Zil') {
+        return `comes from the noble ${this.name.family} family of Zilargo.`
+      } else if (culture === 'Mror') {
+        return `comes from Clan ${this.name.family}, one of the twelve ruling clans of the Mror Holds.`
+      } else {
+        return `comes from the noble ${this.name.family} family of ${nations[culture]}.`
+      }
+    } else if (house) {
+      if (mark && mark !== 'Aberrant') {
+        return `is a dragonmarked heir of House ${house}.`
+      } else if (mark === 'Aberrant') {
+        return `is a member of House ${house} with an aberrant dragonmark.`
+      } else if (!mark) {
+        return `is an unmarked member of House ${house}.`
+      }
+    } else if (mark) {
+      if (mark === 'Aberrant') {
+        return 'bears an aberrant dragonmark.'
+      } else {
+        return `bears the Mark of ${mark}, but is not a member of any dragonmarked house.`
+      }
+    } else {
+      return `is a ${culture} ${race.toLowerCase()}.`
+    }
+  }
+
+  /**
    * Render wiki categories for a randomly-generated character.
    * @param data {object} - The full data set pulled from `fetchData`.
    * @returns {string} - A string with the character's wiki categories.

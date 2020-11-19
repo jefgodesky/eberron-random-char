@@ -317,6 +317,74 @@ describe('Character', () => {
     })
   })
 
+  describe('getLede', () => {
+    it('describes a noble', () => {
+      const char = new Character()
+      char.name = { given: 'Brent', family: 'Clarn', prefix: 'ir’' }
+      char.culture = 'Brelish'
+      char.noble = true
+      expect(char.getLede()).toEqual('comes from the noble Clarn family of Breland.')
+    })
+
+    it('describes a noble from the Mror Holds', () => {
+      const char = new Character()
+      char.name = { given: 'Brent', family: 'Mrorannon' }
+      char.culture = 'Mror'
+      char.noble = true
+      expect(char.getLede()).toEqual('comes from Clan Mrorannon, one of the twelve ruling clans of the Mror Holds.')
+    })
+
+    it('describes a dragonmarked heir', () => {
+      const char = new Character()
+      char.name = { given: 'Brent', family: 'Cannith', prefix: 'd’' }
+      char.culture = 'Brelish'
+      char.house = 'Cannith'
+      char.mark = 'Making'
+      expect(char.getLede()).toEqual('is a dragonmarked heir of House Cannith.')
+    })
+
+    it('describes a character with an aberrant dragonmark who is in a house', () => {
+      const char = new Character()
+      char.name = { given: 'Brent', family: 'Cannith', prefix: 'd’' }
+      char.culture = 'Brelish'
+      char.house = 'Cannith'
+      char.mark = 'Aberrant'
+      expect(char.getLede()).toEqual('is a member of House Cannith with an aberrant dragonmark.')
+    })
+
+    it('describes a character who is a member of a house but has no dragonmark', () => {
+      const char = new Character()
+      char.name = { given: 'Brent', family: 'Cannith', prefix: 'd’' }
+      char.culture = 'Brelish'
+      char.house = 'Cannith'
+      expect(char.getLede()).toEqual('is an unmarked member of House Cannith.')
+    })
+
+    it('describes a character with a dragonmark that isn\'t a member of any house', () => {
+      const char = new Character()
+      char.name = { given: 'Brent', family: 'Tester' }
+      char.culture = 'Brelish'
+      char.mark = 'Making'
+      expect(char.getLede()).toEqual('bears the Mark of Making, but is not a member of any dragonmarked house.')
+    })
+
+    it('describes a character with an aberrant dragonmark', () => {
+      const char = new Character()
+      char.name = { given: 'Brent', family: 'Tester’' }
+      char.culture = 'Brelish'
+      char.mark = 'Aberrant'
+      expect(char.getLede()).toEqual('bears an aberrant dragonmark.')
+    })
+
+    it('describes a character with no house, dragonmark, or noble line', () => {
+      const char = new Character()
+      char.name = { given: 'Brent', family: 'Tester’' }
+      char.race = 'Human'
+      char.culture = 'Brelish'
+      expect(char.getLede()).toEqual('is a Brelish human.')
+    })
+  })
+
   describe('getWikiCategories', () => {
     it('returns categories', () => {
       const char = new Character()
