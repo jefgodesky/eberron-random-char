@@ -510,6 +510,25 @@ class Character {
   }
 
   /**
+   * Return a string describing the character's religion.
+   * @param data {object} - The full data set pulled from `fetchData`.
+   * @returns {string|null} - A sentence describing the character's religion
+   *   if that's a significant factor in hens character, or `null` if it
+   *   is not.
+   */
+
+  getReligion (data) {
+    if (this.isPious() && this.faith && this.faith.religion !== 'Atheism') {
+      const religion = data.religions[this.faith.religion]
+      if (religion) {
+        const pronouns = { Male: 'He', Female: 'She', Agender: 'Hen', 'Non-binary': 'Hen', Genderfluid: 'Hen' }
+        return `${pronouns[this.gender]} is a devout ${religion.follower}.`
+      }
+    }
+    return null
+  }
+
+  /**
    * Render wiki categories for a randomly-generated character.
    * @param data {object} - The full data set pulled from `fetchData`.
    * @returns {string} - A string with the character's wiki categories.

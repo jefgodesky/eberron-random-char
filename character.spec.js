@@ -385,6 +385,29 @@ describe('Character', () => {
     })
   })
 
+  describe('getReligion', () => {
+    it('describes a devout character', () => {
+      const char = new Character()
+      char.gender = 'Female'
+      char.faith = { religion: 'Sovereign Host', piety: 2 }
+      expect(char.getReligion(data)).toEqual('She is a devout Vassal.')
+    })
+
+    it('returns null if the character isn\'t particularly devout', () => {
+      const char = new Character()
+      char.gender = 'Female'
+      char.faith = { religion: 'Sovereign Host', piety: 0 }
+      expect(char.getReligion(data)).toEqual(null)
+    })
+
+    it('returns null if the character is an atheist', () => {
+      const char = new Character()
+      char.gender = 'Female'
+      char.faith = { religion: 'Atheism', piety: 2 }
+      expect(char.getReligion(data)).toEqual(null)
+    })
+  })
+
   describe('getWikiCategories', () => {
     it('returns categories', () => {
       const char = new Character()
