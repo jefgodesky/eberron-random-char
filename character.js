@@ -531,13 +531,18 @@ class Character {
   /**
    * Generates a string describing a character.
    * @param data {object} - The full data set pulled from `fetchData`.
-   * @param html {boolean?} - Optional. If set to `true`, the name is wrapped
-   *   inside a `<strong>` tag. (Default: `false`)
+   * @param formatting {string?} - Optional. If given `html`, the name is
+   *   wrapped in `<strong>` tags. If given `wikitext`, the name is wrapped in
+   *   three straight quotes. (Default: `null`)
    * @returns {string} - A string describing a character.
    */
 
-  getDescription (data, html = false) {
-    const name = html ? `<strong>${this.getFullName()}</strong>` : this.getFullName()
+  getDescription (data, formatting = null) {
+    const name = formatting === 'html'
+      ? `<strong>${this.getFullName()}</strong>`
+      : formatting === 'wikitext'
+        ? `'''${this.getFullName()}'''`
+        : this.getFullName()
     const sentences = [
       `${name} ${this.getDesc()} ${this.getLede(data)}`,
       this.getReligion(data)
