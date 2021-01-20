@@ -227,3 +227,18 @@ section.character textarea {
   height: 20em;
   width: 100%;
 }
+
+.create-wiki {
+  background: #eee;
+  color: #000;
+  display: table;
+  font-family: 'Scaly Sans';
+  margin: 1em 0 0;
+  padding: 0.5em 2em;
+  text-decoration: none;
+}
+
+.create-wiki:hover {
+  background: #007aff;
+  color: #fff;
+}
