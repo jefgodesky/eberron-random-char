@@ -218,3 +218,12 @@ section.character {
   margin: 1em 0;
   padding: 1em;
 }
+
+section.character summary {
+  cursor: pointer;
+}
+
+section.character textarea {
+  height: 20em;
+  width: 100%;
+}
