@@ -466,7 +466,7 @@ class Character {
    */
 
   getLede (data) {
-    const { house, mark, noble, race, culture } = this
+    const { house, mark, noble, race, culture, lifestyle } = this
     const nations = {
       Aundairian: 'Aundair',
       Brelish: 'Breland',
@@ -504,7 +504,12 @@ class Character {
         return `bears the Mark of ${mark}, but is not a member of ${house}.`
       }
     } else {
-      return `is a ${culture} ${race.toLowerCase()}.`
+      let cls = 'middle class'
+      switch (lifestyle) {
+        case 'Poor': cls = 'poor'; break
+        case 'Rich': cls = 'wealthy'; break
+      }
+      return `is a ${cls} ${culture} ${race.toLowerCase()}.`
     }
   }
 
