@@ -668,9 +668,18 @@ class Character {
 
   static parseTraitVar (vars, orig) {
     let str = orig
-    Object.keys(vars).forEach(key => {
-      str = str.replace(key, randomElementFromArray(vars[key]))
-    })
+    let finished = false
+    while (!finished) {
+      let step = str
+      Object.keys(vars).forEach(key => {
+        step = step.replace(key, randomElementFromArray(vars[key]))
+      })
+      if (step === str) {
+        finished = true
+      } else {
+        str = step
+      }
+    }
     return str
   }
 
