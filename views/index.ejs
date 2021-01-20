@@ -6,184 +6,186 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
     <body>
-        <h1>Eberron Random Character Generator</h1>
-        <form action="/generate" method="POST">
-            <label for="area">What area are these characters from?</label>
-            <select id="area" name="area">
-                <% areas.forEach(area => { %>
-                <option><%= area %></option>
-                <% }) %>
-            </select>
-            <p>By default, the characters we generate will reflect the diversity of the area you choose. The options below allow you to limit what choices are considered when generating characters, because sometimes you know that you&rsquo;re looking for genderfluid dwarf who follows the Blood of Vol, but there&rsquo;s still an awful lot more that could be filled in.</p>
-            <p><em>Example:</em> One-third of Sharn&rsquo;s population is human, so if you select Sharn as the area, about one-third of the characters generated will be humans. But if you de-select <em>Human</em> from the list of races below, then we won&rsquo;t generate any humans. The proportions will still reflect Sharn&rsquo;s demographics, we&rsquo;ll just be focusing solely on its non-human population. The more options you de-select, the smaller and more specific a subset of the population we draw from.</p>
-            <fieldset class="togglable">
-                <legend>What cultures could these characters come from?</legend>
-                <ul class="many-options">
-                    <% cultures.forEach(culture => { %>
-                    <li>
-                        <input type="checkbox" name="culture" value="<%= culture.name %>" id="<%= culture.id %>" checked>
-                        <label for="<%= culture.id %>"><%= culture.name %></label>
-                    </li>
+        <main>
+            <h1>Eberron Random Character Generator</h1>
+            <form action="/generate" method="POST">
+                <label for="area">What area are these characters from?</label>
+                <select id="area" name="area">
+                    <% areas.forEach(area => { %>
+                    <option><%= area %></option>
                     <% }) %>
-                </ul>
-            </fieldset>
-            <fieldset class="togglable">
-                <legend>Which races could these characters belong to?</legend>
-                <ul class="many-options">
-                    <% races.forEach(race => { %>
-                    <li>
-                        <input type="checkbox" name="race" value="<%= race.name %>" id="<%= race.id %>" checked>
-                        <label for="<%= race.id %>"><%= race.name %></label>
-                    </li>
-                    <% }) %>
-                </ul>
-            </fieldset>
-            <fieldset class="togglable">
-                <legend>Which faiths might these characters follow?</legend>
-                <ul class="many-options">
-                    <% religions.forEach(religion => { %>
-                    <li>
-                        <input type="checkbox" name="religion" value="<%= religion.name %>" id="<%= religion.id %>" checked>
-                        <label for="<%= religion.id %>"><%= religion.name %></label>
-                    </li>
-                    <% }) %>
-                </ul>
-            </fieldset>
-            <fieldset>
-                <legend>Which genders might these characters have?</legend>
-                <ul class="many-options">
-                    <li>
-                        <input type="checkbox" name="gender" value="Female" id="gender-female" checked>
-                        <label for="gender-female">Female</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="gender" value="Male" id="gender-male" checked>
-                        <label for="gender-male">Male</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="gender" value="Non-binary" id="gender-nb" checked>
-                        <label for="gender-nb">Non-binary</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="gender" value="Genderfluid" id="gender-fluid" checked>
-                        <label for="gender-fluid">Genderfluid</label>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="gender" value="Agender" id="gender-a" checked>
-                        <label for="gender-a">Agender</label>
-                    </li>
-                </ul>
-            </fieldset>
-            <fieldset>
-                <legend>What lifestyle might these characters have?</legend>
-                <ul class="lifestyle">
-                    <li>
-                        <input type="radio" name="lifestyle" value="default" id="lifestyle-default" checked>
-                        <label for="lifestyle-default">
-                            <strong>Default.</strong> We pull from the whole economic range of society: 60% poor, 30% middle class, 9% rich, and 1% noble.
-                        </label>
-                    </li>
-                    <li>
-                        <input type="radio" name="lifestyle" value="Poor" id="lifestyle-poor">
-                        <label for="lifestyle-poor">
-                            <strong>Poor.</strong> 90% of the characters generated will be poor, and 10% middle class.
-                        </label>
-                    </li>
-                    <li>
-                        <input type="radio" name="lifestyle" value="Middle" id="lifestyle-middle">
-                        <label for="lifestyle-middle">
-                            <strong>Middle class.</strong> 80% of the characters generated will be middle class, 10% poor, and 10% rich.
-                        </label>
-                    </li>
-                    <li>
-                        <input type="radio" name="lifestyle" value="Rich" id="lifestyle-rich">
-                        <label for="lifestyle-rich">
-                            <strong>Rich.</strong> 80% of the characters generated will be rich, 10% middle class, and 10% nobility.
-                        </label>
-                    </li>
-                    <li>
-                        <input type="radio" name="lifestyle" value="Noble" id="lifestyle-noble">
-                        <label for="lifestyle-noble">
-                            <strong>Nobility.</strong> 90% of the characters generated will be noble and 10% rich.
-                        </label>
-                    </li>
-                </ul>
-            </fieldset>
-            <fieldset>
-                <legend>Should these characters have dragonmarks, or belong to one of the dragonmarked houses?</legend>
-                <div class="dragonmark-selection">
-                    <label for="mark">Dragonmark</label>
-                    <select id="mark" name="mark">
-                        <option value="Random" selected>Choose randomly</option>
-                        <% marks.forEach(mark => { %>
-                        <option value="<%= mark %>">Mark of <%= mark %></option>
+                </select>
+                <p>By default, the characters we generate will reflect the diversity of the area you choose. The options below allow you to limit what choices are considered when generating characters, because sometimes you know that you&rsquo;re looking for genderfluid dwarf who follows the Blood of Vol, but there&rsquo;s still an awful lot more that could be filled in.</p>
+                <p><em>Example:</em> One-third of Sharn&rsquo;s population is human, so if you select Sharn as the area, about one-third of the characters generated will be humans. But if you de-select <em>Human</em> from the list of races below, then we won&rsquo;t generate any humans. The proportions will still reflect Sharn&rsquo;s demographics, we&rsquo;ll just be focusing solely on its non-human population. The more options you de-select, the smaller and more specific a subset of the population we draw from.</p>
+                <fieldset class="togglable">
+                    <legend>What cultures could these characters come from?</legend>
+                    <ul class="many-options">
+                        <% cultures.forEach(culture => { %>
+                        <li>
+                            <input type="checkbox" name="culture" value="<%= culture.name %>" id="<%= culture.id %>" checked>
+                            <label for="<%= culture.id %>"><%= culture.name %></label>
+                        </li>
                         <% }) %>
-                        <option value="Aberrant">Aberrant Dragonmark</option>
-                    </select>
-                </div>
+                    </ul>
+                </fieldset>
+                <fieldset class="togglable">
+                    <legend>Which races could these characters belong to?</legend>
+                    <ul class="many-options">
+                        <% races.forEach(race => { %>
+                        <li>
+                            <input type="checkbox" name="race" value="<%= race.name %>" id="<%= race.id %>" checked>
+                            <label for="<%= race.id %>"><%= race.name %></label>
+                        </li>
+                        <% }) %>
+                    </ul>
+                </fieldset>
+                <fieldset class="togglable">
+                    <legend>Which faiths might these characters follow?</legend>
+                    <ul class="many-options">
+                        <% religions.forEach(religion => { %>
+                        <li>
+                            <input type="checkbox" name="religion" value="<%= religion.name %>" id="<%= religion.id %>" checked>
+                            <label for="<%= religion.id %>"><%= religion.name %></label>
+                        </li>
+                        <% }) %>
+                    </ul>
+                </fieldset>
+                <fieldset>
+                    <legend>Which genders might these characters have?</legend>
+                    <ul class="many-options">
+                        <li>
+                            <input type="checkbox" name="gender" value="Female" id="gender-female" checked>
+                            <label for="gender-female">Female</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="gender" value="Male" id="gender-male" checked>
+                            <label for="gender-male">Male</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="gender" value="Non-binary" id="gender-nb" checked>
+                            <label for="gender-nb">Non-binary</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="gender" value="Genderfluid" id="gender-fluid" checked>
+                            <label for="gender-fluid">Genderfluid</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="gender" value="Agender" id="gender-a" checked>
+                            <label for="gender-a">Agender</label>
+                        </li>
+                    </ul>
+                </fieldset>
+                <fieldset>
+                    <legend>What lifestyle might these characters have?</legend>
+                    <ul class="lifestyle">
+                        <li>
+                            <input type="radio" name="lifestyle" value="default" id="lifestyle-default" checked>
+                            <label for="lifestyle-default">
+                                <strong>Default.</strong> We pull from the whole economic range of society: 60% poor, 30% middle class, 9% rich, and 1% noble.
+                            </label>
+                        </li>
+                        <li>
+                            <input type="radio" name="lifestyle" value="Poor" id="lifestyle-poor">
+                            <label for="lifestyle-poor">
+                                <strong>Poor.</strong> 90% of the characters generated will be poor, and 10% middle class.
+                            </label>
+                        </li>
+                        <li>
+                            <input type="radio" name="lifestyle" value="Middle" id="lifestyle-middle">
+                            <label for="lifestyle-middle">
+                                <strong>Middle class.</strong> 80% of the characters generated will be middle class, 10% poor, and 10% rich.
+                            </label>
+                        </li>
+                        <li>
+                            <input type="radio" name="lifestyle" value="Rich" id="lifestyle-rich">
+                            <label for="lifestyle-rich">
+                                <strong>Rich.</strong> 80% of the characters generated will be rich, 10% middle class, and 10% nobility.
+                            </label>
+                        </li>
+                        <li>
+                            <input type="radio" name="lifestyle" value="Noble" id="lifestyle-noble">
+                            <label for="lifestyle-noble">
+                                <strong>Nobility.</strong> 90% of the characters generated will be noble and 10% rich.
+                            </label>
+                        </li>
+                    </ul>
+                </fieldset>
+                <fieldset>
+                    <legend>Should these characters have dragonmarks, or belong to one of the dragonmarked houses?</legend>
                     <div class="dragonmark-selection">
-                    <label for="house">Dragonmarked House</label>
-                    <select id="house" name="house">
-                        <option value="Random" selected>Choose randomly</option>
-                        <% houses.forEach(house => { %>
-                        <option value="<%= house %>">House <%= house %></option>
-                        <% }) %>
-                    </select>
-                </div>
-                <p>When chosen randomly, the overwheling majority of generated characters will not have a dragonmark or belong to any dragonmarked house.</p>
-            </fieldset>
-            <fieldset>
-                <legend>What alignments might these characters have?</legend>
-                <table class="alignment">
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="alignment" value="LG" id="alignment-lg" checked>
-                            <label for="alignment-lg">LG</label>
-                        </td>
-                        <td>
-                            <input type="checkbox" name="alignment" value="NG" id="alignment-ng" checked>
-                            <label for="alignment-ng">NG</label>
-                        </td>
-                        <td>
-                            <input type="checkbox" name="alignment" value="CG" id="alignment-cg" checked>
-                            <label for="alignment-cg">CG</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="alignment" value="LN" id="alignment-ln" checked>
-                            <label for="alignment-ln">LN</label>
-                        </td>
-                        <td>
-                            <input type="checkbox" name="alignment" value="N" id="alignment-n" checked>
-                            <label for="alignment-n">N</label>
-                        </td>
-                        <td>
-                            <input type="checkbox" name="alignment" value="CN" id="alignment-cn" checked>
-                            <label for="alignment-cn">CN</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" name="alignment" value="LE" id="alignment-le" checked>
-                            <label for="alignment-le">LE</label>
-                        </td>
-                        <td>
-                            <input type="checkbox" name="alignment" value="NE" id="alignment-ne" checked>
-                            <label for="alignment-ne">NE</label>
-                        </td>
-                        <td>
-                            <input type="checkbox" name="alignment" value="CE" id="alignment-ce" checked>
-                            <label for="alignment-ce">CE</label>
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-            <br />
-            <label for="num">How many characters would you like to generate?</label>
-            <input type="number" min="1" max="100" value="1" name="num" id="num" />
-            <button class="generate">Generate Characters</button>
-        </form>
+                        <label for="mark">Dragonmark</label>
+                        <select id="mark" name="mark">
+                            <option value="Random" selected>Choose randomly</option>
+                            <% marks.forEach(mark => { %>
+                            <option value="<%= mark %>">Mark of <%= mark %></option>
+                            <% }) %>
+                            <option value="Aberrant">Aberrant Dragonmark</option>
+                        </select>
+                    </div>
+                        <div class="dragonmark-selection">
+                        <label for="house">Dragonmarked House</label>
+                        <select id="house" name="house">
+                            <option value="Random" selected>Choose randomly</option>
+                            <% houses.forEach(house => { %>
+                            <option value="<%= house %>">House <%= house %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <p>When chosen randomly, the overwheling majority of generated characters will not have a dragonmark or belong to any dragonmarked house.</p>
+                </fieldset>
+                <fieldset>
+                    <legend>What alignments might these characters have?</legend>
+                    <table class="alignment">
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="alignment" value="LG" id="alignment-lg" checked>
+                                <label for="alignment-lg">LG</label>
+                            </td>
+                            <td>
+                                <input type="checkbox" name="alignment" value="NG" id="alignment-ng" checked>
+                                <label for="alignment-ng">NG</label>
+                            </td>
+                            <td>
+                                <input type="checkbox" name="alignment" value="CG" id="alignment-cg" checked>
+                                <label for="alignment-cg">CG</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="alignment" value="LN" id="alignment-ln" checked>
+                                <label for="alignment-ln">LN</label>
+                            </td>
+                            <td>
+                                <input type="checkbox" name="alignment" value="N" id="alignment-n" checked>
+                                <label for="alignment-n">N</label>
+                            </td>
+                            <td>
+                                <input type="checkbox" name="alignment" value="CN" id="alignment-cn" checked>
+                                <label for="alignment-cn">CN</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="alignment" value="LE" id="alignment-le" checked>
+                                <label for="alignment-le">LE</label>
+                            </td>
+                            <td>
+                                <input type="checkbox" name="alignment" value="NE" id="alignment-ne" checked>
+                                <label for="alignment-ne">NE</label>
+                            </td>
+                            <td>
+                                <input type="checkbox" name="alignment" value="CE" id="alignment-ce" checked>
+                                <label for="alignment-ce">CE</label>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <br />
+                <label for="num">How many characters would you like to generate?</label>
+                <input type="number" min="1" max="100" value="1" name="num" id="num" />
+                <button class="generate">Generate Characters</button>
+            </form>
+        </main>
         <script type="text/javascript" src="client.js"></script>
     </body>
 </html>

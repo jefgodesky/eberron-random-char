@@ -1,130 +1,213 @@
+/* Fonts */
+
+@font-face {
+  font-family: 'Book Insanity';
+  font-style: normal;
+  font-weight: normal;
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/bookinsanity-webfont.eot);
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/bookinsanity-webfont.eot?#iefix) format('embedded-opentype'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/bookinsanity-webfont.woff) format('woff'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/bookinsanity-webfont.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Book Insanity';
+  font-style: italic;
+  font-weight: normal;
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/bookinsanity_italic-webfont.eot);
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/bookinsanity_italic-webfont.eot?#iefix) format('embedded-opentype'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/bookinsanity_italic-webfont.woff) format('woff'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/bookinsanity_italic-webfont.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Book Insanity';
+  font-style: normal;
+  font-weight: bold;
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/bookinsanity_bold-webfont.eot);
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/bookinsanity_bold-webfont.eot?#iefix) format('embedded-opentype'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/bookinsanity_bold-webfont.woff) format('woff'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/bookinsanity_bold-webfont.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Book Insanity';
+  font-style: italic;
+  font-weight: bold;
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/bookinsanity_bold_italic-webfont.eot);
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/bookinsanity_bold_italic-webfont.eot?#iefix) format('embedded-opentype'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/bookinsanity_bold_italic-webfont.woff) format('woff'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/bookinsanity_bold_italic-webfont.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Mr. Eaves';
+  font-style: normal;
+  font-weight: normal;
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/mr_eaves_small_caps-webfont.eot);
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/mr_eaves_small_caps-webfont.eot?#iefix) format('embedded-opentype'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/mr_eaves_small_caps-webfont.woff) format('woff'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/mr_eaves_small_caps-webfont.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Scaly Sans';
+  font-style: normal;
+  font-weight: normal;
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans-webfont.eot);
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans-webfont.eot?#iefix) format('embedded-opentype'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans-webfont.woff) format('woff'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans-webfont.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Scaly Sans';
+  font-style: italic;
+  font-weight: normal;
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans_italic-webfont.eot);
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans_italic-webfont.eot?#iefix) format('embedded-opentype'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans_italic-webfont.woff) format('woff'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans_italic-webfont.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Scaly Sans';
+  font-style: normal;
+  font-weight: bold;
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans_bold-webfont.eot);
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans_bold-webfont.eot?#iefix) format('embedded-opentype'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans_bold-webfont.woff) format('woff'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans_bold-webfont.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Scaly Sans';
+  font-style: italic;
+  font-weight: bold;
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans_bold_italic-webfont.eot);
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans_bold_italic-webfont.eot?#iefix) format('embedded-opentype'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans_bold_italic-webfont.woff) format('woff'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans_bold_italic-webfont.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Scaly Sans Caps';
+  font-style: normal;
+  font-weight: normal;
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans_caps-webfont.eot);
+  src: url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans_caps-webfont.eot?#iefix) format('embedded-opentype'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans_caps-webfont.woff) format('woff'),
+  url(https://dragonbetween.net/w/skins/Vector/fonts/scaly_sans_caps-webfont.ttf) format('truetype');
+}
+
 body {
-  font-family: Arial, sans-serif;
-  padding: 2em;
+  background: #fff url(https://dragonbetween.net/w/skins/Vector/images/eberron-top.jpg) no-repeat top center;
+  background-attachment: fixed;
+  background-size: 100%;
+  font-family: 'Book Insanity', 'Georgia', serif;
+  padding: 0 1em;
 }
 
-body.generated {
+main {
   margin: 0 auto;
-  max-width: 40em;
+  max-width: 50em;
 }
 
-@media (min-width: 50em) {
-  body {
-    padding: 2em 5%;
-  }
+h1 {
+  font-family: 'Mr. Eaves';
+  font-size: 3em;
 }
 
-@media (min-width: 75em) {
-  body {
-    padding: 2em 10%;
-  }
+select {
+  display: block;
+  margin: 1em 0;
+  width: 100%;
 }
 
 label,
-fieldset legend {
-  display: block;
+legend {
+  font-family: 'Scaly Sans';
   font-weight: bold;
 }
 
 fieldset {
-  margin-top: 2em;
-}
-
-label {
-  cursor: pointer;
-}
-
-.many-options,
-.lifestyle {
-  list-style-type: none;
+  background: #fff;
   margin: 1em 0;
+  padding: 1em;
+}
+
+fieldset ul {
+  list-style-type: none;
+  margin: 0;
   padding: 0;
 }
 
-.many-options li {
-  display: inline-block;
-  width: 16em;
+@media (min-width: 30em) {
+  .many-options li {
+    display: inline-block;
+    width: 40%;
+  }
 }
 
-.many-options label,
-.lifestyle label {
-  display: inline-block;
-  font-weight: normal;
+@media (min-width: 50em) {
+  .many-options li {
+    display: inline-block;
+    width: 30%;
+  }
 }
 
-.lifestyle li {
-  margin: 0.5em 0;
+.many-options + div {
+  margin-top: 1em;
 }
 
-.dragonmark-selection {
-  display: inline-block;
-  margin: 1em 4em 1em 0;
-}
-
-.alignment {
-  margin: 2em auto;
-}
-
-.alignment td {
-  font-size: 1.5em;
-  line-height: 3em;
-  text-align: center;
-  width: 3em;
-}
-
-.alignment input {
-  position: absolute;
-  visibility: hidden;
-}
-
-.alignment label {
-  background: #ddd;
-}
-
-.alignment input:checked + label {
-  background: #3366cc;
-  color: #fff;
-}
-
-button.generate {
-  background: #3366cc;
-  border: 0;
-  color: #fff;
-  cursor: pointer;
-  display: block;
-  font-size: 2em;
-  margin: 2em 0;
-  padding: 1em;
-  width: 100%;
-}
-
-span.toggle {
-  color: #3366cc;
+.toggle {
+  color: #007aff;
   cursor: pointer;
   text-decoration: underline;
 }
 
-section.character {
-  background: #eee;
-  margin: 0 0 1em 0;
-  padding: 2em;
+.toggle:hover {
+  color: #008dff;
 }
 
-section.character p:first-child {
-  margin-top: 0;
+input[type="checkbox"] + label,
+input[type="radio"] + label{
+  font-weight: normal;
 }
 
-section.character ul {
-  margin: 1em 0;
-  padding: 0;
+table.alignment {
+  position: relative;
 }
 
-summary {
+table.alignment input {
+  position: absolute;
+  visibility: hidden;
+}
+
+table.alignment input + label {
+  background: #ccc;
+  display: block;
   cursor: pointer;
   font-weight: bold;
+  font-size: 1.5em;
+  padding: 1em 0;
+  text-align: center;
+  width: 4em;
 }
 
-section.character textarea {
-  height: 10em;
-  width: 100%;
+table.alignment input:checked + label {
+  background: #007aff;
+  color: #fff;
+}
+
+.generate {
+  background: #007aff;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font-family: 'Mr. Eaves';
+  font-size: 2em;
+  margin: 1em auto 4em;
+  padding: 1em 4em;
 }
