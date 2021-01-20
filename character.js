@@ -9,6 +9,7 @@ const {
   randomFloatFromBellCurve,
   randomElementFromArray
 } = require('./randomizer')
+const config = require('./config.json')
 
 class Character {
   constructor () {
@@ -615,6 +616,41 @@ class Character {
     if (isNeutral) categories.push(`[[Category:Neutral characters${end}`)
     categories.push(`[[Category:${map[this.alignment]} characters${end}`)
     return categories.join('\n')
+  }
+
+  /**
+   * Generate the string that is the wiki body.
+   * @param data {object} - The full data set pulled from `fetchData`.
+   * @param escaped {boolean} - If `true`, then HTML is escaped. If `false`,
+   *   it is not.
+   * @returns {string} - The wikitext string for the body of a wiki entry.
+   */
+
+  getWikiString (data, escaped = true) {
+    const desc = this.getDescription(data, 'wikitext')
+    const openTag = escaped ? '&lt;' : '<'
+    const closeTag = escaped ? '&gt;' : '>'
+    const openSecrets = `${openTag}div class="secrets"${closeTag}`
+    const closeSecrets = `${openTag}/div${closeTag}`
+    const trait = `* '''Personality trait:''' ${this.traits.personality}`
+    const ideal = `* '''Personality trait:''' ${this.getIdeal()}`
+    const bond = `* '''Personality trait:''' ${this.traits.bond}`
+    const flaw = `* '''Personality trait:''' ${this.traits.flaw}`
+    const secretsArr = [ openSecrets, trait, ideal, bond, flaw, closeSecrets ]
+    const secrets = secretsArr.join('\n')
+    return `${desc}\n\n${secrets}\n\n${this.getWikiCategories(data)}`
+  }
+
+  /**
+   * Create a link that could create a new wiki entry.
+   * @param data {object} - The full data set pulled from `fetchData`.
+   * @returns {string} - A link that can create a new wiki entry.
+   */
+
+  getWikiLink (data) {
+    const title = encodeURIComponent(this.getFullName())
+    const content = encodeURIComponent(this.getWikiString(data, false))
+    return `${config.mediawiki}?title=${title}&content=${content}&action=edit`
   }
 
   /**
