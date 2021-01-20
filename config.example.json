@@ -1,0 +1,24 @@
+{
+  "port": 3000,
+  "google": {
+    "id": "1n3ggwhEIcPcObjFPmC2XdundQg1eqBXvuDeVzzyWCgU",
+    "ranges": {
+      "areas": "Areas!A2:B2",
+      "demographics": "Demographics!A2:H825",
+      "races": "Races!A2:D19",
+      "cultures": "Cultures!A2:H22",
+      "religions": "Religions!A2:E15",
+      "houses": "Dragonmarks!A2:D14",
+      "names": "Names!A2:C1755",
+      "nobility": "Noble families!A2:D129",
+      "traits": "Traits!A2:D3419",
+      "vars": "Trait variables!A2:B785",
+      "zil": "Zil families!A2:B251"
+    },
+    "key": "YOURGOOGLEAPIKEY"
+  },
+  "mediawiki": {
+    "url": "https://example.com/wiki/",
+    "cleanurls": true
+  }
+}
