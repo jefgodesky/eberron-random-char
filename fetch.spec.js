@@ -97,16 +97,17 @@ describe('fetchReligions', () => {
 
 describe('fetchHouses', () => {
   it('fetches dragonmarked houses', async () => {
-    expect.assertions(4)
+    expect.assertions(5)
     const houses = await fetchHouses()
-    console.log(houses)
     const hasName = houses.reduce((acc, curr) => acc && typeof curr.name === 'string', true)
     const hasMark = houses.reduce((acc, curr) => acc && typeof curr.mark === 'string', true)
-    const hasRaces = houses.reduce((acc, curr) => acc && Array.isArray(curr.races) && curr.races.length > 0, true)
+    const hasMarkRaces = houses.reduce((acc, curr) => acc && Array.isArray(curr.races.mark) && curr.races.mark.length > 0, true)
+    const hasHouseRaces = houses.reduce((acc, curr) => acc && Array.isArray(curr.races.house) && curr.races.house.length > 0, true)
     expect(houses).toHaveLength(13)
     expect(hasName).toEqual(true)
     expect(hasMark).toEqual(true)
-    expect(hasRaces).toEqual(true)
+    expect(hasMarkRaces).toEqual(true)
+    expect(hasHouseRaces).toEqual(true)
   })
 })
 
@@ -230,6 +231,7 @@ describe('fetchTraits', () => {
 
 describe('fetchData', () => {
   it('fetches all the data in one object', async () => {
+    jest.setTimeout(10000)
     expect.assertions(10)
     const data = await fetchData()
     expect(data.areas).toBeDefined()

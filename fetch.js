@@ -158,7 +158,10 @@ const fetchHouses = async () => {
       houses.push({
         name: row[0],
         mark: row[1],
-        races: row[2].split(',').map(race => race.trim())
+        races: {
+          mark: row[2].split(',').map(race => race.trim()),
+          house: row[3].split(',').map(race => race.trim())
+        }
       })
     }
   })
