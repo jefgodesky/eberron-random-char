@@ -17,19 +17,7 @@
                     <li><strong>Bond:</strong> <%= char.traits.bond %></li>
                     <li><strong>Flaw:</strong> <%= char.traits.flaw %></li>
                 </ul>
-                <details>
-                    <summary>Wikitext</summary>
-                    <textarea data-wiki="<%= wiki %>"><%= char.getDescription(data, 'wikitext') %>
-
-    &lt;div class="secrets"&gt;
-    * '''Personality trait:''' <%= char.traits.personality %>
-    * '''Ideal:''' <%= char.getIdeal() %>
-    * '''Bond:''' <%= char.traits.bond %>
-    * '''Flaw:''' <%= char.traits.flaw %>
-    &lt;/div&gt;
-
-<%= char.getWikiCategories(data) %></textarea>
-                </details>
+                <a href="<%= char.getWikiLink(data) %>" target="_blank" class="create-wiki">Create a wiki entry for <%= char.getFullName() %></a>
             </section>
             <% }) %>
         </main>
