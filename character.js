@@ -108,10 +108,7 @@ class Character {
 
   setFamilyName (data) {
     const culture = this.culture && data.cultures ? data.cultures[this.culture] : null
-    if (this.noble && culture.nobility && culture.nobility.families && culture.nobility.families.length > 0) {
-      this.name.family = randomElementFromArray(culture.nobility.families)
-      this.name.prefix = culture.nobility.prefix
-    } else {
+    if (!this.name.family) {
       const list = culture ? culture.names : null
       const addOccupations = [ 'Aundairian', 'Brelish', 'Cyran', 'Karrnathi', 'Thranish', 'Khoravar', 'Marcher', 'Reacher' ]
       if (addOccupations.includes(list)) {
