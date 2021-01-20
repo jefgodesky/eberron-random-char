@@ -29,7 +29,7 @@ app.post('/generate', (req, res) => {
   if (req.body.mark === 'Random') delete req.body.mark
   if (req.body.house === 'Random') delete req.body.house
   const characters = Character.generate(app.data, req.body.area, req.body)
-  res.render('generated', { data: app.data, characters })
+  res.render('generated', { data: app.data, characters, wiki: config.mediawiki })
 })
 
 app.listen(config.port, async () => {

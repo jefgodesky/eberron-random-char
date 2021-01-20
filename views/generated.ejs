@@ -19,7 +19,7 @@
                 </ul>
                 <details>
                     <summary>Wikitext</summary>
-                    <textarea><%= char.getDescription(data, 'wikitext') %>
+                    <textarea data-wiki="<%= wiki %>"><%= char.getDescription(data, 'wikitext') %>
 
     &lt;div class="secrets"&gt;
     * '''Personality trait:''' <%= char.traits.personality %>
@@ -28,7 +28,7 @@
     * '''Flaw:''' <%= char.traits.flaw %>
     &lt;/div&gt;
 
-    <%= char.getWikiCategories(data) %></textarea>
+<%= char.getWikiCategories(data) %></textarea>
                 </details>
             </section>
             <% }) %>
