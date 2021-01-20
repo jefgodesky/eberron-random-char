@@ -135,11 +135,13 @@ class Character {
    */
 
   getFullName () {
-    return this.name.family && this.name.prefix
-      ? `${this.name.given} ${this.name.prefix}${this.name.family}`
-      : this.name.family
-        ? `${this.name.given} ${this.name.family}`
-        : this.name.given
+    return this.culture === 'Tairnadal' && this.ancestor
+      ? `${this.name.given} ${this.ancestor}`
+      : this.name.family && this.name.prefix
+        ? `${this.name.given} ${this.name.prefix}${this.name.family}`
+        : this.name.family
+          ? `${this.name.given} ${this.name.family}`
+          : this.name.given
   }
 
   /**
