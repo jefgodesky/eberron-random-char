@@ -272,7 +272,7 @@ class Character {
    */
 
   setDragonmark (data, mark) {
-    const eligible = union(data.houses.filter(house => house.races.includes(this.race)).map(house => house.mark))
+    const eligible = union(data.houses.filter(house => house.races.mark.includes(this.race)).map(house => house.mark))
     if (mark && eligible.includes(mark)) {
       this.mark = mark
     } else {
@@ -305,20 +305,11 @@ class Character {
       // about a 1 in 1,000 chance that you're a member of that house, even
       // if you don't have a dragonmark (for House Lyrandar and the half-elves,
       // that chance is even higher, 1 in 500, but that's Lyrandar).
-      const raceHouses = union(data.houses.filter(house => house.races.includes(this.race)).map(house => house.name))
+      const raceHouses = union(data.houses.filter(house => house.races.house.includes(this.race)).map(house => house.name))
       raceHouses.forEach(house => {
         const chance = house === 'Lyrandar' && this.race === 'Half-elf' ? 250 : 1000
         if (!this.house && random.int(1, chance) === 1) this.house = house
       })
-
-      // But the houses also recruit from other races, though it's much less
-      // frequent. If you're not in any house yet, we loop through all of them,
-      // and for each there's a 1 in 10,000 chance that you're a member anyway.
-      if (!this.house) {
-        data.houses.forEach(house => {
-          if (!this.house && random.int(1, 5000) === 1) this.house = house.name
-        })
-      }
     }
 
     // Now you're either in a house or you're not. If you are, do you get a
