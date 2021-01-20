@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/jefgodesky/eberron-random-char/issues"
   },
-  "homepage": "https://github.com/jefgodesky/eberron-random-char#readme",
+  "homepage": "https://dragonbetween.net/random/char",
   "devDependencies": {
     "jest": "^26.6.3"
   },
