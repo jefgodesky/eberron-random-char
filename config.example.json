@@ -17,8 +17,5 @@
     },
     "key": "YOURGOOGLEAPIKEY"
   },
-  "mediawiki": {
-    "url": "https://example.com/wiki/",
-    "cleanurls": true
-  }
+  "mediawiki": "https://example.com/wiki/"
 }
