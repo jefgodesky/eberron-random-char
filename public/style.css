@@ -211,3 +211,10 @@ table.alignment input:checked + label {
   margin: 1em auto 4em;
   padding: 1em 4em;
 }
+
+section.character {
+  background: #fff;
+  border: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 1em;
+}
