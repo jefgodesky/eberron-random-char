@@ -505,6 +505,8 @@ class Character {
           : 'any dragonmarked house'
         return `bears the Mark of ${mark}, but is not a member of ${house}.`
       }
+    } else if (culture === 'Tairnadal' && this.ancestor) {
+      return `is a revenant of ${this.ancestor}.`
     } else {
       let cls = 'middle class'
       switch (lifestyle) {
