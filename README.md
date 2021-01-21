@@ -1,6 +1,6 @@
 # Eberron Random Character Generator
 
-[Live site](https://dragonbetween.net/random/char)
+[Live site](http://dragonbetween.net:3000)
 
 Humans are terrible at randomness, and that 
 includes DM's. Left to our own devices at the 
